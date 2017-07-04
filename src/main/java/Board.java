@@ -1,23 +1,23 @@
+import java.util.Arrays;
+
 public class Board {
 
-    private Player[][] boardData;
+    private Player[][] grid;
     private int gridSize = 3;
 
     public Board() {
-        boardData = new Player[gridSize][gridSize];
-        for (int row = 0; row < gridSize; row++) {
-            for (int col = 0; col < gridSize; col++) {
-                setSquareValue(row, col, Player.NEITHER);
-            }
+        grid = new Player[gridSize][gridSize];
+        for (Player[] row : grid) {
+            Arrays.fill(row, Player.NEITHER);
         }
     }
 
     public Player getSquareValue(int row, int col) {
-        return boardData[row][col];
+        return grid[row][col];
     }
 
     public void setSquareValue(int row, int col, Player player) {
-        boardData[row][col] = player;
+        grid[row][col] = player;
     }
 
     public boolean isEmptySquare(int row, int col) {
@@ -55,6 +55,10 @@ public class Board {
 
     public boolean isAnyWinningDiagonal(Player player) {
         return isWinningDiagonalFromTopLeft(player) || isWinningDiagonalFromTopRight(player);
+    }
+
+    public int getTotalSquares() {
+        return gridSize * gridSize;
     }
 
     private boolean isWinningRow(int row, Player player) {
@@ -96,5 +100,18 @@ public class Board {
 
     private boolean squareMatches(int row, int col, Player player) {
         return getSquareValue(row, col) == player;
+    }
+
+    public BoardRef convertPosition(int position) {
+        int offsetPosition = position - 1;
+        int row = offsetPosition / gridSize;
+        int col = offsetPosition % gridSize;
+        return new BoardRef(row, col);
+    }
+
+    public int convertBoardRef(int row, int col) {
+        int rowOffset = row * gridSize;
+        int colOffset = col + 1;
+        return rowOffset + colOffset;
     }
 }
