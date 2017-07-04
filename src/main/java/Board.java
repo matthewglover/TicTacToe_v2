@@ -61,6 +61,19 @@ public class Board {
         return gridSize * gridSize;
     }
 
+    public BoardRef convertPosition(int position) {
+        int offsetPosition = position - 1;
+        int row = offsetPosition / gridSize;
+        int col = offsetPosition % gridSize;
+        return new BoardRef(row, col);
+    }
+
+    public int convertBoardRef(int row, int col) {
+        int rowOffset = row * gridSize;
+        int colOffset = col + 1;
+        return rowOffset + colOffset;
+    }
+
     private boolean isWinningRow(int row, Player player) {
         for (int col = 0; col < gridSize; col++) {
             if (!squareMatches(row, col, player)) {
@@ -100,18 +113,5 @@ public class Board {
 
     private boolean squareMatches(int row, int col, Player player) {
         return getSquareValue(row, col) == player;
-    }
-
-    public BoardRef convertPosition(int position) {
-        int offsetPosition = position - 1;
-        int row = offsetPosition / gridSize;
-        int col = offsetPosition % gridSize;
-        return new BoardRef(row, col);
-    }
-
-    public int convertBoardRef(int row, int col) {
-        int rowOffset = row * gridSize;
-        int colOffset = col + 1;
-        return rowOffset + colOffset;
     }
 }
