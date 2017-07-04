@@ -1,136 +1,62 @@
-import java.util.Arrays;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.*;
 
 public class Board {
 
-    private Player[][] grid;
     private int gridSize = 3;
+    private Player[] grid;
 
     public Board() {
-        grid = new Player[gridSize][gridSize];
-        for (Player[] row : grid) {
-            Arrays.fill(row, Player.NEITHER);
-        }
+        grid = new Player[gridSize * gridSize];
+        fill(grid, Player.NEITHER);
     }
 
-    public Player getSquareValue(int row, int col) {
-        return grid[row][col];
+
+    public Player getSquare(int squareNumber) {
+        return grid[squareNumber - 1];
     }
 
-    public Player getSquareValue(int position) {
-        BoardRef boardRef = convertPosition(position);
-        return getSquareValue(boardRef.row, boardRef.col);
+    public void setSquare(int squareNumber, Player player) {
+        grid[squareNumber - 1] = player;
     }
 
-    public void setSquareValue(int row, int col, Player player) {
-        grid[row][col] = player;
+    public boolean isEmpty(int squareNumber) {
+        return getSquare(squareNumber) == Player.NEITHER;
     }
-
-    public void setSquareValue(int position, Player player) {
-        BoardRef boardRef = convertPosition(position);
-        setSquareValue(boardRef.row, boardRef.col, player);
-    }
-
-    public boolean isEmptySquare(int row, int col) {
-        return squareMatches(row, col, Player.NEITHER);
-    }
-
-    public boolean isEmptySquare(int position) {
-        BoardRef boardRef = convertPosition(position);
-        return isEmptySquare(boardRef.row, boardRef.col);
-    }
-
     public boolean isFull() {
-        for (int row = 0; row < gridSize; row++) {
-            for (int col = 0; col < gridSize; col++) {
-               if (isEmptySquare(row, col)) {
-                   return false;
-               }
-            }
-        }
-        return true;
+        return stream(grid).allMatch(square -> square != Player.NEITHER);
     }
 
     public boolean isAnyWinningLine(Player player) {
-        return isAnyWinningRow(player) || isAnyWinningColumn(player) || isAnyWinningDiagonal(player);
+        return Stream.concat(getRows(), Stream.concat(getColumns(), getDiagonals()))
+                .anyMatch(line -> isWinningLine(line, player));
     }
 
-    public boolean isAnyWinningRow(Player player) {
-        for (int row = 0; row < gridSize; row++) {
-           if (isWinningRow(row, player)) {
-               return true;
-           }
-        }
-        return false;
+    private boolean isWinningLine(Player[] line, Player player) {
+        return stream(line).allMatch(square -> square == player);
     }
 
-    public boolean isAnyWinningColumn(Player player) {
-        for (int col = 0; col < gridSize; col++) {
-            if (isWinningColumn(col, player)) {
-                return true;
-            }
-        }
-        return false;
+    private Stream<Player[]> getRows() {
+        Player[] top = { getSquare(1), getSquare(2), getSquare(3) };
+        Player[] middle = { getSquare(4), getSquare(5), getSquare(6) };
+        Player[] bottom = { getSquare(7), getSquare(8), getSquare(9) };
+        Player[][] rows = { top, middle, bottom };
+        return stream(rows);
     }
 
-    public boolean isAnyWinningDiagonal(Player player) {
-        return isWinningDiagonalFromTopLeft(player) || isWinningDiagonalFromTopRight(player);
+    private Stream<Player[]> getColumns() {
+        Player[] left = { getSquare(1), getSquare(4), getSquare(7) };
+        Player[] middle = { getSquare(2), getSquare(5), getSquare(8) };
+        Player[] right = { getSquare(3), getSquare(6), getSquare(9) };
+        Player[][] cols = { left, middle, right };
+        return stream(cols);
     }
 
-    public int getTotalSquares() {
-        return gridSize * gridSize;
-    }
-
-    public BoardRef convertPosition(int position) {
-        int offsetPosition = position - 1;
-        int row = offsetPosition / gridSize;
-        int col = offsetPosition % gridSize;
-        return new BoardRef(row, col);
-    }
-
-    public int convertBoardRef(int row, int col) {
-        int rowOffset = row * gridSize;
-        int colOffset = col + 1;
-        return rowOffset + colOffset;
-    }
-
-    private boolean isWinningRow(int row, Player player) {
-        for (int col = 0; col < gridSize; col++) {
-            if (!squareMatches(row, col, player)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isWinningColumn(int col, Player player) {
-        for (int row = 0; row < gridSize; row++) {
-            if (!squareMatches(row, col, player)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isWinningDiagonalFromTopLeft(Player player) {
-        for (int coord = 0; coord < gridSize; coord++) {
-            if (!squareMatches(coord, coord, player)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isWinningDiagonalFromTopRight(Player player) {
-        int maxIndex = gridSize - 1;
-        for (int row = 0; row < gridSize; row++) {
-            if (!squareMatches(row, maxIndex - row, player)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean squareMatches(int row, int col, Player player) {
-        return getSquareValue(row, col) == player;
+    private Stream<Player[]> getDiagonals() {
+        Player[] topLeft = { getSquare(1), getSquare(5), getSquare(9) };
+        Player[] topRight = { getSquare(3), getSquare(5), getSquare(7) };
+        Player[][] diagonals = { topLeft, topRight };
+        return stream(diagonals);
     }
 }
