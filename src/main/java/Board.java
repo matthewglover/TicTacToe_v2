@@ -16,12 +16,27 @@ public class Board {
         return grid[row][col];
     }
 
+    public Player getSquareValue(int position) {
+        BoardRef boardRef = convertPosition(position);
+        return getSquareValue(boardRef.row, boardRef.col);
+    }
+
     public void setSquareValue(int row, int col, Player player) {
         grid[row][col] = player;
     }
 
+    public void setSquareValue(int position, Player player) {
+        BoardRef boardRef = convertPosition(position);
+        setSquareValue(boardRef.row, boardRef.col, player);
+    }
+
     public boolean isEmptySquare(int row, int col) {
         return squareMatches(row, col, Player.NEITHER);
+    }
+
+    public boolean isEmptySquare(int position) {
+        BoardRef boardRef = convertPosition(position);
+        return isEmptySquare(boardRef.row, boardRef.col);
     }
 
     public boolean isFull() {
@@ -33,6 +48,10 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public boolean isAnyWinningLine(Player player) {
+        return isAnyWinningRow(player) || isAnyWinningColumn(player) || isAnyWinningDiagonal(player);
     }
 
     public boolean isAnyWinningRow(Player player) {
