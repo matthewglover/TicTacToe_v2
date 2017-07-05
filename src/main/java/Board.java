@@ -22,10 +22,10 @@ public class Board {
     }
 
     public boolean isEmptySquare(int squareNumber) {
-        return getSquare(squareNumber) == Player.NEITHER;
+        return getSquare(squareNumber).isEmpty();
     }
     public boolean isFull() {
-        return stream(grid).allMatch(square -> square != Player.NEITHER);
+        return stream(grid).allMatch(square -> !square.isEmpty());
     }
 
     public boolean isWinningLine(Player player) {
@@ -42,13 +42,13 @@ public class Board {
 
     public Stream<Stream<Player>> getRows() {
         return Stream.iterate(1, d -> d + gridSize)
-                .map(createLine(1))
+                .map(getLine(1))
                 .limit(gridSize);
     }
 
     public Stream<Stream<Player>> getColumns() {
         return Stream.iterate(1, d -> d + 1)
-                .map(createLine(gridSize))
+                .map(getLine(gridSize))
                 .limit(gridSize);
     }
 
@@ -58,7 +58,7 @@ public class Board {
         return Stream.of(topLeft, topRight);
     }
 
-    private Function<Integer, Stream<Player>> createLine(int increment) {
+    private Function<Integer, Stream<Player>> getLine(int increment) {
         return firstItem -> Stream.iterate(firstItem, d -> d + increment)
                 .map(this::getSquare)
                 .limit(gridSize);
