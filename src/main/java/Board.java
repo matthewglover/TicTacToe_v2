@@ -42,25 +42,15 @@ public class Board {
     }
 
     public Stream<Stream<Player>> getRows() {
-        Function<Integer, Stream<Player>> createRow =
-                firstItem -> Stream.iterate(firstItem, d -> d + 1)
-                                    .limit(gridSize)
-                                    .map(this::getSquare);
-
         return Stream.iterate(1, d -> d + gridSize)
-                .limit(gridSize)
-                .map(createRow);
+                .map(createLine(1))
+                .limit(gridSize);
     }
 
     public Stream<Stream<Player>> getColumns() {
-        Function<Integer, Stream<Player>> createColumn =
-                firstItem -> Stream.iterate(firstItem, d -> d + gridSize)
-                                    .map(this::getSquare)
-                                    .limit(gridSize);
-
         return Stream.iterate(1, d -> d + 1)
-                .limit(gridSize)
-                .map(createColumn);
+                .map(createLine(gridSize))
+                .limit(gridSize);
     }
 
     private Stream<Stream<Player>>getDiagonals() {
@@ -69,25 +59,9 @@ public class Board {
         return Stream.of(topLeft, topRight);
     }
 
-    public int[] test() {
-        int totalSquares = gridSize * gridSize; UnaryOperator<Integer> rowStarter = number -> number + gridSize;
-        return Stream
-                .iterate(1, rowStarter)
-                .limit(gridSize)
-                .mapToInt(Integer::intValue)
-                .toArray();
-    }
-
-    public Player[][] test2() {
-        Function<Integer, Player[]> createRow =
-                firstItem -> Stream.iterate(firstItem, d -> d + 1)
-                                    .limit(3)
-                                    .map(this::getSquare)
-                                    .toArray(Player[]::new);
-
-        return Stream.iterate(1, d -> d + 3)
-                .limit(3)
-                .map(createRow)
-                .toArray(Player[][]::new);
+    private Function<Integer, Stream<Player>> createLine(int increment) {
+        return firstItem -> Stream.iterate(firstItem, d -> d + increment)
+                .map(this::getSquare)
+                .limit(gridSize);
     }
 }

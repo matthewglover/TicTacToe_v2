@@ -94,19 +94,6 @@ public class BoardTest {
         assertTrue(board.isAnyWinningLine(Player.X));
     }
 
-//    @Test
-//    public void boardNumbers() {
-//        int[] numbers = {1, 4, 7};
-//        assertArrayEquals(numbers, board.test());
-//    }
-
-    @Test
-    public void boardNumbers() {
-        Player[] numbers = {Player.NEITHER, Player.NEITHER, Player.NEITHER};
-//        Player[][] listNumbers = { numbers, numbers, numbers };
-        assertArrayEquals(numbers, board.test2()[0]);
-    }
-
     private void fillBoard() {
         for (int squareNumber = 1; squareNumber <= 9; squareNumber++) {
             board.setSquare( squareNumber, Player.X);
