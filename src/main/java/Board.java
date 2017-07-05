@@ -32,6 +32,10 @@ public class Board {
         return getLines().anyMatch(line -> isCurrentWinningLine(line, player));
     }
 
+    public int getGridSize() {
+        return this.gridSize;
+    }
+
     private boolean isCurrentWinningLine(Stream<Player> line, Player player) {
         return line.allMatch(square -> square == player);
     }
@@ -40,13 +44,13 @@ public class Board {
         return Stream.concat(getRows(), Stream.concat(getColumns(), getDiagonals()));
     }
 
-    public Stream<Stream<Player>> getRows() {
+    private Stream<Stream<Player>> getRows() {
         return Stream.iterate(1, d -> d + gridSize)
                 .map(getLine(1))
                 .limit(gridSize);
     }
 
-    public Stream<Stream<Player>> getColumns() {
+    private Stream<Stream<Player>> getColumns() {
         return Stream.iterate(1, d -> d + 1)
                 .map(getLine(gridSize))
                 .limit(gridSize);

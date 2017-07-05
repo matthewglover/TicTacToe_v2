@@ -1,6 +1,19 @@
+import java.util.Scanner;
+
 public class Game {
     private Board board = new Board();
     private Player currentPlayer = Player.X;
+    private ConsoleRenderer renderer;
+
+    public static void main(String[] args) {
+        ConsoleRenderer renderer = new ConsoleRenderer(System.out);
+        new Game(renderer);
+    }
+
+    public Game(ConsoleRenderer renderer) {
+        this.renderer = renderer;
+//        renderer.promptForMove(currentPlayer, board);
+    }
 
     public Board getBoard() {
         return board;

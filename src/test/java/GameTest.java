@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 public class GameTest {
 
-    private Game game = new Game();
+    private Game game = new Game(new ConsoleRenderer(System.out));
     private Board board = game.getBoard();
 
     @Test
