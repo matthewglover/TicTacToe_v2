@@ -25,19 +25,19 @@ public class BoardTest {
 
     @Test
     public void squareIsEmptyWhenItsEmpty() {
-        assertTrue(board.isEmpty(1));
+        assertTrue(board.isEmptySquare(1));
     }
 
     @Test
     public void squareIsNotEmptyWhenItsTakenByX() {
         board.setSquare(1, Player.X);
-        assertFalse(board.isEmpty(1));
+        assertFalse(board.isEmptySquare(1));
     }
 
     @Test
     public void squareIsNotEmptyWhenItsTakenByO() {
         board.setSquare(1, Player.O);
-        assertFalse(board.isEmpty(1));
+        assertFalse(board.isEmptySquare(1));
     }
 
     @Test
@@ -92,6 +92,12 @@ public class BoardTest {
         board.setSquare(5, Player.X);
         board.setSquare(7, Player.X);
         assertTrue(board.isAnyWinningLine(Player.X));
+    }
+
+    @Test
+    public void boardNumbers() {
+        int[] numbers = {1, 4, 7};
+        assertArrayEquals(numbers, board.test());
     }
 
     private void fillBoard() {
