@@ -23,7 +23,7 @@
 //    }
 //
 //    public Player getWinner() {
-//        if (board.isAnyWinningLine(Player.X)) {
+//        if (board.isWinningLine(Player.X)) {
 //            return Player.X;
 //        }
 //        return Player.NEITHER;

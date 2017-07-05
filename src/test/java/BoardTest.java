@@ -60,15 +60,15 @@ public class BoardTest {
 
     @Test
     public void notWinningLineWhenEmptyBoard() {
-        assertFalse(board.isAnyWinningLine(Player.X));
+        assertFalse(board.isWinningLine(Player.X));
     }
 
     @Test
-    public void winningLineWhenWinningRow() {
-        board.setSquare(1, Player.X);
-        board.setSquare(2, Player.X);
-        board.setSquare(3, Player.X);
-        assertTrue(board.isAnyWinningLine(Player.X));
+    public void isWinningLineWhenWinningRow() {
+        board.setSquare(1, Player.O);
+        board.setSquare(2, Player.O);
+        board.setSquare(3, Player.O);
+        assertTrue(board.isWinningLine(Player.O));
     }
 
     @Test
@@ -76,14 +76,14 @@ public class BoardTest {
         board.setSquare(1, Player.X);
         board.setSquare(4, Player.X);
         board.setSquare(7, Player.X);
-        assertTrue(board.isAnyWinningLine(Player.X));
+        assertTrue(board.isWinningLine(Player.X));
     }
     @Test
     public void winningLineWhenWinningDiagonalTopLeftToBottomRight() {
-        board.setSquare(1, Player.X);
-        board.setSquare(5, Player.X);
-        board.setSquare(9, Player.X);
-        assertTrue(board.isAnyWinningLine(Player.X));
+        board.setSquare(1, Player.O);
+        board.setSquare(5, Player.O);
+        board.setSquare(9, Player.O);
+        assertTrue(board.isWinningLine(Player.O));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class BoardTest {
         board.setSquare(3, Player.X);
         board.setSquare(5, Player.X);
         board.setSquare(7, Player.X);
-        assertTrue(board.isAnyWinningLine(Player.X));
+        assertTrue(board.isWinningLine(Player.X));
     }
 
     private void fillBoard() {

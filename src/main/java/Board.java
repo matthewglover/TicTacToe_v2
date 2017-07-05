@@ -28,11 +28,11 @@ public class Board {
         return stream(grid).allMatch(square -> square != Player.NEITHER);
     }
 
-    public boolean isAnyWinningLine(Player player) {
-        return getLines().anyMatch(line -> isWinningLine(line, player));
+    public boolean isWinningLine(Player player) {
+        return getLines().anyMatch(line -> isCurrentWinningLine(line, player));
     }
 
-    private boolean isWinningLine(Stream<Player> line, Player player) {
+    private boolean isCurrentWinningLine(Stream<Player> line, Player player) {
         return line.allMatch(square -> square == player);
     }
 
