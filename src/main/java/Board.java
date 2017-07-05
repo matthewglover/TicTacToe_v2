@@ -1,3 +1,4 @@
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
@@ -40,18 +41,26 @@ public class Board {
         return Stream.concat(getRows(), Stream.concat(getColumns(), getDiagonals()));
     }
 
-    private Stream<Stream<Player>> getRows() {
-        Stream<Player> top = Stream.of(getSquare(1), getSquare(2), getSquare(3));
-        Stream<Player> middle = Stream.of(getSquare(4), getSquare(5), getSquare(6));
-        Stream<Player> bottom = Stream.of(getSquare(7), getSquare(8), getSquare(9));
-        return Stream.of(top, middle, bottom);
+    public Stream<Stream<Player>> getRows() {
+        Function<Integer, Stream<Player>> createRow =
+                firstItem -> Stream.iterate(firstItem, d -> d + 1)
+                                    .limit(gridSize)
+                                    .map(this::getSquare);
+
+        return Stream.iterate(1, d -> d + gridSize)
+                .limit(gridSize)
+                .map(createRow);
     }
 
-    private Stream<Stream<Player>>getColumns() {
-        Stream<Player> left = Stream.of(getSquare(1), getSquare(4), getSquare(7));
-        Stream<Player> middle = Stream.of(getSquare(2), getSquare(5), getSquare(8));
-        Stream<Player> right = Stream.of(getSquare(3), getSquare(6), getSquare(9));
-        return Stream.of(left, middle, right);
+    public Stream<Stream<Player>> getColumns() {
+        Function<Integer, Stream<Player>> createColumn =
+                firstItem -> Stream.iterate(firstItem, d -> d + gridSize)
+                                    .map(this::getSquare)
+                                    .limit(gridSize);
+
+        return Stream.iterate(1, d -> d + 1)
+                .limit(gridSize)
+                .map(createColumn);
     }
 
     private Stream<Stream<Player>>getDiagonals() {
@@ -61,12 +70,24 @@ public class Board {
     }
 
     public int[] test() {
-        int totalSquares = gridSize * gridSize;
-        UnaryOperator<Integer> rowStarter = number -> number + gridSize;
+        int totalSquares = gridSize * gridSize; UnaryOperator<Integer> rowStarter = number -> number + gridSize;
         return Stream
                 .iterate(1, rowStarter)
                 .limit(gridSize)
                 .mapToInt(Integer::intValue)
                 .toArray();
+    }
+
+    public Player[][] test2() {
+        Function<Integer, Player[]> createRow =
+                firstItem -> Stream.iterate(firstItem, d -> d + 1)
+                                    .limit(3)
+                                    .map(this::getSquare)
+                                    .toArray(Player[]::new);
+
+        return Stream.iterate(1, d -> d + 3)
+                .limit(3)
+                .map(createRow)
+                .toArray(Player[][]::new);
     }
 }
