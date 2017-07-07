@@ -21,27 +21,6 @@ public class ConsoleUI implements GameUI {
         return getBoardMove(board);
     }
 
-    private int getBoardMove(Board board) {
-        String input = scanner.nextLine();
-        if (isValidBoardMove(input, board)) {
-            return Integer.parseInt(input);
-        }
-        output.println("\nOops, invalid input. Try again: ");
-        return getBoardMove(board);
-    }
-
-    private boolean isValidBoardMove(String input, Board board) {
-       if (!input.matches("^\\d+$")) {
-           return false;
-       }
-       int move = Integer.parseInt(input);
-       return isMoveInBounds(move, board) && board.isEmptySquare(move);
-    }
-
-    private boolean isMoveInBounds(int move, Board board) {
-        return move >= 1 && move <= board.getTotalSquares();
-    }
-
     public void reportDraw() {
         output.print("It's a draw!");
     }
@@ -52,6 +31,27 @@ public class ConsoleUI implements GameUI {
 
     public void reportMoveError() {
         output.print("Oops, that square is already taken. Try again: ");
+    }
+
+    private int getBoardMove(Board board) {
+        String input = scanner.nextLine();
+        if (isValidBoardMove(input, board)) {
+            return Integer.parseInt(input);
+        }
+        output.println("\nOops, invalid input. Try again: ");
+        return getBoardMove(board);
+    }
+
+    private boolean isValidBoardMove(String input, Board board) {
+        if (!input.matches("^\\d+$")) {
+            return false;
+        }
+        int move = Integer.parseInt(input);
+        return isMoveInBounds(move, board) && board.isEmptySquare(move);
+    }
+
+    private boolean isMoveInBounds(int move, Board board) {
+        return move >= 1 && move <= board.getTotalSquares();
     }
 
     private String formatPlayerPrompt(Player player) {
