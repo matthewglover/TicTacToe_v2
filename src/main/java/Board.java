@@ -9,7 +9,7 @@ public class Board {
     private Player[] grid;
 
     public Board() {
-        grid = new Player[gridSize * gridSize];
+        grid = new Player[getTotalSquares()];
         fill(grid, Player.NEITHER);
     }
 
@@ -28,15 +28,23 @@ public class Board {
         return stream(grid).allMatch(square -> !square.isEmpty());
     }
 
-    public boolean isWinningLine(Player player) {
-        return getLines().anyMatch(line -> isCurrentWinningLine(line, player));
+    public boolean isAnyWinningLine(Player player) {
+        return getLines().anyMatch(line -> isWinningLine(line, player));
     }
 
     public int getGridSize() {
-        return this.gridSize;
+        return gridSize;
     }
 
-    private boolean isCurrentWinningLine(Stream<Player> line, Player player) {
+    public int getTotalSquares() {
+        return gridSize * gridSize;
+    }
+
+    public Stream<Stream<Integer>> getRowsOfSquareNumbers() {
+        return getGroupOfLinesOfSquareNumbers(gridSize, 1);
+    }
+
+    private boolean isWinningLine(Stream<Player> line, Player player) {
         return line.allMatch(square -> square == player);
     }
 
@@ -45,15 +53,13 @@ public class Board {
     }
 
     private Stream<Stream<Player>> getRows() {
-        return Stream.iterate(1, d -> d + gridSize)
-                .map(getLine(1))
-                .limit(gridSize);
+        return getRowsOfSquareNumbers()
+                .map(line -> line.map(this::getSquare));
     }
 
     private Stream<Stream<Player>> getColumns() {
-        return Stream.iterate(1, d -> d + 1)
-                .map(getLine(gridSize))
-                .limit(gridSize);
+        return getGroupOfLinesOfSquareNumbers(1, gridSize)
+                    .map(line -> line.map(this::getSquare));
     }
 
     private Stream<Stream<Player>>getDiagonals() {
@@ -62,9 +68,14 @@ public class Board {
         return Stream.of(topLeft, topRight);
     }
 
-    private Function<Integer, Stream<Player>> getLine(int increment) {
+    private Stream<Stream<Integer>> getGroupOfLinesOfSquareNumbers(int lineIncrementor, int squareIncrementor) {
+        return Stream.iterate(1, d -> d + lineIncrementor)
+                .limit(gridSize)
+                .map(getLineOfSquareNumbers(squareIncrementor));
+    }
+
+    private Function<Integer, Stream<Integer>> getLineOfSquareNumbers(int increment) {
         return firstItem -> Stream.iterate(firstItem, d -> d + increment)
-                .map(this::getSquare)
-                .limit(gridSize);
+                                    .limit(gridSize);
     }
 }

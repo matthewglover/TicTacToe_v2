@@ -1,44 +1,27 @@
-import java.util.Scanner;
 
 public class Game {
     private Board board = new Board();
     private Player currentPlayer = Player.X;
-    private ConsoleRenderer renderer;
-
-    public static void main(String[] args) {
-        ConsoleRenderer renderer = new ConsoleRenderer(System.out);
-        new Game(renderer);
-    }
-
-    public Game(ConsoleRenderer renderer) {
-        this.renderer = renderer;
-//        renderer.promptForMove(currentPlayer, board);
-    }
 
     public Board getBoard() {
         return board;
     }
 
-    public void move(int position) {
-        if (!board.isEmptySquare(position)) {
-            return;
+    public void move(int squareNumber) {
+        if (board.isEmptySquare(squareNumber)) {
+            board.setSquare(squareNumber, getCurrentPlayer());
+            toggleCurrentPlayer();
         }
-        board.setSquare(position, getCurrentPlayer());
-        toggleCurrentPlayer();
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    private void toggleCurrentPlayer() {
-        currentPlayer = (currentPlayer == Player.X) ? Player.O : Player.X;
-    }
-
     public Player getWinner() {
-        if (board.isWinningLine(Player.X)) {
+        if (board.isAnyWinningLine(Player.X)) {
             return Player.X;
-        } else if (board.isWinningLine(Player.O)) {
+        } else if (board.isAnyWinningLine(Player.O)) {
             return Player.O;
         }
         return Player.NEITHER;
@@ -50,5 +33,9 @@ public class Game {
 
     public boolean isOver() {
         return isWinner() || board.isFull();
+    }
+
+    private void toggleCurrentPlayer() {
+        currentPlayer = (currentPlayer == Player.X) ? Player.O : Player.X;
     }
 }
