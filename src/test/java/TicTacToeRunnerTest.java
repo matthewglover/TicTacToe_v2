@@ -1,4 +1,3 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -43,11 +42,10 @@ public class TicTacToeRunnerTest {
     private class TestUI implements GameUI {
         private final int[] moves;
         private final boolean playAgain;
-        private int crntMove;
-        public int promptForMoveCallCount = 0;
-        public int reportDrawCallCount = 0;
-        public int reportMoveErrorCallCount = 0;
-        public int reportWinnerCallCount = 0;
+        private int currentMove;
+        public int promptForMoveCallCount;
+        public int reportDrawCallCount;
+        public int reportWinnerCallCount;
         public Player lastPlayerPromptedForMove;
         public int promptPlayAgainCount;
 
@@ -58,15 +56,11 @@ public class TicTacToeRunnerTest {
         public int promptForMove(Player player, BoardReader board) {
             promptForMoveCallCount += 1;
             lastPlayerPromptedForMove = player;
-            return moves[crntMove++];
+            return moves[currentMove++];
         }
 
         public void reportDraw() {
             reportDrawCallCount = 1;
-        }
-
-        public void reportMoveError() {
-            reportMoveErrorCallCount = 1;
         }
 
         public void reportWinner(Player player) {

@@ -1,4 +1,3 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -71,13 +70,6 @@ public class ConsoleUITest {
         ConsoleUI UI = buildUIWithInput("");
         UI.reportWinner(Player.X);
         assertEquals("X Wins!!", outContent.toString());
-    }
-
-    @Test
-    public void reportsInputError() {
-        ConsoleUI UI = buildUIWithInput("");
-        UI.reportMoveError();
-        assertEquals("Oops, that square is already taken. Try again: ", outContent.toString());
     }
 
     @Test

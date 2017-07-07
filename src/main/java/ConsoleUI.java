@@ -29,10 +29,6 @@ public class ConsoleUI implements GameUI {
         output.print(String.format("%s Wins!!", player.toString()));
     }
 
-    public void reportMoveError() {
-        output.print("Oops, that square is already taken. Try again: ");
-    }
-
     public boolean promptPlayAgain() {
         output.print("Type <N> for a new game or any other key to exit: ");
         return getPlayAgain();
@@ -43,7 +39,7 @@ public class ConsoleUI implements GameUI {
         if (isValidBoardMove(input, board)) {
             return Integer.parseInt(input);
         }
-        output.println("\nOops, invalid input. Try again: ");
+        output.print("\nOops, invalid input. Try again: ");
         return getBoardMove(board);
     }
 
