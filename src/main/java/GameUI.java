@@ -3,4 +3,5 @@ public interface GameUI {
     void reportDraw();
     void reportWinner(Player player);
     void reportMoveError();
+    boolean promptPlayAgain();
 }

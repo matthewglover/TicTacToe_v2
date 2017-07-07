@@ -33,6 +33,11 @@ public class ConsoleUI implements GameUI {
         output.print("Oops, that square is already taken. Try again: ");
     }
 
+    public boolean promptPlayAgain() {
+        output.print("Type <N> for a new game or any other key to exit: ");
+        return getPlayAgain();
+    }
+
     private int getBoardMove(BoardReader board) {
         String input = scanner.nextLine();
         if (isValidBoardMove(input, board)) {
@@ -40,6 +45,11 @@ public class ConsoleUI implements GameUI {
         }
         output.println("\nOops, invalid input. Try again: ");
         return getBoardMove(board);
+    }
+
+    private boolean getPlayAgain() {
+        String input = scanner.nextLine();
+        return input.equals("N");
     }
 
     private boolean isValidBoardMove(String input, BoardReader board) {

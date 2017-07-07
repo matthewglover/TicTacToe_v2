@@ -1,3 +1,4 @@
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -77,6 +78,25 @@ public class ConsoleUITest {
         ConsoleUI UI = buildUIWithInput("");
         UI.reportMoveError();
         assertEquals("Oops, that square is already taken. Try again: ", outContent.toString());
+    }
+
+    @Test
+    public void promptUserToPlayAgainPrintsMessage() {
+        ConsoleUI UI = buildUIWithInput("N");
+        UI.promptPlayAgain();
+        assertEquals("Type <N> for a new game or any other key to exit: ", outContent.toString());
+    }
+
+    @Test
+    public void playAgainWhenUserInputIsN() {
+        ConsoleUI UI = buildUIWithInput("N\n");
+        assertTrue(UI.promptPlayAgain());
+    }
+
+    @Test
+    public void dontPlayAgainWhenUserInputIsNotN() {
+        ConsoleUI UI = buildUIWithInput("Other\n");
+        assertFalse(UI.promptPlayAgain());
     }
 
     private void assertLinesEqual(String[] expected) {
