@@ -3,7 +3,7 @@ import java.util.stream.Stream;
 
 import static java.util.Arrays.*;
 
-public class Board {
+public class Board implements BoardReader {
 
     private int gridSize = 3;
     private Player[] grid;

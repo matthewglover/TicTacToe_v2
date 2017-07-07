@@ -15,7 +15,7 @@ public class ConsoleUI implements GameUI {
         this.scanner = new Scanner(in);
     }
 
-    public int promptForMove(Player player, Board board) {
+    public int promptForMove(Player player, BoardReader board) {
         output.println(formatBoard(board));
         output.print(formatPlayerPrompt(player));
         return getBoardMove(board);
@@ -33,7 +33,7 @@ public class ConsoleUI implements GameUI {
         output.print("Oops, that square is already taken. Try again: ");
     }
 
-    private int getBoardMove(Board board) {
+    private int getBoardMove(BoardReader board) {
         String input = scanner.nextLine();
         if (isValidBoardMove(input, board)) {
             return Integer.parseInt(input);
@@ -42,7 +42,7 @@ public class ConsoleUI implements GameUI {
         return getBoardMove(board);
     }
 
-    private boolean isValidBoardMove(String input, Board board) {
+    private boolean isValidBoardMove(String input, BoardReader board) {
         if (!input.matches("^\\d+$")) {
             return false;
         }
@@ -50,7 +50,7 @@ public class ConsoleUI implements GameUI {
         return isMoveInBounds(move, board) && board.isEmptySquare(move);
     }
 
-    private boolean isMoveInBounds(int move, Board board) {
+    private boolean isMoveInBounds(int move, BoardReader board) {
         return move >= 1 && move <= board.getTotalSquares();
     }
 
@@ -58,24 +58,26 @@ public class ConsoleUI implements GameUI {
         return String.format("Player %s: ", player.toString());
     }
 
-    private String formatBoard(Board board) {
-        return board.getRowsOfSquareNumbers()
-                    .map(rowOfSquareNumbers -> formatRow(rowOfSquareNumbers, board))
-                    .collect(Collectors.joining("\n" + formatRowDivider(board) + "\n"));
+    private String formatBoard(BoardReader board) {
+        return board
+                .getRowsOfSquareNumbers()
+                .map(rowOfSquareNumbers -> formatRow(rowOfSquareNumbers, board))
+                .collect(Collectors.joining("\n" + formatRowDivider(board) + "\n"));
     }
 
-    private String formatRow(Stream<Integer> rowOfSquareNumbers, Board board) {
-        return rowOfSquareNumbers.map(squareNumber -> formatSquare(squareNumber, board))
-                            .collect(Collectors.joining("|"));
+    private String formatRow(Stream<Integer> rowOfSquareNumbers, BoardReader board) {
+        return rowOfSquareNumbers
+                .map(squareNumber -> formatSquare(squareNumber, board))
+                .collect(Collectors.joining("|"));
     }
 
-    private String formatSquare(Integer squareNumber, Board board) {
+    private String formatSquare(Integer squareNumber, BoardReader board) {
         Player square = board.getSquare(squareNumber);
         String squareString = (square.isEmpty()) ? squareNumber.toString() : square.toString();
         return String.format(" %s ", squareString);
     }
 
-    private String formatRowDivider(Board board) {
+    private String formatRowDivider(BoardReader board) {
         return String.join(" ", Collections.nCopies(board.getGridSize(), "---"));
     }
 }

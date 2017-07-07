@@ -3,7 +3,7 @@ public class Game {
     private Board board = new Board();
     private Player currentPlayer = Player.X;
 
-    public Board getBoard() {
+    public BoardReader getBoard() {
         return board;
     }
 

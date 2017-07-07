@@ -31,7 +31,7 @@ public class TicTacToeRunnerTest {
         public TestUI(int[] moves) {
             this.moves = moves;
         }
-        public int promptForMove(Player player, Board board) {
+        public int promptForMove(Player player, BoardReader board) {
             promptForMoveCallCount += 1;
             lastPlayerPromptedForMove = player;
             return moves[crntMove++];

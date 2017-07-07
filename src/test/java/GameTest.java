@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 public class GameTest {
 
     private Game game = new Game();
-    private Board board = game.getBoard();
+    private BoardReader board = game.getBoard();
 
     @Test
     public void xMovesFirst() {
