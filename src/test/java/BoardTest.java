@@ -94,6 +94,53 @@ public class BoardTest {
         assertTrue(board.isAnyWinningLine(Player.X));
     }
 
+    @Test
+    public void boardSizeCanBeSelected() {
+        board = new Board(4);
+        assertEquals(4, board.getGridSize());
+        assertEquals(16, board.getTotalSquares());
+    }
+
+    @Test
+    public void winningLineWhenWinningRowFor4x4Board() {
+        board = new Board(4);
+        board.setSquare(1, Player.X);
+        board.setSquare(2, Player.X);
+        board.setSquare(3, Player.X);
+        board.setSquare(4, Player.X);
+        assertTrue(board.isAnyWinningLine(Player.X));
+    }
+
+    @Test
+    public void winningLineWhenWinningColumnFor4x4Board() {
+        board = new Board(4);
+        board.setSquare(1, Player.X);
+        board.setSquare(5, Player.X);
+        board.setSquare(9, Player.X);
+        board.setSquare(13, Player.X);
+        assertTrue(board.isAnyWinningLine(Player.X));
+    }
+
+    @Test
+    public void winningLineWhenWinningDiagonalTopLeftFor4x4Board() {
+        board = new Board(4);
+        board.setSquare(1, Player.X);
+        board.setSquare(6, Player.X);
+        board.setSquare(11, Player.X);
+        board.setSquare(16, Player.X);
+        assertTrue(board.isAnyWinningLine(Player.X));
+    }
+
+    @Test
+    public void winningLineWhenWinningDiagonalTopRightFor4x4Board() {
+        board = new Board(4);
+        board.setSquare(4, Player.X);
+        board.setSquare(7, Player.X);
+        board.setSquare(10, Player.X);
+        board.setSquare(13, Player.X);
+        assertTrue(board.isAnyWinningLine(Player.X));
+    }
+
     private void fillBoard() {
         for (int squareNumber = 1; squareNumber <= 9; squareNumber++) {
             board.setSquare( squareNumber, Player.X);
