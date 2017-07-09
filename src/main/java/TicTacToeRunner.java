@@ -9,7 +9,12 @@ public class TicTacToeRunner {
 
     public TicTacToeRunner(GameUI UI) {
        this.UI = UI;
-       startNewGame();
+       promptForGameOptions();
+    }
+
+    private void promptForGameOptions() {
+        int boardSize = UI.promptForBoardSize();
+        startNewGame(boardSize);
     }
 
     private void promptForNextMove() {
@@ -27,12 +32,12 @@ public class TicTacToeRunner {
 
     private void checkPlayAgain() {
         if (UI.promptPlayAgain()) {
-            startNewGame();
+            promptForGameOptions();
         }
     }
 
-    private void startNewGame() {
-        game = new Game();
+    private void startNewGame(int boardSize) {
+        game = new Game(boardSize);
         promptForNextMove();
     }
 

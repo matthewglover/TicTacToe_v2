@@ -97,7 +97,7 @@ public class BoardTest {
     @Test
     public void boardSizeCanBeSelected() {
         board = new Board(4);
-        assertEquals(4, board.getGridSize());
+        assertEquals(4, board.getSize());
         assertEquals(16, board.getTotalSquares());
     }
 

@@ -7,31 +7,48 @@ import java.util.stream.Stream;
 
 public class ConsoleUI implements GameUI {
 
-    private PrintStream output;
+    private PrintStream out;
     private Scanner scanner;
+    private static final int FIRST_SQUARE_NUMBER = 1;
+    private static final int MIN_BOARD_SIZE = 3;
+    private static final int MAX_BOARD_SIZE = 4;
 
-    public ConsoleUI(InputStream in, PrintStream output) {
-        this.output = output;
+    public ConsoleUI(InputStream in, PrintStream out) {
+        this.out = out;
         this.scanner = new Scanner(in);
     }
 
     public int promptForMove(Player player, BoardReader board) {
-        output.println(formatBoard(board));
-        output.print(formatPlayerPrompt(player));
+        out.println(formatBoard(board));
+        out.print(formatPlayerPrompt(player));
         return getBoardMove(board);
     }
 
     public void reportDraw() {
-        output.print("It's a draw!");
+        out.print("It's a draw!");
     }
 
     public void reportWinner(Player player) {
-        output.print(String.format("%s Wins!!", player.toString()));
+        out.print(String.format("%s Wins!!", player.toString()));
     }
 
     public boolean promptPlayAgain() {
-        output.print("Type <N> for a new game or any other key to exit: ");
+        out.print("Type <N> for a new game or any other key to exit: ");
         return getPlayAgain();
+    }
+
+    public int promptForBoardSize() {
+        out.print("Select board size: ");
+        return getBoardSize();
+    }
+
+    private int getBoardSize() {
+        String input = scanner.nextLine();
+        if (isValidBoardSize(input)) {
+            return Integer.parseInt(input);
+        }
+        out.print("\nOops, invalid input. Try again: ");
+        return getBoardSize();
     }
 
     private int getBoardMove(BoardReader board) {
@@ -39,7 +56,7 @@ public class ConsoleUI implements GameUI {
         if (isValidBoardMove(input, board)) {
             return Integer.parseInt(input);
         }
-        output.print("\nOops, invalid input. Try again: ");
+        out.print("\nOops, invalid input. Try again: ");
         return getBoardMove(board);
     }
 
@@ -56,8 +73,20 @@ public class ConsoleUI implements GameUI {
         return isMoveInBounds(move, board) && board.isEmptySquare(move);
     }
 
+    private boolean isValidBoardSize(String input) {
+        if(!input.matches("^\\d+$")) {
+            return false;
+        }
+        int boardSize = Integer.parseInt(input);
+        return isBoardSizeInBounds(boardSize);
+    }
+
     private boolean isMoveInBounds(int move, BoardReader board) {
-        return move >= 1 && move <= board.getTotalSquares();
+        return move >= FIRST_SQUARE_NUMBER && move <= board.getTotalSquares();
+    }
+
+    private boolean isBoardSizeInBounds(int boardSize) {
+        return boardSize >= MIN_BOARD_SIZE && boardSize <= MAX_BOARD_SIZE;
     }
 
     private String formatPlayerPrompt(Player player) {
@@ -79,11 +108,21 @@ public class ConsoleUI implements GameUI {
 
     private String formatSquare(Integer squareNumber, BoardReader board) {
         Player square = board.getSquare(squareNumber);
-        String squareString = (square.isEmpty()) ? squareNumber.toString() : square.toString();
-        return String.format(" %s ", squareString);
+        String squareString = getSquareString(square, squareNumber);
+        String leftPad = getLeftPad(squareString, board);
+        return String.format(" %s ", leftPad + squareString);
+    }
+
+    private String getSquareString(Player square, int squareNumber) {
+       return (square.isEmpty()) ? Integer.toString(squareNumber) : square.toString();
+    }
+
+    private String getLeftPad(String squareString, BoardReader board) {
+       return (board.getTotalSquares() > 9 && squareString.length() == 1) ? " " : "";
     }
 
     private String formatRowDivider(BoardReader board) {
-        return String.join(" ", Collections.nCopies(board.getGridSize(), "---"));
+        String squareDivider = (board.getTotalSquares() < 10) ? "---" : "----";
+        return String.join(" ", Collections.nCopies(board.getSize(), squareDivider));
     }
 }

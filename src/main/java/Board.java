@@ -5,7 +5,7 @@ import static java.util.Arrays.*;
 
 public class Board implements BoardReader {
 
-    private int gridSize;
+    private int size;
     private Player[] grid;
 
     public Board() {
@@ -35,20 +35,20 @@ public class Board implements BoardReader {
         return getLines().anyMatch(line -> isWinningLine(line, player));
     }
 
-    public int getGridSize() {
-        return gridSize;
+    public int getSize() {
+        return size;
     }
 
     public int getTotalSquares() {
-        return gridSize * gridSize;
+        return size * size;
     }
 
     public Stream<Stream<Integer>> getRowsOfSquareNumbers() {
-        return getGroupOfLinesOfSquareNumbers(gridSize, 1);
+        return getGroupOfLinesOfSquareNumbers(size, 1);
     }
 
     private void setup(int size) {
-        gridSize = size;
+        this.size = size;
         grid = new Player[getTotalSquares()];
         fill(grid, Player.NEITHER);
     }
@@ -67,7 +67,7 @@ public class Board implements BoardReader {
     }
 
     private Stream<Stream<Player>> getColumns() {
-        return getGroupOfLinesOfSquareNumbers(1, gridSize)
+        return getGroupOfLinesOfSquareNumbers(1, size)
                     .map(line -> line.map(this::getSquare));
     }
 
@@ -76,11 +76,11 @@ public class Board implements BoardReader {
     }
 
     private Stream<Player> getDiagonalTopLeft() {
-        return getDiagonal(1, gridSize + 1);
+        return getDiagonal(1, size + 1);
     }
 
     private Stream<Player> getDiagonalTopRight() {
-        return getDiagonal(gridSize, gridSize - 1);
+        return getDiagonal(size, size - 1);
     }
 
     private Stream<Player> getDiagonal(int startSquare, int squareIncrementer) {
@@ -90,13 +90,13 @@ public class Board implements BoardReader {
     private Stream<Stream<Integer>> getGroupOfLinesOfSquareNumbers(int lineIncrementer, int squareIncrementer) {
         return Stream
                 .iterate(1, d -> d + lineIncrementer)
-                .limit(gridSize)
+                .limit(size)
                 .map(getLineOfSquareNumbers(squareIncrementer));
     }
 
     private Function<Integer, Stream<Integer>> getLineOfSquareNumbers(int increment) {
         return firstItem -> Stream
                                 .iterate(firstItem, d -> d + increment)
-                                .limit(gridSize);
+                                .limit(size);
     }
 }

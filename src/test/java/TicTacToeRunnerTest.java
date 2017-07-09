@@ -1,3 +1,4 @@
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7,13 +8,19 @@ public class TicTacToeRunnerTest {
     TestUI testUI;
 
     @Test
-    public void runsFirstGameAndReportsWinner() {
+    public void requestsBoardSizeOnStartGame() {
+        createAppRunner(new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+        assertEquals(1, testUI.promptForBoardSizeCalled);
+    }
+
+    @Test
+    public void reportsWinner() {
         createAppRunner(new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
         assertEquals(1, testUI.reportWinnerCallCount);
     }
 
     @Test
-    public void ifDrawReportsDraw() {
+    public void reportsDraw() {
         createAppRunner(new int[]{ 1, 2, 3, 5, 4, 7, 8, 9, 6 });
         assertEquals(1, testUI.reportDrawCallCount);
     }
@@ -48,6 +55,7 @@ public class TicTacToeRunnerTest {
         public int reportWinnerCallCount;
         public Player lastPlayerPromptedForMove;
         public int promptPlayAgainCount;
+        public int promptForBoardSizeCalled;
 
         public TestUI(int[] moves, boolean playAgain) {
             this.moves = moves;
@@ -70,6 +78,11 @@ public class TicTacToeRunnerTest {
         public boolean promptPlayAgain() {
             promptPlayAgainCount++;
             return playAgain && promptPlayAgainCount < 2;
+        }
+
+        public int promptForBoardSize() {
+            promptForBoardSizeCalled++;
+            return 3;
         }
     }
 }

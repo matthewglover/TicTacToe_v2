@@ -5,7 +5,7 @@ public interface BoardReader {
     boolean isEmptySquare(int squareNumber);
     boolean isFull();
     boolean isAnyWinningLine(Player player);
-    int getGridSize();
+    int getSize();
     int getTotalSquares();
     Stream<Stream<Integer>> getRowsOfSquareNumbers();
 }

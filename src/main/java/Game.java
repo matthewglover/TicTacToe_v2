@@ -1,7 +1,15 @@
 
 public class Game {
-    private Board board = new Board();
+    private Board board;
     private Player currentPlayer = Player.X;
+
+    public Game() {
+        buildBoard(3);
+    }
+
+    public Game(int boardSize) {
+        buildBoard(boardSize);
+    }
 
     public BoardReader getBoard() {
         return board;
@@ -37,5 +45,9 @@ public class Game {
 
     private void toggleCurrentPlayer() {
         currentPlayer = (currentPlayer == Player.X) ? Player.O : Player.X;
+    }
+
+    private void buildBoard(int boardSize) {
+        board = new Board(boardSize);
     }
 }
