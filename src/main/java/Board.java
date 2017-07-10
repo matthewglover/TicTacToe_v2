@@ -9,7 +9,7 @@ public class Board implements BoardReader {
     private Player[] grid;
 
     public Board() {
-        setup(3);
+        setup(MIN_SIZE);
     }
 
     public Board(int size) {

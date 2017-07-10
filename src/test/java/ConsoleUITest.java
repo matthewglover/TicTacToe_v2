@@ -1,4 +1,3 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -15,21 +14,21 @@ public class ConsoleUITest {
     @Test
     public void promptForBoardSizePrints() {
         buildUIWithInput("3");
-        UI.promptForBoardSize();
+        UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_BOARD_SIZE);
         assertEquals(UIMessages.SELECT_BOARD_SIZE_PROMPT, outContent.toString());
     }
 
     @Test
     public void promptForBoardSizeReturnsSize() {
         buildUIWithInput("3");
-        int boardSize = UI.promptForBoardSize();
+        int boardSize = UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_BOARD_SIZE);
         assertEquals(3, boardSize);
     }
 
     @Test
     public void promptForBoardSizeReportsInputErrorWhenOutOfBoundsBoardSize() {
         buildUIWithInput("5\n4\n");
-        int boardSize = UI.promptForBoardSize();
+        int boardSize = UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_BOARD_SIZE);
         assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
         assertEquals(4, boardSize);
     }
@@ -37,7 +36,7 @@ public class ConsoleUITest {
     @Test
     public void promptForBoardSizeReportsInputErrorWhenNonIntegerInput() {
         buildUIWithInput("invalid input\n4\n");
-        int boardSize = UI.promptForBoardSize();
+        int boardSize = UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_BOARD_SIZE);
         assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
         assertEquals(4, boardSize);
     }

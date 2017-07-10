@@ -8,4 +8,7 @@ public interface BoardReader {
     int getSize();
     int getTotalSquares();
     Stream<Stream<Integer>> getRowsOfSquareNumbers();
+    int FIRST_SQUARE_NUMBER = 1;
+    int MIN_SIZE = 3;
+    int MAX_BOARD_SIZE = 4;
 }

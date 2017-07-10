@@ -1,10 +1,9 @@
-
 public class Game {
     private Board board;
     private Player currentPlayer = Player.X;
 
     public Game() {
-        buildBoard(3);
+        buildBoard(Board.MIN_SIZE);
     }
 
     public Game(int boardSize) {

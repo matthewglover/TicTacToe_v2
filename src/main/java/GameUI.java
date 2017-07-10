@@ -3,5 +3,5 @@ public interface GameUI {
     void reportDraw();
     void reportWinner(Player player);
     boolean promptPlayAgain();
-    int promptForBoardSize();
+    int promptForBoardSize(int minBoardSize, int maxBoardSize);
 }

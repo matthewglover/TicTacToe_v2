@@ -1,4 +1,3 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -80,7 +79,7 @@ public class TicTacToeRunnerTest {
             return playAgain && promptPlayAgainCount < 2;
         }
 
-        public int promptForBoardSize() {
+        public int promptForBoardSize(int minBoardSize, int maxBoardSize) {
             promptForBoardSizeCalled++;
             return 3;
         }

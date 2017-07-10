@@ -13,7 +13,7 @@ public class TicTacToeRunner {
     }
 
     private void promptForGameOptions() {
-        int boardSize = UI.promptForBoardSize();
+        int boardSize = UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_BOARD_SIZE);
         startNewGame(boardSize);
     }
 

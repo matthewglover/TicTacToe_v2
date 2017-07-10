@@ -6,9 +6,6 @@ public class ConsoleUI implements GameUI {
 
     private PrintStream out;
     private Scanner scanner;
-    private static final int FIRST_SQUARE_NUMBER = 1;
-    private static final int MIN_BOARD_SIZE = 3;
-    private static final int MAX_BOARD_SIZE = 4;
 
     public ConsoleUI(InputStream in, PrintStream out) {
         this.out = out;
@@ -35,18 +32,19 @@ public class ConsoleUI implements GameUI {
         return getPlayAgain();
     }
 
-    public int promptForBoardSize() {
+    public int promptForBoardSize(int minBoardSize, int maxBoardSize) {
         out.print(UIMessages.SELECT_BOARD_SIZE_PROMPT);
-        return getBoardSize();
+
+        return getBoardSize(minBoardSize, maxBoardSize);
     }
 
-    private int getBoardSize() {
+    private int getBoardSize(int minBoardSize, int maxBoardSize) {
         String input = scanner.nextLine();
-        if (isValidBoardSize(input)) {
+        if (isValidBoardSize(input, minBoardSize, maxBoardSize)) {
             return Integer.parseInt(input);
         }
         promptInvalidInput();
-        return getBoardSize();
+        return getBoardSize(minBoardSize, maxBoardSize);
     }
 
     private int getBoardMove(BoardReader board) {
@@ -75,20 +73,20 @@ public class ConsoleUI implements GameUI {
         return isMoveInBounds(move, board) && board.isEmptySquare(move);
     }
 
-    private boolean isValidBoardSize(String input) {
+    private boolean isValidBoardSize(String input, int minBoardSize, int maxBoardSize) {
         if(!input.matches("^\\d+$")) {
             return false;
         }
         int boardSize = Integer.parseInt(input);
-        return isBoardSizeInBounds(boardSize);
+        return isBoardSizeInBounds(boardSize, minBoardSize, maxBoardSize);
     }
 
     private boolean isMoveInBounds(int move, BoardReader board) {
-        return move >= FIRST_SQUARE_NUMBER && move <= board.getTotalSquares();
+        return move >= board.FIRST_SQUARE_NUMBER && move <= board.getTotalSquares();
     }
 
-    private boolean isBoardSizeInBounds(int boardSize) {
-        return boardSize >= MIN_BOARD_SIZE && boardSize <= MAX_BOARD_SIZE;
+    private boolean isBoardSizeInBounds(int boardSize, int minBoardSize, int maxBoardSize) {
+        return boardSize >= minBoardSize && boardSize <= maxBoardSize;
     }
 
     private String formatPlayerPrompt(Player player) {
