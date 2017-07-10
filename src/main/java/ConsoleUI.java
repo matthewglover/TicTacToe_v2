@@ -1,7 +1,6 @@
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.Collections; import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,20 +24,20 @@ public class ConsoleUI implements GameUI {
     }
 
     public void reportDraw() {
-        out.print("It's a draw!");
+        out.print(UIMessages.GAME_DRAWN);
     }
 
     public void reportWinner(Player player) {
-        out.print(String.format("%s Wins!!", player.toString()));
+        out.print(String.format(UIMessages.GAME_WON, player.toString()));
     }
 
     public boolean promptPlayAgain() {
-        out.print("Type <N> for a new game or any other key to exit: ");
+        out.print(UIMessages.NEW_GAME_PROMPT);
         return getPlayAgain();
     }
 
     public int promptForBoardSize() {
-        out.print("Select board size: ");
+        out.print(UIMessages.SELECT_BOARD_SIZE_PROMPT);
         return getBoardSize();
     }
 
@@ -47,7 +46,7 @@ public class ConsoleUI implements GameUI {
         if (isValidBoardSize(input)) {
             return Integer.parseInt(input);
         }
-        out.print("\nOops, invalid input. Try again: ");
+        promptInvalidInput();
         return getBoardSize();
     }
 
@@ -56,13 +55,17 @@ public class ConsoleUI implements GameUI {
         if (isValidBoardMove(input, board)) {
             return Integer.parseInt(input);
         }
-        out.print("\nOops, invalid input. Try again: ");
+        promptInvalidInput();
         return getBoardMove(board);
+    }
+
+    private void promptInvalidInput() {
+        out.print("\n" + UIMessages.INVALID_INPUT_PROMPT);
     }
 
     private boolean getPlayAgain() {
         String input = scanner.nextLine();
-        return input.equals("N");
+        return input.equals(UIMessages.DONT_PLAY_AGAIN_INPUT);
     }
 
     private boolean isValidBoardMove(String input, BoardReader board) {
@@ -90,7 +93,7 @@ public class ConsoleUI implements GameUI {
     }
 
     private String formatPlayerPrompt(Player player) {
-        return String.format("Player %s: ", player.toString());
+        return String.format(UIMessages.PLAYER_MOVE_PROMPT, player.toString());
     }
 
     private String formatBoard(BoardReader board) {

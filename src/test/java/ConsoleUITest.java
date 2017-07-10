@@ -16,7 +16,7 @@ public class ConsoleUITest {
     public void promptForBoardSizePrints() {
         buildUIWithInput("3");
         UI.promptForBoardSize();
-        assertEquals("Select board size: ", outContent.toString());
+        assertEquals(UIMessages.SELECT_BOARD_SIZE_PROMPT, outContent.toString());
     }
 
     @Test
@@ -27,10 +27,18 @@ public class ConsoleUITest {
     }
 
     @Test
-    public void promptForBoardSizeReportsInputError() {
+    public void promptForBoardSizeReportsInputErrorWhenOutOfBoundsBoardSize() {
         buildUIWithInput("5\n4\n");
         int boardSize = UI.promptForBoardSize();
-        assertEquals("Oops, invalid input. Try again: ", getLastLineOfOutput());
+        assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
+        assertEquals(4, boardSize);
+    }
+
+    @Test
+    public void promptForBoardSizeReportsInputErrorWhenNonIntegerInput() {
+        buildUIWithInput("invalid input\n4\n");
+        int boardSize = UI.promptForBoardSize();
+        assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
         assertEquals(4, boardSize);
     }
 
@@ -82,14 +90,14 @@ public class ConsoleUITest {
     public void nonIntegerReportsInputError() {
         buildUIWithInput("INVALID_INPUT\n1");
         UI.promptForMove(Player.X, board);
-        assertEquals("Oops, invalid input. Try again: ", getLastLineOfOutput());
+        assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
     }
 
     @Test
     public void outOfBoundsMoveReportsInputError() {
         buildUIWithInput("10\n1");
         UI.promptForMove(Player.X, board);
-        assertEquals("Oops, invalid input. Try again: ", getLastLineOfOutput());
+        assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
     }
 
     @Test
@@ -97,14 +105,14 @@ public class ConsoleUITest {
         board.setSquare(1, Player.O);
         buildUIWithInput("1\n2");
         UI.promptForMove(Player.X, board);
-        assertEquals("Oops, invalid input. Try again: ", getLastLineOfOutput());
+        assertEquals(UIMessages.INVALID_INPUT_PROMPT, getLastLineOfOutput());
     }
 
     @Test
     public void reportsDraw() {
         buildUIWithInput("");
         UI.reportDraw();
-        assertEquals("It's a draw!", outContent.toString());
+        assertEquals(UIMessages.GAME_DRAWN, outContent.toString());
     }
 
     @Test
@@ -116,14 +124,14 @@ public class ConsoleUITest {
 
     @Test
     public void promptUserToPlayAgainPrintsMessage() {
-        buildUIWithInput("N");
+        buildUIWithInput(UIMessages.DONT_PLAY_AGAIN_INPUT + "\n");
         UI.promptPlayAgain();
-        assertEquals("Type <N> for a new game or any other key to exit: ", outContent.toString());
+        assertEquals(UIMessages.NEW_GAME_PROMPT, outContent.toString());
     }
 
     @Test
     public void playAgainWhenUserInputIsN() {
-        buildUIWithInput("N\n");
+        buildUIWithInput(UIMessages.DONT_PLAY_AGAIN_INPUT + "\n");
         assertTrue(UI.promptPlayAgain());
     }
 
