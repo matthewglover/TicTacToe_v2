@@ -1,8 +1,6 @@
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Collections; import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Scanner;
 
 public class ConsoleUI implements GameUI {
 
@@ -18,7 +16,8 @@ public class ConsoleUI implements GameUI {
     }
 
     public int promptForMove(Player player, BoardReader board) {
-        out.println(formatBoard(board));
+        BoardFormatter boardFormatter = new BoardFormatter(board);
+        out.println(boardFormatter.format());
         out.print(formatPlayerPrompt(player));
         return getBoardMove(board);
     }
@@ -94,38 +93,5 @@ public class ConsoleUI implements GameUI {
 
     private String formatPlayerPrompt(Player player) {
         return String.format(UIMessages.PLAYER_MOVE_PROMPT, player.toString());
-    }
-
-    private String formatBoard(BoardReader board) {
-        return board
-                .getRowsOfSquareNumbers()
-                .map(rowOfSquareNumbers -> formatRow(rowOfSquareNumbers, board))
-                .collect(Collectors.joining("\n" + formatRowDivider(board) + "\n"));
-    }
-
-    private String formatRow(Stream<Integer> rowOfSquareNumbers, BoardReader board) {
-        return rowOfSquareNumbers
-                .map(squareNumber -> formatSquare(squareNumber, board))
-                .collect(Collectors.joining("|"));
-    }
-
-    private String formatSquare(Integer squareNumber, BoardReader board) {
-        Player square = board.getSquare(squareNumber);
-        String squareString = getSquareString(square, squareNumber);
-        String leftPad = getLeftPad(squareString, board);
-        return String.format(" %s ", leftPad + squareString);
-    }
-
-    private String getSquareString(Player square, int squareNumber) {
-       return (square.isEmpty()) ? Integer.toString(squareNumber) : square.toString();
-    }
-
-    private String getLeftPad(String squareString, BoardReader board) {
-       return (board.getTotalSquares() > 9 && squareString.length() == 1) ? " " : "";
-    }
-
-    private String formatRowDivider(BoardReader board) {
-        String squareDivider = (board.getTotalSquares() < 10) ? "---" : "----";
-        return String.join(" ", Collections.nCopies(board.getSize(), squareDivider));
     }
 }
