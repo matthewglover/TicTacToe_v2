@@ -1,6 +1,7 @@
 public interface GameUI {
-    int promptForMove(Player player, BoardReader board);
+    int promptForMove(Player player, Board board);
     void reportDraw();
     void reportWinner(Player player);
     boolean promptPlayAgain();
+    int promptForBoardSize(int minBoardSize, int maxBoardSize);
 }

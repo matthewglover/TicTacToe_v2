@@ -1,54 +1,71 @@
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Collections;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ConsoleUI implements GameUI {
 
-    private PrintStream output;
+    private PrintStream out;
     private Scanner scanner;
 
-    public ConsoleUI(InputStream in, PrintStream output) {
-        this.output = output;
+    public ConsoleUI(InputStream in, PrintStream out) {
+        this.out = out;
         this.scanner = new Scanner(in);
     }
 
-    public int promptForMove(Player player, BoardReader board) {
-        output.println(formatBoard(board));
-        output.print(formatPlayerPrompt(player));
+    public int promptForMove(Player player, Board board) {
+        BoardFormatter boardFormatter = new BoardFormatter(board);
+        out.println(boardFormatter.format());
+        out.print(formatPlayerPrompt(player));
         return getBoardMove(board);
     }
 
     public void reportDraw() {
-        output.print("It's a draw!");
+        out.print(UIMessages.GAME_DRAWN);
     }
 
     public void reportWinner(Player player) {
-        output.print(String.format("%s Wins!!", player.toString()));
+        out.print(String.format(UIMessages.GAME_WON, player.toString()));
     }
 
     public boolean promptPlayAgain() {
-        output.print("Type <N> for a new game or any other key to exit: ");
+        out.print(UIMessages.NEW_GAME_PROMPT);
         return getPlayAgain();
     }
 
-    private int getBoardMove(BoardReader board) {
+    public int promptForBoardSize(int minBoardSize, int maxBoardSize) {
+        out.print(UIMessages.SELECT_BOARD_SIZE_PROMPT);
+
+        return getBoardSize(minBoardSize, maxBoardSize);
+    }
+
+    private int getBoardSize(int minBoardSize, int maxBoardSize) {
+        String input = scanner.nextLine();
+        if (isValidBoardSize(input, minBoardSize, maxBoardSize)) {
+            return Integer.parseInt(input);
+        }
+        promptInvalidInput();
+        return getBoardSize(minBoardSize, maxBoardSize);
+    }
+
+    private int getBoardMove(Board board) {
         String input = scanner.nextLine();
         if (isValidBoardMove(input, board)) {
             return Integer.parseInt(input);
         }
-        output.print("\nOops, invalid input. Try again: ");
+        promptInvalidInput();
         return getBoardMove(board);
+    }
+
+    private void promptInvalidInput() {
+        out.print("\n" + UIMessages.INVALID_INPUT_PROMPT);
     }
 
     private boolean getPlayAgain() {
         String input = scanner.nextLine();
-        return input.equals("N");
+        return input.equals(UIMessages.DONT_PLAY_AGAIN_INPUT);
     }
 
-    private boolean isValidBoardMove(String input, BoardReader board) {
+    private boolean isValidBoardMove(String input, Board board) {
         if (!input.matches("^\\d+$")) {
             return false;
         }
@@ -56,34 +73,23 @@ public class ConsoleUI implements GameUI {
         return isMoveInBounds(move, board) && board.isEmptySquare(move);
     }
 
-    private boolean isMoveInBounds(int move, BoardReader board) {
-        return move >= 1 && move <= board.getTotalSquares();
+    private boolean isValidBoardSize(String input, int minBoardSize, int maxBoardSize) {
+        if(!input.matches("^\\d+$")) {
+            return false;
+        }
+        int boardSize = Integer.parseInt(input);
+        return isBoardSizeInBounds(boardSize, minBoardSize, maxBoardSize);
+    }
+
+    private boolean isMoveInBounds(int move, Board board) {
+        return move >= board.FIRST_SQUARE_NUMBER && move <= board.getTotalSquares();
+    }
+
+    private boolean isBoardSizeInBounds(int boardSize, int minBoardSize, int maxBoardSize) {
+        return boardSize >= minBoardSize && boardSize <= maxBoardSize;
     }
 
     private String formatPlayerPrompt(Player player) {
-        return String.format("Player %s: ", player.toString());
-    }
-
-    private String formatBoard(BoardReader board) {
-        return board
-                .getRowsOfSquareNumbers()
-                .map(rowOfSquareNumbers -> formatRow(rowOfSquareNumbers, board))
-                .collect(Collectors.joining("\n" + formatRowDivider(board) + "\n"));
-    }
-
-    private String formatRow(Stream<Integer> rowOfSquareNumbers, BoardReader board) {
-        return rowOfSquareNumbers
-                .map(squareNumber -> formatSquare(squareNumber, board))
-                .collect(Collectors.joining("|"));
-    }
-
-    private String formatSquare(Integer squareNumber, BoardReader board) {
-        Player square = board.getSquare(squareNumber);
-        String squareString = (square.isEmpty()) ? squareNumber.toString() : square.toString();
-        return String.format(" %s ", squareString);
-    }
-
-    private String formatRowDivider(BoardReader board) {
-        return String.join(" ", Collections.nCopies(board.getGridSize(), "---"));
+        return String.format(UIMessages.PLAYER_MOVE_PROMPT, player.toString());
     }
 }

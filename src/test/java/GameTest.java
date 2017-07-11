@@ -1,11 +1,10 @@
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
 public class GameTest {
 
-    private Game game = new Game();
-    private BoardReader board = game.getBoard();
+    private Game game = new Game(3);
+    private Board board = game.getBoard();
 
     @Test
     public void xMovesFirst() {
@@ -78,5 +77,41 @@ public class GameTest {
         game.move(9);
         game.move(8);
         assertTrue(game.isOver());
+    }
+
+    @Test
+    public void boardSizeCanBeSelected() {
+        game = new Game(4);
+        Board board = game.getBoard();
+        assertEquals(4, board.getSize());
+    }
+
+    @Test
+    public void noWinnerIfLineOf3in4x4Game() {
+        game = new Game(4);
+        game.move(1);
+        game.move(5);
+        game.move(2);
+        game.move(9);
+        game.move(3);
+        game.move(13);
+        game.move(6);
+        game.move(15);
+        game.move(11);
+        assertFalse(game.isWinner());
+    }
+
+    @Test
+    public void winnerIfLineOf4in4x4Game() {
+        game = new Game(4);
+        game.move(1);
+        game.move(5);
+        game.move(2);
+        game.move(9);
+        game.move(3);
+        game.move(13);
+        game.move(4);
+        assertTrue(game.isWinner());
+        assertEquals(Player.X, game.getWinner());
     }
 }
