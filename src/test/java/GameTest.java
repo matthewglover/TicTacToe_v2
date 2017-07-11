@@ -114,4 +114,17 @@ public class GameTest {
         assertTrue(game.isWinner());
         assertEquals(Player.X, game.getWinner());
     }
+
+    @Test
+    public void duplicateHasSameMovesAsOriginal() {
+        game.move(1);
+        game.move(2);
+        game.move(3);
+        Game duplicateGame = game.duplicate();
+        Board duplicateBoard = duplicateGame.getBoard();
+        assertEquals(game.getCurrentPlayer(), duplicateGame.getCurrentPlayer());
+        for (int i = 1; i <= board.getTotalSquares(); i++) {
+            assertEquals(board.getSquare(i), duplicateBoard.getSquare(i));
+        }
+    }
 }

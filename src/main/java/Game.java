@@ -38,6 +38,16 @@ public class Game {
         return isWinner() || board.isFull();
     }
 
+    public Game duplicate() {
+        Game duplicateGame = new Game(board.getSize());
+        Board duplicateBoard = duplicateGame.getBoard();
+        for (int i = Board.FIRST_SQUARE_NUMBER; i <= board.getTotalSquares(); i++) {
+            duplicateBoard.setSquare(i, board.getSquare(i));
+            duplicateGame.toggleCurrentPlayer();
+        }
+        return duplicateGame;
+    }
+    
     private void toggleCurrentPlayer() {
         currentPlayer = (currentPlayer == Player.X) ? Player.O : Player.X;
     }
