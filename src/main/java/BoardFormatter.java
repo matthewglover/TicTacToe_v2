@@ -3,9 +3,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BoardFormatter {
-    private BoardReader board;
+    private Board board;
 
-    public BoardFormatter(BoardReader board) {
+    public BoardFormatter(Board board) {
         this.board = board;
     }
 

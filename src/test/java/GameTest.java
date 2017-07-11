@@ -3,8 +3,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 public class GameTest {
 
-    private Game game = new Game();
-    private BoardReader board = game.getBoard();
+    private Game game = new Game(3);
+    private Board board = game.getBoard();
 
     @Test
     public void xMovesFirst() {
@@ -82,7 +82,7 @@ public class GameTest {
     @Test
     public void boardSizeCanBeSelected() {
         game = new Game(4);
-        BoardReader board = game.getBoard();
+        Board board = game.getBoard();
         assertEquals(4, board.getSize());
     }
 

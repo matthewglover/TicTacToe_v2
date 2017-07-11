@@ -12,7 +12,7 @@ public class ConsoleUI implements GameUI {
         this.scanner = new Scanner(in);
     }
 
-    public int promptForMove(Player player, BoardReader board) {
+    public int promptForMove(Player player, Board board) {
         BoardFormatter boardFormatter = new BoardFormatter(board);
         out.println(boardFormatter.format());
         out.print(formatPlayerPrompt(player));
@@ -47,7 +47,7 @@ public class ConsoleUI implements GameUI {
         return getBoardSize(minBoardSize, maxBoardSize);
     }
 
-    private int getBoardMove(BoardReader board) {
+    private int getBoardMove(Board board) {
         String input = scanner.nextLine();
         if (isValidBoardMove(input, board)) {
             return Integer.parseInt(input);
@@ -65,7 +65,7 @@ public class ConsoleUI implements GameUI {
         return input.equals(UIMessages.DONT_PLAY_AGAIN_INPUT);
     }
 
-    private boolean isValidBoardMove(String input, BoardReader board) {
+    private boolean isValidBoardMove(String input, Board board) {
         if (!input.matches("^\\d+$")) {
             return false;
         }
@@ -81,7 +81,7 @@ public class ConsoleUI implements GameUI {
         return isBoardSizeInBounds(boardSize, minBoardSize, maxBoardSize);
     }
 
-    private boolean isMoveInBounds(int move, BoardReader board) {
+    private boolean isMoveInBounds(int move, Board board) {
         return move >= board.FIRST_SQUARE_NUMBER && move <= board.getTotalSquares();
     }
 

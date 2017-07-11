@@ -3,14 +3,13 @@ import java.util.stream.Stream;
 
 import static java.util.Arrays.*;
 
-public class Board implements BoardReader {
+public class Board {
 
     private int size;
     private Player[] grid;
-
-    public Board() {
-        setup(MIN_SIZE);
-    }
+    public static final int MIN_SIZE = 3;
+    public static final int MAX_SIZE = 4;
+    public static final int FIRST_SQUARE_NUMBER = 1;
 
     public Board(int size) {
         setup(size);
@@ -27,6 +26,7 @@ public class Board implements BoardReader {
     public boolean isEmptySquare(int squareNumber) {
         return getSquare(squareNumber).isEmpty();
     }
+
     public boolean isFull() {
         return stream(grid).allMatch(square -> !square.isEmpty());
     }

@@ -4,41 +4,39 @@ public class TicTacToeRunner {
 
     public static void main(String[] args) {
         GameUI UI = new ConsoleUI(System.in, System.out);
-        new TicTacToeRunner(UI);
+        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(UI);
+        ticTacToeRunner.execute();
     }
 
     public TicTacToeRunner(GameUI UI) {
        this.UI = UI;
-       promptForGameOptions();
     }
 
-    private void promptForGameOptions() {
-        int boardSize = UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_BOARD_SIZE);
+    public void execute() {
+        int boardSize = promptForBoardSize();
         startNewGame(boardSize);
+        runGame();
+        reportGameResult();
+        if (checkPlayAgain()) {
+            execute();
+        };
     }
 
-    private void promptForNextMove() {
-        int squareNumber = UI.promptForMove(game.getCurrentPlayer(), game.getBoard());
-        game.move(squareNumber);
-
-        if (game.isOver()) {
-            reportGameResult();
-            checkPlayAgain();
-        }
-        else {
-            promptForNextMove();
-        }
-    }
-
-    private void checkPlayAgain() {
-        if (UI.promptPlayAgain()) {
-            promptForGameOptions();
-        }
+    private int promptForBoardSize() {
+        return UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_SIZE);
     }
 
     private void startNewGame(int boardSize) {
         game = new Game(boardSize);
-        promptForNextMove();
+    }
+
+    private void runGame() {
+        int squareNumber = UI.promptForMove(game.getCurrentPlayer(), game.getBoard());
+        game.move(squareNumber);
+
+        if (!game.isOver()) {
+            runGame();
+        }
     }
 
     private void reportGameResult() {
@@ -47,5 +45,9 @@ public class TicTacToeRunner {
         } else {
             UI.reportDraw();
         }
+    }
+
+    private boolean checkPlayAgain() {
+        return UI.promptPlayAgain();
     }
 }

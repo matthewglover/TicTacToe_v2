@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 public class BoardTest {
 
-    Board board = new Board();
+    Board board = new Board(3);
 
     @Test
     public void squareIsNeitherXNorOWhenItsEmpty() {

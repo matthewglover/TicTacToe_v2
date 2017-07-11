@@ -2,15 +2,11 @@ public class Game {
     private Board board;
     private Player currentPlayer = Player.X;
 
-    public Game() {
-        buildBoard(Board.MIN_SIZE);
-    }
-
     public Game(int boardSize) {
         buildBoard(boardSize);
     }
 
-    public BoardReader getBoard() {
+    public Board getBoard() {
         return board;
     }
 
