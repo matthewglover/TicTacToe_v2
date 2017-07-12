@@ -1,28 +1,61 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class MiniMaxTest {
+
     @Test
-    public void returnsLastSquareNumberWhenLastMove() {
-        Game game = new Game(3);
-        makeMoves(game, new int[]{1, 5, 3, 2, 8, 4, 6, 9});
-        MiniMax miniMax = new MiniMax(game);
-        assertEquals(7, miniMax.run());
+    public void maximisingPlayerWinningGameScores10() {
+        Game game = makeMoves(new int[]{1, 4, 2, 5, 3});
+        MiniMax miniMax = new MiniMax(game, 0, true);
+        int result = miniMax.run();
+        assertEquals(10, result);
     }
 
     @Test
-    public void returnsWinningSquareNumberWhenTwoEmptySquares() {
-        Game game = new Game(3);
-        makeMoves(game, new int[]{2, 1, 5, 3, 6, 4, 9});
-        MiniMax miniMax = new MiniMax(game);
-        assertEquals(7, miniMax.run());
+    public void minimisingPlayerWinningGameScoresMinus10() {
+        Game game = makeMoves(new int[]{1, 4, 2, 5, 3});
+        MiniMax miniMax = new MiniMax(game, 0, false);
+        int result = miniMax.run();
+        assertEquals(-10, result);
     }
 
-    private void makeMoves(Game game, int[] moves) {
+    @Test
+    public void drawnGameScores0() {
+        Game game = makeMoves(new int[]{1, 4, 2, 5, 6, 3, 7, 8, 9});
+        MiniMax miniMax = new MiniMax(game, 0, false);
+        int result = miniMax.run();
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void maximisingPlayerWinInOneMoveScores9() {
+        Game game = makeMoves(new int[]{1, 3, 2, 5, 7, 6, 9, 8});
+        MiniMax miniMax = new MiniMax(game, 0, false);
+        int result = miniMax.run();
+        assertEquals(9, result);
+    }
+
+    @Test
+    public void minimisingPlayerWinInOneMoveScoresMinus9() {
+        Game game = makeMoves(new int[]{1, 3, 2, 5, 7, 6, 9, 8});
+        MiniMax miniMax = new MiniMax(game, 0, true);
+        int result = miniMax.run();
+        assertEquals(-9, result);
+    }
+
+    @Test
+    public void selectsWinningMoveOverLosingMove() {
+        Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
+        int nextMove = MiniMax.selectMove(game);
+        assertEquals(8, nextMove);
+    }
+
+    private Game makeMoves(int[] moves) {
+        Game game = new Game(3);
         for (int squareNumber : moves) {
             game.move(squareNumber);
         }
+        return game;
     }
 }

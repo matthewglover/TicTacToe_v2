@@ -1,64 +1,76 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MiniMax {
-    private Game game;
 
-    public MiniMax(Game game) {
+    private Game game;
+    private int depth;
+    private boolean isMaximisingPlayer;
+
+    public static int selectMove(Game game) {
+        List<Game> nextGameStates = game.getNextMoves();
+        List<Integer> nextGameStateScores = nextGameStates.stream().map(MiniMax::runMove).collect(Collectors.toList());
+
+        int bestScore = Collections.max(nextGameStateScores);
+        Game bestGameState = nextGameStates.get(nextGameStateScores.indexOf(bestScore));
+
+        return bestGameState.getLastMove();
+    }
+
+    public MiniMax(Game game, int depth, boolean isMaximisingPlayer) {
         this.game = game;
+        this.depth = depth;
+        this.isMaximisingPlayer = isMaximisingPlayer;
     }
 
     public int run() {
-        List<Game> bestGames = getBestGames();
-        return bestGames.get(0).getLastMove();
+        if (game.isOver()) {
+            return getScore();
+        }
+
+        List<Game> allMoves = game.getNextMoves();
+
+        int bestScore = getInitialBestScore();
+
+        for (Game move : allMoves) {
+            MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
+            int moveScore = miniMax.run();
+            bestScore = getBetterScore(bestScore, moveScore);
+        }
+
+        return bestScore;
     }
 
-    private Game runGame(int squareNumber) {
-        Game newGame = game.duplicate();
-        newGame.move(squareNumber);
-        return newGame;
+    private int getInitialBestScore() {
+        return isMaximisingPlayer ? -1000 : 1000;
     }
 
-    private List<Game> getBestGames() {
-        List<Game> allGames = getAllGames();
-        List<Game> winningGames = getWinningGames(allGames);
+    private int getScore() {
+        int baseScore = isMaximisingPlayer ? 10 : -10;
 
-        if (isSingleStrategy(allGames)) {
-            return allGames;
+        if (!game.isWinner()) {
+            return 0;
         }
 
 
-        if (isAnyStrategy(winningGames)) {
-            return winningGames;
+        if (isMaximisingPlayer) {
+            return 10 - depth;
         }
 
-        return null;
+        return baseScore + depth;
     }
 
-    private boolean isSingleStrategy(List<Game> allGames) {
-        return allGames.size() == 1;
+    private int getBetterScore(int bestScore, int moveScore) {
+        if (isMaximisingPlayer) {
+            return Math.max(bestScore, moveScore);
+        } else {
+            return Math.min(bestScore, moveScore);
+        }
     }
 
-    private boolean isAnyStrategy(List<Game> winningGames) {
-        return !winningGames.isEmpty();
-    }
-
-    private List<Game> getAllGames() {
-        List<Integer> emptySquares = game.getEmptySquares();
-        return emptySquares
-                .stream()
-                .map(squareNumber -> runGame(squareNumber))
-                .collect(Collectors.toList());
-    }
-
-    private List<Game> getWinningGames(List<Game> allGames) {
-        return allGames
-                .stream()
-                .filter(this::isWinningStrategy)
-                .collect(Collectors.toList());
-    }
-
-    private boolean isWinningStrategy(Game nextGame) {
-        return nextGame.getWinner() == game.getCurrentPlayer();
+    private static int runMove(Game game) {
+        MiniMax miniMax = new MiniMax(game, 0, true);
+        return miniMax.run();
     }
 }

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
     private Board board;
@@ -13,16 +14,16 @@ public class Game {
         return board;
     }
 
-    public void move(int squareNumber) {
-        if (board.isEmptySquare(squareNumber)) {
-            lastMove = squareNumber;
-            board.setSquare(squareNumber, getCurrentPlayer());
-            toggleCurrentPlayer();
-        }
-    }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public boolean isOver() {
+        return isWinner() || board.isFull();
+    }
+
+    public boolean isWinner() {
+        return !getWinner().isEmpty();
     }
 
     public Player getWinner() {
@@ -34,12 +35,23 @@ public class Game {
         return Player.NEITHER;
     }
 
-    public boolean isWinner() {
-        return !getWinner().isEmpty();
+    public int getLastMove() {
+        return lastMove;
     }
 
-    public boolean isOver() {
-        return isWinner() || board.isFull();
+    public void move(int squareNumber) {
+        if (board.isEmptySquare(squareNumber)) {
+            lastMove = squareNumber;
+            board.setSquare(squareNumber, getCurrentPlayer());
+            toggleCurrentPlayer();
+        }
+    }
+
+    public List<Game> getNextMoves() {
+        return getEmptySquares()
+                .stream()
+                .map(this::getState)
+                .collect(Collectors.toList());
     }
 
     public Game duplicate() {
@@ -52,7 +64,13 @@ public class Game {
         return duplicateGame;
     }
 
-    public List<Integer> getEmptySquares() {
+    private Game getState(int squareNumber) {
+        Game newGame = duplicate();
+        newGame.move(squareNumber);
+        return newGame;
+    }
+
+    private List<Integer> getEmptySquares() {
         return board.getEmptySquares();
     }
 
@@ -62,9 +80,5 @@ public class Game {
 
     private void buildBoard(int boardSize) {
         board = new Board(boardSize);
-    }
-
-    public int getLastMove() {
-        return lastMove;
     }
 }
