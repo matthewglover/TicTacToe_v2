@@ -18,14 +18,6 @@ public class Game {
         return currentPlayer;
     }
 
-    public boolean isOver() {
-        return isWinner() || board.isFull();
-    }
-
-    public boolean isWinner() {
-        return !getWinner().isEmpty();
-    }
-
     public Player getWinner() {
         if (board.isAnyWinningLine(Player.X)) {
             return Player.X;
@@ -39,19 +31,27 @@ public class Game {
         return lastMove;
     }
 
+    public List<Game> getNextMoves() {
+        return getEmptySquares()
+                .stream()
+                .map(this::getState)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isOver() {
+        return isWinner() || board.isFull();
+    }
+
+    public boolean isWinner() {
+        return !getWinner().isEmpty();
+    }
+
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
             lastMove = squareNumber;
             board.setSquare(squareNumber, getCurrentPlayer());
             toggleCurrentPlayer();
         }
-    }
-
-    public List<Game> getNextMoves() {
-        return getEmptySquares()
-                .stream()
-                .map(this::getState)
-                .collect(Collectors.toList());
     }
 
     public Game duplicate() {
