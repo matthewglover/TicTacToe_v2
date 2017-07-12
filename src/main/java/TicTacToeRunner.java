@@ -9,7 +9,7 @@ public class TicTacToeRunner {
     }
 
     public TicTacToeRunner(GameUI UI) {
-       this.UI = UI;
+        this.UI = UI;
     }
 
     public void execute() {
@@ -19,7 +19,8 @@ public class TicTacToeRunner {
         reportGameResult();
         if (checkPlayAgain()) {
             execute();
-        };
+        }
+        ;
     }
 
     private int promptForBoardSize() {

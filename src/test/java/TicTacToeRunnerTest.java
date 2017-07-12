@@ -6,7 +6,7 @@ public class TicTacToeRunnerTest {
 
     @Test
     public void requestsBoardSizeOnStartGame() {
-        TestUI testUI = new TestUI(new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+        TestUI testUI = new TestUI(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
         TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(testUI);
         ticTacToeRunner.execute();
         assertEquals(1, testUI.promptForBoardSizeCalled);
@@ -14,7 +14,7 @@ public class TicTacToeRunnerTest {
 
     @Test
     public void reportsWinner() {
-        TestUI testUI = new TestUI(new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+        TestUI testUI = new TestUI(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
         TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(testUI);
         ticTacToeRunner.execute();
         assertEquals(1, testUI.reportWinnerCallCount);
@@ -22,7 +22,7 @@ public class TicTacToeRunnerTest {
 
     @Test
     public void reportsDraw() {
-        TestUI testUI = new TestUI(new int[]{ 1, 2, 3, 5, 4, 7, 8, 9, 6 });
+        TestUI testUI = new TestUI(new int[]{1, 2, 3, 5, 4, 7, 8, 9, 6});
         TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(testUI);
         ticTacToeRunner.execute();
         assertEquals(1, testUI.reportDrawCallCount);
@@ -30,7 +30,7 @@ public class TicTacToeRunnerTest {
 
     @Test
     public void promptsToPlayAgainOnGameCompletion() {
-        TestUI testUI = new TestUI(new int[]{ 1, 2, 3, 4, 5, 6, 7 });
+        TestUI testUI = new TestUI(new int[]{1, 2, 3, 4, 5, 6, 7});
         TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(testUI);
         ticTacToeRunner.execute();
         assertEquals(1, testUI.promptPlayAgainCount);
@@ -38,7 +38,7 @@ public class TicTacToeRunnerTest {
 
     @Test
     public void playAgainStartsNewGame() {
-        TestUI testUI = new TestUI(new int[]{ 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7 });
+        TestUI testUI = new TestUI(new int[]{1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7});
         testUI.setPlayAgain(true);
         TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(testUI);
         ticTacToeRunner.execute();

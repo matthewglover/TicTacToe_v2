@@ -74,7 +74,7 @@ public class ConsoleUI implements GameUI {
     }
 
     private boolean isValidBoardSize(String input, int minBoardSize, int maxBoardSize) {
-        if(!input.matches("^\\d+$")) {
+        if (!input.matches("^\\d+$")) {
             return false;
         }
         int boardSize = Integer.parseInt(input);

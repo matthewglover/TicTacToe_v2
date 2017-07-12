@@ -10,7 +10,7 @@ public class BoardTest {
 
     @Test
     public void squareIsNeitherXNorOWhenItsEmpty() {
-       assertEquals(Player.NEITHER, board.getSquare(1));
+        assertEquals(Player.NEITHER, board.getSquare(1));
     }
 
     @Test
@@ -80,6 +80,7 @@ public class BoardTest {
         board.setSquare(7, Player.X);
         assertTrue(board.isAnyWinningLine(Player.X));
     }
+
     @Test
     public void winningLineWhenWinningDiagonalTopLeftToBottomRight() {
         board.setSquare(1, Player.O);
@@ -89,7 +90,7 @@ public class BoardTest {
     }
 
     @Test
-    public void winningLineWhenWinningDiagonalTopRightToBottomLeft(){
+    public void winningLineWhenWinningDiagonalTopRightToBottomLeft() {
         board.setSquare(3, Player.X);
         board.setSquare(5, Player.X);
         board.setSquare(7, Player.X);
@@ -160,7 +161,7 @@ public class BoardTest {
 
     private void fillBoard() {
         for (int squareNumber = 1; squareNumber <= 9; squareNumber++) {
-            board.setSquare( squareNumber, Player.X);
+            board.setSquare(squareNumber, Player.X);
         }
     }
 }

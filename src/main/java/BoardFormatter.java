@@ -30,11 +30,11 @@ public class BoardFormatter {
     }
 
     private String getSquareString(Player square, int squareNumber) {
-       return (square.isEmpty()) ? Integer.toString(squareNumber) : square.toString();
+        return (square.isEmpty()) ? Integer.toString(squareNumber) : square.toString();
     }
 
     private String getLeftPad(String squareString) {
-       return (board.getTotalSquares() > 9 && squareString.length() == 1) ? " " : "";
+        return (board.getTotalSquares() > 9 && squareString.length() == 1) ? " " : "";
     }
 
     private String formatRowDivider() {

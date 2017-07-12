@@ -49,12 +49,12 @@ public class ConsoleUITest {
         ConsoleUI UI = buildUIWithInput("4");
         UI.promptForMove(Player.X, board);
         assertLinesEqual(new String[]{
-            " X | O | O ",
-            "--- --- ---",
-            " 4 | 5 | 6 ",
-            "--- --- ---",
-            " 7 | 8 | X ",
-            "Player X: "
+                " X | O | O ",
+                "--- --- ---",
+                " 4 | 5 | 6 ",
+                "--- --- ---",
+                " 7 | 8 | X ",
+                "Player X: "
         });
     }
 

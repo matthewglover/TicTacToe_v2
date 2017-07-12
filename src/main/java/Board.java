@@ -71,10 +71,10 @@ public class Board {
 
     private Stream<Stream<Player>> getColumns() {
         return getGroupOfLinesOfSquareNumbers(1, size)
-                    .map(line -> line.map(this::getSquare));
+                .map(line -> line.map(this::getSquare));
     }
 
-    private Stream<Stream<Player>>getDiagonals() {
+    private Stream<Stream<Player>> getDiagonals() {
         return Stream.of(getDiagonalTopLeft(), getDiagonalTopRight());
     }
 
@@ -99,8 +99,8 @@ public class Board {
 
     private Function<Integer, Stream<Integer>> getLineOfSquareNumbers(int increment) {
         return firstItem -> Stream
-                                .iterate(firstItem, d -> d + increment)
-                                .limit(size);
+                .iterate(firstItem, d -> d + increment)
+                .limit(size);
     }
 
     public List<Integer> getEmptySquares() {

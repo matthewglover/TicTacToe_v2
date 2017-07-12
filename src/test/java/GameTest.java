@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
 public class GameTest {
 
     private Game game = new Game(3);
