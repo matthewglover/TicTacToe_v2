@@ -46,6 +46,13 @@ public class Board {
         return size * size;
     }
 
+    public List<Integer> getEmptySquares() {
+        return getRowsOfSquareNumbers()
+                .flatMap(identity())
+                .filter(squareNumber -> isEmptySquare(squareNumber))
+                .collect(Collectors.toList());
+    }
+
     public Stream<Stream<Integer>> getRowsOfSquareNumbers() {
         return getGroupOfLinesOfSquareNumbers(size, 1);
     }
@@ -101,12 +108,5 @@ public class Board {
         return firstItem -> Stream
                 .iterate(firstItem, d -> d + increment)
                 .limit(size);
-    }
-
-    public List<Integer> getEmptySquares() {
-        return getRowsOfSquareNumbers()
-                .flatMap(identity())
-                .filter(squareNumber -> isEmptySquare(squareNumber))
-                .collect(Collectors.toList());
     }
 }
