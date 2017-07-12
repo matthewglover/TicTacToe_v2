@@ -1,6 +1,9 @@
+import java.util.List;
+
 public class Game {
     private Board board;
     private Player currentPlayer = Player.X;
+    private int lastMove;
 
     public Game(int boardSize) {
         buildBoard(boardSize);
@@ -12,6 +15,7 @@ public class Game {
 
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
+            lastMove = squareNumber;
             board.setSquare(squareNumber, getCurrentPlayer());
             toggleCurrentPlayer();
         }
@@ -47,12 +51,20 @@ public class Game {
         }
         return duplicateGame;
     }
-    
+
+    public List<Integer> getEmptySquares() {
+        return board.getEmptySquares();
+    }
+
     private void toggleCurrentPlayer() {
         currentPlayer = (currentPlayer == Player.X) ? Player.O : Player.X;
     }
 
     private void buildBoard(int boardSize) {
         board = new Board(boardSize);
+    }
+
+    public int getLastMove() {
+        return lastMove;
     }
 }

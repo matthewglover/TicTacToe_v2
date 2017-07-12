@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -139,6 +141,21 @@ public class BoardTest {
         board.setSquare(10, Player.X);
         board.setSquare(13, Player.X);
         assertTrue(board.isAnyWinningLine(Player.X));
+    }
+
+    @Test
+    public void emptySquaresAreEmpty() {
+        board.setSquare(1, Player.X);
+        board.setSquare(2, Player.X);
+        board.setSquare(3, Player.X);
+        board.setSquare(4, Player.X);
+        board.setSquare(8, Player.X);
+        List<Integer> emptySquaresList = board.getEmptySquares();
+        int[] emptySquaresArray =
+                emptySquaresList.stream()
+                        .mapToInt(Integer::intValue)
+                        .toArray();
+        assertArrayEquals(new int[]{5, 6, 7, 9}, emptySquaresArray);
     }
 
     private void fillBoard() {

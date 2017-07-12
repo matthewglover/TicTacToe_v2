@@ -1,7 +1,10 @@
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.*;
+import static java.util.function.UnaryOperator.identity;
 
 public class Board {
 
@@ -98,5 +101,12 @@ public class Board {
         return firstItem -> Stream
                                 .iterate(firstItem, d -> d + increment)
                                 .limit(size);
+    }
+
+    public List<Integer> getEmptySquares() {
+        return getRowsOfSquareNumbers()
+                .flatMap(identity())
+                .filter(squareNumber -> isEmptySquare(squareNumber))
+                .collect(Collectors.toList());
     }
 }
