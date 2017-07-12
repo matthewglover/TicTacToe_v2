@@ -10,7 +10,10 @@ public class MiniMax {
 
     public static int selectMove(Game game) {
         List<Game> nextGameStates = game.getNextMoves();
-        List<Integer> nextGameStateScores = nextGameStates.stream().map(MiniMax::runMove).collect(Collectors.toList());
+        List<Integer> nextGameStateScores = nextGameStates
+                .stream()
+                .map(MiniMax::runMove)
+                .collect(Collectors.toList());
 
         int bestScore = Collections.max(nextGameStateScores);
         Game bestGameState = nextGameStates.get(nextGameStateScores.indexOf(bestScore));
