@@ -41,8 +41,7 @@ public class MiniMax {
     }
 
     private int getMoveScore(Game move) {
-        MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
-        return miniMax.execute();
+        return new MiniMax(move, depth + 1, !isMaximisingPlayer).execute();
     }
 
     private int getSeedScore() {
