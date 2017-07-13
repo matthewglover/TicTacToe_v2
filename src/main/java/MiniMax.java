@@ -3,6 +3,8 @@ public class MiniMax {
     private Game game;
     private int depth;
     private boolean isMaximisingPlayer;
+    private final int DRAW_SCORE = 0;
+    private final int WINNING_SCORE = 10;
 
 
     public MiniMax(Game game, int depth, boolean isMaximisingPlayer) {
@@ -16,14 +18,15 @@ public class MiniMax {
     }
 
     private int getScore() {
-        if (!game.isWinner()) {
-            return 0;
-        }
+        return game.isWinner() ? getWinningScore() : DRAW_SCORE;
+    }
+
+    private int getWinningScore() {
         return getBaseScore() + getDepthOffset();
     }
 
     private int getBaseScore() {
-        return isMaximisingPlayer ? 10 : -10;
+        return isMaximisingPlayer ? WINNING_SCORE : -WINNING_SCORE;
     }
 
     private int getDepthOffset() {
