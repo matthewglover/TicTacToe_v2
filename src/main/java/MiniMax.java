@@ -1,10 +1,11 @@
 public class MiniMax {
 
-    private Game game;
-    private int depth;
-    private boolean isMaximisingPlayer;
+    private final Game game;
+    private final int depth;
+    private final boolean isMaximisingPlayer;
     private final int DRAW_SCORE = 0;
     private final int WINNING_SCORE = 10;
+    private int score;
 
 
     public MiniMax(Game game, int depth, boolean isMaximisingPlayer) {
@@ -13,8 +14,17 @@ public class MiniMax {
         this.isMaximisingPlayer = isMaximisingPlayer;
     }
 
+    public static MiniMax getMaxScore(MiniMax a, MiniMax b) {
+        return a.getScore() > b.getScore() ? a : b;
+    }
+
     public int execute() {
-        return game.isOver() ? getScore() : getBestScore();
+        score = game.isOver() ? getScore() : getBestScore();
+        return score;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     private int getScore() {
@@ -49,10 +59,6 @@ public class MiniMax {
     }
 
     private int getBetterScore(Integer bestScore, Integer moveScore) {
-        if (isMaximisingPlayer) {
-            return Math.max(bestScore, moveScore);
-        } else {
-            return Math.min(bestScore, moveScore);
-        }
+        return isMaximisingPlayer ? Math.max(bestScore, moveScore) : Math.min(bestScore, moveScore);
     }
 }

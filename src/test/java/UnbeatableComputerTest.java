@@ -7,7 +7,7 @@ public class UnbeatableComputerTest {
     public void selectsWinningMoveOverLosingMove() {
         Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
         UnbeatableComputer unbeatableComputer = new UnbeatableComputer(game);
-        unbeatableComputer.run();
+        unbeatableComputer.execute();
         assertEquals(8, unbeatableComputer.getMove());
     }
 
