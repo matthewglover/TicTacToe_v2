@@ -44,13 +44,6 @@ public class MiniMaxTest {
         assertEquals(-9, result);
     }
 
-    @Test
-    public void selectsWinningMoveOverLosingMove() {
-        Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
-        int nextMove = MiniMax.selectMove(game);
-        assertEquals(8, nextMove);
-    }
-
     private Game makeMoves(int[] moves) {
         Game game = new Game(3);
         for (int squareNumber : moves) {

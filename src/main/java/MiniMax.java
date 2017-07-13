@@ -1,6 +1,4 @@
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MiniMax {
 
@@ -8,18 +6,6 @@ public class MiniMax {
     private int depth;
     private boolean isMaximisingPlayer;
 
-    public static int selectMove(Game game) {
-        List<Game> nextGameStates = game.getNextMoves();
-        List<Integer> nextGameStateScores = nextGameStates
-                .stream()
-                .map(MiniMax::runMove)
-                .collect(Collectors.toList());
-
-        int bestScore = Collections.max(nextGameStateScores);
-        Game bestGameState = nextGameStates.get(nextGameStateScores.indexOf(bestScore));
-
-        return bestGameState.getLastMove();
-    }
 
     public MiniMax(Game game, int depth, boolean isMaximisingPlayer) {
         this.game = game;
@@ -70,10 +56,5 @@ public class MiniMax {
         } else {
             return Math.min(bestScore, moveScore);
         }
-    }
-
-    private static int runMove(Game game) {
-        MiniMax miniMax = new MiniMax(game, 0, true);
-        return miniMax.run();
     }
 }
