@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class MiniMax {
 
     private Game game;
@@ -13,44 +11,42 @@ public class MiniMax {
         this.isMaximisingPlayer = isMaximisingPlayer;
     }
 
-    public int run() {
-        if (game.isOver()) {
-            return getScore();
-        }
-
-        List<Game> allMoves = game.getNextMoves();
-
-        int bestScore = getInitialBestScore();
-
-        for (Game move : allMoves) {
-            MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
-            int moveScore = miniMax.run();
-            bestScore = getBetterScore(bestScore, moveScore);
-        }
-
-        return bestScore;
-    }
-
-    private int getInitialBestScore() {
-        return isMaximisingPlayer ? -1000 : 1000;
+    public int execute() {
+        return game.isOver() ? getScore() : getBestScore();
     }
 
     private int getScore() {
-        int baseScore = isMaximisingPlayer ? 10 : -10;
-
         if (!game.isWinner()) {
             return 0;
         }
-
-
-        if (isMaximisingPlayer) {
-            return 10 - depth;
-        }
-
-        return baseScore + depth;
+        return getBaseScore() + getDepthOffset();
     }
 
-    private int getBetterScore(int bestScore, int moveScore) {
+    private int getBaseScore() {
+        return isMaximisingPlayer ? 10 : -10;
+    }
+
+    private int getDepthOffset() {
+        return isMaximisingPlayer ? -depth : depth;
+    }
+
+    private int getBestScore() {
+        return game.getNextMoves()
+                .stream()
+                .map(this::getMoveScore)
+                .reduce(getSeedScore(), this::getBetterScore);
+    }
+
+    private int getMoveScore(Game move) {
+        MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
+        return miniMax.execute();
+    }
+
+    private int getSeedScore() {
+        return isMaximisingPlayer ? -Integer.MAX_VALUE : Integer.MAX_VALUE;
+    }
+
+    private int getBetterScore(Integer bestScore, Integer moveScore) {
         if (isMaximisingPlayer) {
             return Math.max(bestScore, moveScore);
         } else {

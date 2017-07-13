@@ -8,7 +8,7 @@ public class MiniMaxTest {
     public void maximisingPlayerWinningGameScores10() {
         Game game = makeMoves(new int[]{1, 4, 2, 5, 3});
         MiniMax miniMax = new MiniMax(game, 0, true);
-        int result = miniMax.run();
+        int result = miniMax.execute();
         assertEquals(10, result);
     }
 
@@ -16,7 +16,7 @@ public class MiniMaxTest {
     public void minimisingPlayerWinningGameScoresMinus10() {
         Game game = makeMoves(new int[]{1, 4, 2, 5, 3});
         MiniMax miniMax = new MiniMax(game, 0, false);
-        int result = miniMax.run();
+        int result = miniMax.execute();
         assertEquals(-10, result);
     }
 
@@ -24,7 +24,7 @@ public class MiniMaxTest {
     public void drawnGameScores0() {
         Game game = makeMoves(new int[]{1, 4, 2, 5, 6, 3, 7, 8, 9});
         MiniMax miniMax = new MiniMax(game, 0, false);
-        int result = miniMax.run();
+        int result = miniMax.execute();
         assertEquals(0, result);
     }
 
@@ -32,7 +32,7 @@ public class MiniMaxTest {
     public void maximisingPlayerWinInOneMoveScores9() {
         Game game = makeMoves(new int[]{1, 3, 2, 5, 7, 6, 9, 8});
         MiniMax miniMax = new MiniMax(game, 0, false);
-        int result = miniMax.run();
+        int result = miniMax.execute();
         assertEquals(9, result);
     }
 
@@ -40,7 +40,7 @@ public class MiniMaxTest {
     public void minimisingPlayerWinInOneMoveScoresMinus9() {
         Game game = makeMoves(new int[]{1, 3, 2, 5, 7, 6, 9, 8});
         MiniMax miniMax = new MiniMax(game, 0, true);
-        int result = miniMax.run();
+        int result = miniMax.execute();
         assertEquals(-9, result);
     }
 

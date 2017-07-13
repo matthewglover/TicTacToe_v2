@@ -27,6 +27,6 @@ public class UnbeatableComputer {
 
     private static int runMove(Game game) {
         MiniMax miniMax = new MiniMax(game, 0, true);
-        return miniMax.run();
+        return miniMax.execute();
     }
 }
