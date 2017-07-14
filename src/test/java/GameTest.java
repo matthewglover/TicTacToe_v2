@@ -128,4 +128,12 @@ public class GameTest {
             assertEquals(board.getSquare(i), duplicateBoard.getSquare(i));
         }
     }
+
+    @Test
+    public void duplicateHasSameCurrentPlayerAsOriginal() {
+       game.move(1);
+       game.move(2);
+       Game duplicateGame = game.duplicate();
+       assertEquals(game.getCurrentPlayer(), duplicateGame.getCurrentPlayer());
+    }
 }

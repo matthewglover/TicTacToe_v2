@@ -1,27 +1,28 @@
 public class UnbeatableComputer {
     private final Game game;
     private Game selectedGameState;
+    private int currentBestScore = Integer.MIN_VALUE;
 
     public UnbeatableComputer(Game game) {
         this.game = game;
     }
 
     public void execute() {
-        selectedGameState = game.getNextMoves()
-                .stream()
-                .map(UnbeatableComputer::runMove)
-                .reduce(MiniMax::getMaxScore)
-                .get()
-                .getGame();
+        for (Game gameMove : game.getNextMoves()) {
+            tryGameStrategy(gameMove);
+        }
+    }
+
+    private void tryGameStrategy(Game gameMove) {
+        MiniMax mm = new MiniMax(gameMove, 0, true);
+        mm.execute();
+        if (mm.getScore() > currentBestScore) {
+            currentBestScore = mm.getScore();
+            selectedGameState = mm.getGame();
+        }
     }
 
     public int getMove() {
         return selectedGameState.getLastMove();
-    }
-
-    private static MiniMax runMove(Game game) {
-        MiniMax miniMax = new MiniMax(game, 0, true);
-        miniMax.execute();
-        return miniMax;
     }
 }

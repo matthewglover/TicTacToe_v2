@@ -14,12 +14,13 @@ public class MiniMax {
         this.isMaximisingPlayer = isMaximisingPlayer;
     }
 
-    public static MiniMax getMaxScore(MiniMax a, MiniMax b) {
-        return a.getScore() > b.getScore() ? a : b;
-    }
-
     public int execute() {
-        score = game.isOver() ? getScore() : getBestScore();
+        if (game.isOver()) {
+            score = calculateScore();
+        }
+        else {
+            score = getBestScore();
+        }
         return score;
     }
 
@@ -27,7 +28,11 @@ public class MiniMax {
         return game;
     }
 
-    private int getScore() {
+    public int getScore() {
+        return score;
+    }
+
+    private int calculateScore() {
         return game.isWinner() ? getWinningScore() : DRAW_SCORE;
     }
 
@@ -51,14 +56,17 @@ public class MiniMax {
     }
 
     private int getMoveScore(Game move) {
-        return new MiniMax(move, depth + 1, !isMaximisingPlayer).execute();
+        MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
+        miniMax.execute();
+        return miniMax.getScore();
     }
 
     private int getSeedScore() {
-        return isMaximisingPlayer ? -Integer.MAX_VALUE : Integer.MAX_VALUE;
+        return !isMaximisingPlayer ? -Integer.MAX_VALUE : Integer.MAX_VALUE;
     }
 
     private int getBetterScore(Integer bestScore, Integer moveScore) {
-        return isMaximisingPlayer ? Math.max(bestScore, moveScore) : Math.min(bestScore, moveScore);
+        int result = !isMaximisingPlayer ? Math.max(bestScore, moveScore) : Math.min(bestScore, moveScore);
+        return result;
     }
 }

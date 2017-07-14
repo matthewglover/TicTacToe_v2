@@ -11,6 +11,28 @@ public class UnbeatableComputerTest {
         assertEquals(8, unbeatableComputer.getMove());
     }
 
+    @Test
+    public void selectsDrawingMoveOverLosingMove() {
+        // x o x
+        // 4 5 6
+        // 7 o 9
+        Game game = makeMoves(new int[]{1, 2, 3, 8});
+        UnbeatableComputer unbeatableComputer = new UnbeatableComputer(game);
+        unbeatableComputer.execute();
+        assertEquals(5, unbeatableComputer.getMove());
+    }
+
+    @Test
+    public void maximisingPlayerWinInTwoMovesSelectsFirstMove() {
+        // x o 3
+        // 4 x 6
+        // 7 8 o
+        Game game = makeMoves(new int[]{1, 2, 5, 9});
+        UnbeatableComputer unbeatableComputer = new UnbeatableComputer(game);
+        unbeatableComputer.execute();
+        assertEquals(4, unbeatableComputer.getMove());
+    }
+
     private Game makeMoves(int[] moves) {
         Game game = new Game(3);
         for (int squareNumber : moves) {
