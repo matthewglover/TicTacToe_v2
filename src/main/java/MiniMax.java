@@ -14,16 +14,6 @@ public class MiniMax {
         this.isMaximisingPlayer = isMaximisingPlayer;
     }
 
-    public int execute() {
-        if (game.isOver()) {
-            score = calculateScore();
-        }
-        else {
-            score = getBestScore();
-        }
-        return score;
-    }
-
     public Game getGame() {
         return game;
     }
@@ -32,12 +22,20 @@ public class MiniMax {
         return score;
     }
 
-    private int calculateScore() {
-        return game.isWinner() ? getWinningScore() : DRAW_SCORE;
+    public void execute() {
+        if (game.isOver()) {
+            calculateScore();
+        } else {
+            calculateBestScore();
+        }
     }
 
-    private int getWinningScore() {
-        return getBaseScore() + getDepthOffset();
+    private void calculateScore() {
+        if (game.isWinner()) {
+            score = getBaseScore() + getDepthOffset();
+        } else {
+            score = DRAW_SCORE;
+        }
     }
 
     private int getBaseScore() {
@@ -48,25 +46,18 @@ public class MiniMax {
         return isMaximisingPlayer ? -depth : depth;
     }
 
-    private int getBestScore() {
-        return game.getNextMoves()
+    private void calculateBestScore() {
+        boolean isNextMaximisingPlayer = !isMaximisingPlayer;
+
+        score = game.getNextMoves()
                 .stream()
-                .map(this::getMoveScore)
-                .reduce(getSeedScore(), this::getBetterScore);
-    }
-
-    private int getMoveScore(Game move) {
-        MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
-        miniMax.execute();
-        return miniMax.getScore();
-    }
-
-    private int getSeedScore() {
-        return !isMaximisingPlayer ? -Integer.MAX_VALUE : Integer.MAX_VALUE;
-    }
-
-    private int getBetterScore(Integer bestScore, Integer moveScore) {
-        int result = !isMaximisingPlayer ? Math.max(bestScore, moveScore) : Math.min(bestScore, moveScore);
-        return result;
+                .map(move -> {
+                    MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
+                    miniMax.execute();
+                    return miniMax.getScore();
+                })
+                .reduce((bestScore, moveScore) ->
+                        isNextMaximisingPlayer ? Math.max(bestScore, moveScore) : Math.min(bestScore, moveScore))
+                .get();
     }
 }

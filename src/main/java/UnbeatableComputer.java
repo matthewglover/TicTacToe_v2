@@ -7,6 +7,10 @@ public class UnbeatableComputer {
         this.game = game;
     }
 
+    public int getMove() {
+        return selectedGameState.getLastMove();
+    }
+
     public void execute() {
         for (Game gameMove : game.getNextMoves()) {
             tryGameStrategy(gameMove);
@@ -14,15 +18,11 @@ public class UnbeatableComputer {
     }
 
     private void tryGameStrategy(Game gameMove) {
-        MiniMax mm = new MiniMax(gameMove, 0, true);
-        mm.execute();
-        if (mm.getScore() > currentBestScore) {
-            currentBestScore = mm.getScore();
-            selectedGameState = mm.getGame();
+        MiniMax miniMax = new MiniMax(gameMove, 0, true);
+        miniMax.execute();
+        if (miniMax.getScore() > currentBestScore) {
+            currentBestScore = miniMax.getScore();
+            selectedGameState = miniMax.getGame();
         }
-    }
-
-    public int getMove() {
-        return selectedGameState.getLastMove();
     }
 }

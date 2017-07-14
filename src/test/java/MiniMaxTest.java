@@ -19,9 +19,7 @@ public class MiniMaxTest {
     @Test
     public void drawnGameScores0() {
         Game game = makeMoves(new int[]{1, 4, 2, 5, 6, 3, 7, 8, 9});
-        MiniMax miniMax = new MiniMax(game, 0, false);
-        int result = miniMax.execute();
-        assertEquals(0, result);
+        assertEquals(0, runMiniMax(game, false));
     }
 
     @Test
