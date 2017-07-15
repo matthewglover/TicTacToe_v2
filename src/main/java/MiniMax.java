@@ -1,17 +1,22 @@
 public class MiniMax {
 
+    private static final int DRAW_SCORE = 0;
+    private static final int WINNING_SCORE = 10;
+
     private final Game game;
     private final int depth;
+    private final int nextDepth;
     private final boolean isMaximisingPlayer;
-    private final int DRAW_SCORE = 0;
-    private final int WINNING_SCORE = 10;
+    private final boolean isNextMaximisingPlayer;
     private int score;
 
 
     public MiniMax(Game game, int depth, boolean isMaximisingPlayer) {
         this.game = game;
         this.depth = depth;
+        nextDepth = depth + 1;
         this.isMaximisingPlayer = isMaximisingPlayer;
+        isNextMaximisingPlayer = !isMaximisingPlayer;
     }
 
     public Game getGame() {
@@ -47,12 +52,10 @@ public class MiniMax {
     }
 
     private void calculateBestScore() {
-        boolean isNextMaximisingPlayer = !isMaximisingPlayer;
-
         score = game.getNextMoves()
                 .stream()
                 .map(move -> {
-                    MiniMax miniMax = new MiniMax(move, depth + 1, !isMaximisingPlayer);
+                    MiniMax miniMax = new MiniMax(move, nextDepth, isNextMaximisingPlayer);
                     miniMax.execute();
                     return miniMax.getScore();
                 })
