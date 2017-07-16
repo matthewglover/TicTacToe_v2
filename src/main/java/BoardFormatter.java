@@ -1,9 +1,10 @@
 import java.util.Collections;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BoardFormatter {
-    private Board board;
+    private final Board board;
 
     public BoardFormatter(Board board) {
         this.board = board;
@@ -12,21 +13,22 @@ public class BoardFormatter {
     public String format() {
         return board
                 .getRowsOfSquareNumbers()
-                .map(rowOfSquareNumbers -> formatRow(rowOfSquareNumbers))
+                .map(formatRow())
                 .collect(Collectors.joining("\n" + formatRowDivider() + "\n"));
     }
 
-    private String formatRow(Stream<Integer> rowOfSquareNumbers) {
-        return rowOfSquareNumbers
-                .map(squareNumber -> formatSquare(squareNumber))
-                .collect(Collectors.joining("|"));
+    private Function<Stream<Integer>, String> formatRow() {
+        return (Stream<Integer> rowOfSquareNumbers) ->
+                rowOfSquareNumbers
+                        .map(formatSquare())
+                        .collect(Collectors.joining("|"));
     }
 
-    private String formatSquare(Integer squareNumber) {
-        Player square = board.getSquare(squareNumber);
-        String squareString = getSquareString(square, squareNumber);
-        String leftPad = getLeftPad(squareString);
-        return String.format(" %s ", leftPad + squareString);
+    private Function<Integer, String> formatSquare() {
+        return (Integer squareNumber) -> {
+            String squareString = getSquareString(board.getSquare(squareNumber), squareNumber);
+            return String.format(" %s ", getLeftPad(squareString) + squareString);
+        };
     }
 
     private String getSquareString(Player square, int squareNumber) {

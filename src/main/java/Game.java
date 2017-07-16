@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -34,7 +35,7 @@ public class Game {
     public List<Game> getNextMoves() {
         return getEmptySquares()
                 .stream()
-                .map(this::getState)
+                .map(makeMove())
                 .collect(Collectors.toList());
     }
 
@@ -68,14 +69,16 @@ public class Game {
         return duplicateGame;
     }
 
-    private Game getState(int squareNumber) {
-        Game newGame = duplicate();
-        newGame.move(squareNumber);
-        return newGame;
-    }
-
     private List<Integer> getEmptySquares() {
         return board.getEmptySquares();
+    }
+
+    private Function<Integer, Game> makeMove() {
+        return (Integer squareNumber) -> {
+            Game newGame = duplicate();
+            newGame.move(squareNumber);
+            return newGame;
+        };
     }
 
     private void toggleCurrentPlayer() {

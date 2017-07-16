@@ -8,34 +8,16 @@ import static java.util.function.UnaryOperator.identity;
 
 public class Board {
 
-    private int size;
-    private Player[] grid;
     public static final int MIN_SIZE = 3;
     public static final int MAX_SIZE = 4;
     public static final int FIRST_SQUARE_NUMBER = 1;
 
+    private final int size;
+    private Player[] grid;
+
     public Board(int size) {
-        setup(size);
-    }
-
-    public Player getSquare(int squareNumber) {
-        return grid[squareNumber - 1];
-    }
-
-    public void setSquare(int squareNumber, Player player) {
-        grid[squareNumber - 1] = player;
-    }
-
-    public boolean isEmptySquare(int squareNumber) {
-        return getSquare(squareNumber).isEmpty();
-    }
-
-    public boolean isFull() {
-        return stream(grid).allMatch(square -> !square.isEmpty());
-    }
-
-    public boolean isAnyWinningLine(Player player) {
-        return getLines().anyMatch(line -> isWinningLine(line, player));
+        this.size = size;
+        setupGrid();
     }
 
     public int getSize() {
@@ -57,8 +39,27 @@ public class Board {
         return getGroupOfLinesOfSquareNumbers(size, 1);
     }
 
-    private void setup(int size) {
-        this.size = size;
+    public Player getSquare(int squareNumber) {
+        return grid[squareNumber - 1];
+    }
+
+    public void setSquare(int squareNumber, Player player) {
+        grid[squareNumber - 1] = player;
+    }
+
+    public boolean isEmptySquare(int squareNumber) {
+        return getSquare(squareNumber).isEmpty();
+    }
+
+    public boolean isAnyWinningLine(Player player) {
+        return getLines().anyMatch(line -> isWinningLine(line, player));
+    }
+
+    public boolean isFull() {
+        return stream(grid).allMatch(square -> !square.isEmpty());
+    }
+
+    private void setupGrid() {
         grid = new Player[getTotalSquares()];
         fill(grid, Player.NEITHER);
     }
@@ -98,15 +99,14 @@ public class Board {
     }
 
     private Stream<Stream<Integer>> getGroupOfLinesOfSquareNumbers(int lineIncrementer, int squareIncrementer) {
-        return Stream
-                .iterate(1, d -> d + lineIncrementer)
+        return Stream.iterate(1, d -> d + lineIncrementer)
                 .limit(size)
                 .map(getLineOfSquareNumbers(squareIncrementer));
     }
 
     private Function<Integer, Stream<Integer>> getLineOfSquareNumbers(int increment) {
-        return firstItem -> Stream
-                .iterate(firstItem, d -> d + increment)
-                .limit(size);
+        return (Integer firstItem) ->
+                Stream.iterate(firstItem, d -> d + increment)
+                        .limit(size);
     }
 }

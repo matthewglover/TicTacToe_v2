@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class ConsoleUI implements GameUI {
 
-    private PrintStream out;
-    private Scanner scanner;
+    private final PrintStream out;
+    private final Scanner scanner;
 
     public ConsoleUI(InputStream in, PrintStream out) {
         this.out = out;
@@ -13,9 +13,7 @@ public class ConsoleUI implements GameUI {
     }
 
     public int promptForMove(Player player, Board board) {
-        BoardFormatter boardFormatter = new BoardFormatter(board);
-        out.println(boardFormatter.format());
-        out.print(formatPlayerPrompt(player));
+        printRequestMove(player, board);
         return getBoardMove(board);
     }
 
@@ -38,13 +36,10 @@ public class ConsoleUI implements GameUI {
         return getBoardSize(minBoardSize, maxBoardSize);
     }
 
-    private int getBoardSize(int minBoardSize, int maxBoardSize) {
-        String input = scanner.nextLine();
-        if (isValidBoardSize(input, minBoardSize, maxBoardSize)) {
-            return Integer.parseInt(input);
-        }
-        promptInvalidInput();
-        return getBoardSize(minBoardSize, maxBoardSize);
+    private void printRequestMove(Player player, Board board) {
+        BoardFormatter boardFormatter = new BoardFormatter(board);
+        out.println(boardFormatter.format());
+        out.print(formatPlayerPrompt(player));
     }
 
     private int getBoardMove(Board board) {
@@ -54,6 +49,15 @@ public class ConsoleUI implements GameUI {
         }
         promptInvalidInput();
         return getBoardMove(board);
+    }
+
+    private int getBoardSize(int minBoardSize, int maxBoardSize) {
+        String input = scanner.nextLine();
+        if (isValidBoardSize(input, minBoardSize, maxBoardSize)) {
+            return Integer.parseInt(input);
+        }
+        promptInvalidInput();
+        return getBoardSize(minBoardSize, maxBoardSize);
     }
 
     private void promptInvalidInput() {

@@ -1,3 +1,7 @@
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
 public class MiniMax {
 
     private static final int DRAW_SCORE = 0;
@@ -52,15 +56,29 @@ public class MiniMax {
     }
 
     private void calculateBestScore() {
-        score = game.getNextMoves()
-                .stream()
-                .map(move -> {
-                    MiniMax miniMax = new MiniMax(move, nextDepth, isNextMaximisingPlayer);
-                    miniMax.execute();
-                    return miniMax.getScore();
-                })
-                .reduce((bestScore, moveScore) ->
-                        isNextMaximisingPlayer ? Math.max(bestScore, moveScore) : Math.min(bestScore, moveScore))
+        score = getNextMoveScores()
+                .reduce(selectBetterScore())
                 .get();
+    }
+
+    private Stream<Integer> getNextMoveScores() {
+        return game.getNextMoves()
+                .stream()
+                .map(getMiniMaxScore());
+    }
+
+    private Function<Game, Integer> getMiniMaxScore() {
+        return (Game move) -> {
+            MiniMax miniMax = new MiniMax(move, nextDepth, isNextMaximisingPlayer);
+            miniMax.execute();
+            return miniMax.getScore();
+        };
+    }
+
+    private BinaryOperator<Integer> selectBetterScore() {
+        return (Integer bestScore, Integer moveScore) ->
+                isNextMaximisingPlayer
+                        ? Math.max(bestScore, moveScore)
+                        : Math.min(bestScore, moveScore);
     }
 }
