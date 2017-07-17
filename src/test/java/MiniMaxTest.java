@@ -2,15 +2,15 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class AlphaBetaTest {
+public class MiniMaxTest {
     @Test
     public void selectsWinningMoveOverLosingMove() {
         // x o x
         // x o o
         // 7 8 x
         Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
-        AlphaBeta alphaBeta = AlphaBeta.run(game);
-        assertEquals(8, alphaBeta.getMove());
+        MiniMax miniMax = MiniMax.run(game);
+        assertEquals(8, miniMax.getMove());
     }
 
     @Test
@@ -19,18 +19,18 @@ public class AlphaBetaTest {
         // 4 5 6
         // 7 o 9
         Game game = makeMoves(new int[]{1, 2, 3, 8});
-        AlphaBeta alphaBeta = AlphaBeta.run(game);
-        assertEquals(5, alphaBeta.getMove());
+        MiniMax miniMax = MiniMax.run(game);
+        assertEquals(5, miniMax.getMove());
     }
 
     @Test
-    public void maximisingPlayerWinInTwoMovesSelectsFirstMove() {
+    public void maximisingPlayerWithTwoWinningMovesSelectsFirstMove() {
         // x o 3
         // 4 x 6
         // 7 8 o
         Game game = makeMoves(new int[]{1, 2, 5, 9});
-        AlphaBeta alphaBeta = AlphaBeta.run(game);
-        assertEquals(4, alphaBeta.getMove());
+        MiniMax miniMax = MiniMax.run(game);
+        assertEquals(4, miniMax.getMove());
     }
 
     private Game makeMoves(int[] moves) {

@@ -1,6 +1,4 @@
-public class AlphaBeta {
-    private static final int MINIMUM_ALPHA = Integer.MIN_VALUE;
-    private static final int MAXIMUM_BETA = Integer.MAX_VALUE;
+public class MiniMax {
     private static final int DRAW_SCORE = 0;
     private static final int WINNING_SCORE = 10;
 
@@ -8,25 +6,21 @@ public class AlphaBeta {
     private final int depth;
     private final boolean isMaximising;
 
-    private int alpha;
-    private int beta;
     private int selectedScore;
     private int selectedMove;
 
-    public static AlphaBeta run(Game game) {
-        AlphaBeta strategies = new AlphaBeta(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
-        strategies.execute();
-        return strategies;
+    public static MiniMax run(Game game) {
+        MiniMax miniMax = new MiniMax(game, 0, true);
+        miniMax.execute();
+        return miniMax;
     }
 
-    public AlphaBeta(Game game, int depth, boolean isMaximising, int alpha, int beta) {
+    public MiniMax(Game game, int depth, boolean isMaximising) {
         this.game = game;
         this.depth = depth;
         this.isMaximising = isMaximising;
-        this.alpha = alpha;
-        this.beta = beta;
 
-        selectedScore = isMaximising ? MINIMUM_ALPHA : MAXIMUM_BETA;
+        selectedScore = isMaximising ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     }
 
     public int getMove() {
@@ -44,11 +38,6 @@ public class AlphaBeta {
             if (isBetterScore(currentMoveScore)) {
                 selectedScore = currentMoveScore;
                 selectedMove = gameMove.getLastMove();
-                updateAlphaBeta(currentMoveScore);
-            }
-
-            if (beta <= alpha) {
-                break;
             }
         }
     }
@@ -74,9 +63,9 @@ public class AlphaBeta {
     }
 
     private int calculateInterimMoveScore(Game gameMove) {
-        AlphaBeta alphaBeta = new AlphaBeta(gameMove, nextDepth(), isNextMaximising(), alpha, beta);
-        alphaBeta.execute();
-        return alphaBeta.getScore();
+        MiniMax miniMax = new MiniMax(gameMove, nextDepth(), isNextMaximising());
+        miniMax.execute();
+        return miniMax.getScore();
     }
 
     private int nextDepth() {
@@ -89,15 +78,7 @@ public class AlphaBeta {
 
     private boolean isBetterScore(int currentScore) {
         return isMaximising
-                ? currentScore > alpha
-                : currentScore < beta;
-    }
-
-    private void updateAlphaBeta(int score) {
-        if (isMaximising) {
-            alpha = score;
-        } else {
-            beta = score;
-        }
+                ? currentScore > selectedScore
+                : currentScore < selectedScore;
     }
 }
