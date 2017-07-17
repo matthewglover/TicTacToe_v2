@@ -1,4 +1,4 @@
-public class MiniMax {
+public class AlphaBeta {
     private static final int MINIMUM_ALPHA = Integer.MIN_VALUE;
     private static final int MAXIMUM_BETA = Integer.MAX_VALUE;
     private static final int DRAW_SCORE = 0;
@@ -13,13 +13,13 @@ public class MiniMax {
     private int selectedScore;
     private int selectedMove;
 
-    public static MiniMax getMove(Game game) {
-        MiniMax strategies = new MiniMax(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
+    public static AlphaBeta getMove(Game game) {
+        AlphaBeta strategies = new AlphaBeta(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
         strategies.execute();
         return strategies;
     }
 
-    public MiniMax(Game game, int depth, boolean isMaximising, int alpha, int beta) {
+    public AlphaBeta(Game game, int depth, boolean isMaximising, int alpha, int beta) {
         this.game = game;
         this.depth = depth;
         this.isMaximising = isMaximising;
@@ -74,9 +74,9 @@ public class MiniMax {
     }
 
     private int calculateInterimMoveScore(Game gameMove) {
-        MiniMax miniMax = new MiniMax(gameMove, nextDepth(), isNextMaximising(), alpha, beta);
-        miniMax.execute();
-        return miniMax.getScore();
+        AlphaBeta alphaBeta = new AlphaBeta(gameMove, nextDepth(), isNextMaximising(), alpha, beta);
+        alphaBeta.execute();
+        return alphaBeta.getScore();
     }
 
     private int nextDepth() {
