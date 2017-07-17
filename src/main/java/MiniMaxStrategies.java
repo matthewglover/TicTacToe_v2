@@ -6,18 +6,22 @@ public class MiniMaxStrategies {
     private final Game game;
     private final int depth;
     private final boolean isNextMaximisingPlayer;
+    private int alpha;
+    private int beta;
     private MiniMaxStrategy selectedStrategy;
 
     public static MiniMaxStrategies getBestStrategy(Game game) {
-        MiniMaxStrategies strategies = new MiniMaxStrategies(game, 0, true);
+        MiniMaxStrategies strategies = new MiniMaxStrategies(game, 0, true, Integer.MAX_VALUE, Integer.MIN_VALUE);
         strategies.execute();
         return strategies;
     }
 
-    public MiniMaxStrategies(Game game, int depth, boolean isNextMaximisingPlayer) {
+    public MiniMaxStrategies(Game game, int depth, boolean isNextMaximisingPlayer, int alpha, int beta) {
         this.game = game;
         this.depth = depth;
         this.isNextMaximisingPlayer = isNextMaximisingPlayer;
+        this.alpha = alpha;
+        this.beta = beta;
     }
 
     public void execute() {
@@ -42,7 +46,7 @@ public class MiniMaxStrategies {
 
     private Function<Game, MiniMaxStrategy> getStrategy() {
         return (Game gameMove) -> {
-            MiniMaxStrategy miniMaxStrategy = new MiniMaxStrategy(gameMove, depth, isNextMaximisingPlayer);
+            MiniMaxStrategy miniMaxStrategy = new MiniMaxStrategy(gameMove, depth, isNextMaximisingPlayer, alpha, beta);
             miniMaxStrategy.execute();
             return miniMaxStrategy;
         };

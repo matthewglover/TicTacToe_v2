@@ -8,15 +8,19 @@ public class MiniMaxStrategy {
     private final int nextDepth;
     private final boolean isMaximisingPlayer;
     private final boolean isNextMaximisingPlayer;
+    private int alpha;
+    private int beta;
     private int score;
 
 
-    public MiniMaxStrategy(Game game, int depth, boolean isMaximisingPlayer) {
+    public MiniMaxStrategy(Game game, int depth, boolean isMaximisingPlayer, int alpha, int beta) {
         this.game = game;
         this.depth = depth;
         this.isMaximisingPlayer = isMaximisingPlayer;
         nextDepth = depth + 1;
         isNextMaximisingPlayer = !isMaximisingPlayer;
+        this.alpha = alpha;
+        this.beta = beta;
     }
 
     public void execute() {
@@ -52,7 +56,7 @@ public class MiniMaxStrategy {
     }
 
     private void calculateBestScore() {
-        MiniMaxStrategies strategies = new MiniMaxStrategies(game, nextDepth, isNextMaximisingPlayer);
+        MiniMaxStrategies strategies = new MiniMaxStrategies(game, nextDepth, isNextMaximisingPlayer, alpha, beta);
         strategies.execute();
         score = strategies.getBestScore();
     }

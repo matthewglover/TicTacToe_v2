@@ -92,7 +92,7 @@ public class MiniMaxScoreTest {
     }
 
     private int runMiniMax(Game game, boolean isMaximisingPlayer) {
-        MiniMaxStrategy miniMaxStrategy = new MiniMaxStrategy(game, 0, isMaximisingPlayer);
+        MiniMaxStrategy miniMaxStrategy = new MiniMaxStrategy(game, 0, isMaximisingPlayer, Integer.MIN_VALUE, Integer.MAX_VALUE);
         miniMaxStrategy.execute();
         return miniMaxStrategy.getScore();
     }
