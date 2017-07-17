@@ -1,17 +1,16 @@
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
 public class MiniMaxStrategies {
     private final Game game;
     private final int depth;
     private final boolean isNextMaximisingPlayer;
+    private static final int MINIMUM_ALPHA = Integer.MIN_VALUE;
+    private static final int MAXIMUM_BETA = Integer.MAX_VALUE;
+
     private int alpha;
     private int beta;
     private MiniMaxStrategy selectedStrategy;
 
     public static MiniMaxStrategies getBestStrategy(Game game) {
-        MiniMaxStrategies strategies = new MiniMaxStrategies(game, 0, true, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        MiniMaxStrategies strategies = new MiniMaxStrategies(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
         strategies.execute();
         return strategies;
     }
@@ -25,9 +24,19 @@ public class MiniMaxStrategies {
     }
 
     public void execute() {
-        selectedStrategy = getStrategies()
-                .reduce(selectBestStrategy())
-                .get();
+        for (Game gameMove : game.getNextMoves()) {
+            MiniMaxStrategy currentStrategy = new MiniMaxStrategy(gameMove, depth, isNextMaximisingPlayer, alpha, beta);
+            currentStrategy.execute();
+
+            if (isBetterScore(currentStrategy.getScore())) {
+                selectedStrategy = currentStrategy;
+                updateAlphaBeta(currentStrategy.getScore());
+            }
+
+            if (beta <= alpha) {
+                break;
+            }
+        }
     }
 
     public int getBestMove() {
@@ -35,33 +44,28 @@ public class MiniMaxStrategies {
     }
 
     public int getBestScore() {
-        return selectedStrategy.getScore();
+        if (isPrunedNode()) {
+            return isNextMaximisingPlayer ? MINIMUM_ALPHA : MAXIMUM_BETA;
+        } else {
+            return selectedStrategy.getScore();
+        }
     }
 
-    private Stream<MiniMaxStrategy> getStrategies() {
-        return game.getNextMoves()
-                .stream()
-                .map(getStrategy());
-    }
-
-    private Function<Game, MiniMaxStrategy> getStrategy() {
-        return (Game gameMove) -> {
-            MiniMaxStrategy miniMaxStrategy = new MiniMaxStrategy(gameMove, depth, isNextMaximisingPlayer, alpha, beta);
-            miniMaxStrategy.execute();
-            return miniMaxStrategy;
-        };
-    }
-
-    private BinaryOperator<MiniMaxStrategy> selectBestStrategy() {
-        return (MiniMaxStrategy bestStrategy, MiniMaxStrategy currentStrategy) ->
-                selectBetterStrategy(bestStrategy, currentStrategy)
-                        ? currentStrategy
-                        : bestStrategy;
-    }
-
-    private boolean selectBetterStrategy(MiniMaxStrategy bestStrategy, MiniMaxStrategy currentStrategy) {
+    private boolean isBetterScore(int currentScore) {
         return isNextMaximisingPlayer
-                ? currentStrategy.getScore() > bestStrategy.getScore()
-                : currentStrategy.getScore() < bestStrategy.getScore();
+                ? currentScore > alpha
+                : currentScore < beta;
+    }
+
+    private void updateAlphaBeta(int score) {
+        if (isNextMaximisingPlayer) {
+            alpha = score;
+        } else {
+            beta = score;
+        }
+    }
+
+    private boolean isPrunedNode() {
+        return selectedStrategy == null;
     }
 }

@@ -2,9 +2,12 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class MiniMaxScoreStrategiesTest {
+public class MiniMaxStrategiesTest {
     @Test
     public void selectsWinningMoveOverLosingMove() {
+        // x o x
+        // x o o
+        // 7 8 x
         Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
         MiniMaxStrategies miniMaxStrategies = MiniMaxStrategies.getBestStrategy(game);
         assertEquals(8, miniMaxStrategies.getBestMove());

@@ -8,8 +8,9 @@ public class MiniMaxStrategy {
     private final int nextDepth;
     private final boolean isMaximisingPlayer;
     private final boolean isNextMaximisingPlayer;
-    private int alpha;
-    private int beta;
+    private final int alpha;
+    private final int beta;
+
     private int score;
 
 
