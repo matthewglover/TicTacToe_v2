@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class MiniMaxTest {
+public class MiniMaxScoreTest {
 
     @Test
     public void maximisingPlayerWinningGameScores10() {
@@ -92,8 +92,8 @@ public class MiniMaxTest {
     }
 
     private int runMiniMax(Game game, boolean isMaximisingPlayer) {
-        MiniMax miniMax = new MiniMax(game, 0, isMaximisingPlayer);
-        miniMax.execute();
-        return miniMax.getScore();
+        MiniMaxStrategy miniMaxStrategy = new MiniMaxStrategy(game, 0, isMaximisingPlayer);
+        miniMaxStrategy.execute();
+        return miniMaxStrategy.getScore();
     }
 }

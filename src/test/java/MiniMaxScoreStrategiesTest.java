@@ -2,13 +2,12 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class UnbeatableComputerTest {
+public class MiniMaxScoreStrategiesTest {
     @Test
     public void selectsWinningMoveOverLosingMove() {
         Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
-        UnbeatableComputer unbeatableComputer = new UnbeatableComputer(game);
-        unbeatableComputer.execute();
-        assertEquals(8, unbeatableComputer.getMove());
+        MiniMaxStrategies miniMaxStrategies = MiniMaxStrategies.getBestStrategy(game);
+        assertEquals(8, miniMaxStrategies.getBestMove());
     }
 
     @Test
@@ -17,9 +16,8 @@ public class UnbeatableComputerTest {
         // 4 5 6
         // 7 o 9
         Game game = makeMoves(new int[]{1, 2, 3, 8});
-        UnbeatableComputer unbeatableComputer = new UnbeatableComputer(game);
-        unbeatableComputer.execute();
-        assertEquals(5, unbeatableComputer.getMove());
+        MiniMaxStrategies miniMaxStrategies = MiniMaxStrategies.getBestStrategy(game);
+        assertEquals(5, miniMaxStrategies.getBestMove());
     }
 
     @Test
@@ -28,9 +26,8 @@ public class UnbeatableComputerTest {
         // 4 x 6
         // 7 8 o
         Game game = makeMoves(new int[]{1, 2, 5, 9});
-        UnbeatableComputer unbeatableComputer = new UnbeatableComputer(game);
-        unbeatableComputer.execute();
-        assertEquals(4, unbeatableComputer.getMove());
+        MiniMaxStrategies miniMaxStrategies = MiniMaxStrategies.getBestStrategy(game);
+        assertEquals(4, miniMaxStrategies.getBestMove());
     }
 
     private Game makeMoves(int[] moves) {
