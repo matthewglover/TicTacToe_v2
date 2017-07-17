@@ -57,8 +57,8 @@ public class MiniMaxStrategy {
     }
 
     private void calculateBestScore() {
-        MiniMaxStrategies strategies = new MiniMaxStrategies(game, nextDepth, isNextMaximisingPlayer, alpha, beta);
+        MiniMax strategies = new MiniMax(game, nextDepth, isNextMaximisingPlayer, alpha, beta);
         strategies.execute();
-        score = strategies.getBestScore();
+        score = strategies.getScore();
     }
 }
