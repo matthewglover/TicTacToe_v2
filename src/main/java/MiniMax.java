@@ -13,7 +13,7 @@ public class MiniMax {
     private int selectedScore;
     private int selectedMove;
 
-    public static MiniMax run(Game game) {
+    public static MiniMax getMove(Game game) {
         MiniMax strategies = new MiniMax(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
         strategies.execute();
         return strategies;
@@ -29,7 +29,7 @@ public class MiniMax {
         selectedScore = isMaximising ? MINIMUM_ALPHA : MAXIMUM_BETA;
     }
 
-    public int run() {
+    public int getMove() {
         return selectedMove;
     }
 
