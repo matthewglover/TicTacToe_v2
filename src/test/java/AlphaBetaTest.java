@@ -1,3 +1,4 @@
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -21,6 +22,38 @@ public class AlphaBetaTest {
         Game game = makeMoves(new int[]{1, 2, 3, 8});
         AlphaBeta alphaBeta = AlphaBeta.run(game);
         assertEquals(5, alphaBeta.getMove());
+    }
+
+    @Test
+    public void runsBiggerGame() {
+        Game game = new Game(4);
+        for (int squareNumber : new int[]{1, 5, 2, 6, 3, 7}) {
+            game.move(squareNumber);
+        }
+        AlphaBeta alphaBeta = AlphaBeta.run(game);
+        assertEquals(4, alphaBeta.getMove());
+    }
+
+    @Test
+    @Ignore
+    public void runs4x4Game() {
+        Game game = new Game(4);
+        for (int squareNumber : new int[]{5, 9, 6, 10, 7, 11}) {
+            game.move(squareNumber);
+        }
+        long abStartTime = System.nanoTime();
+        AlphaBeta alphaBeta = AlphaBeta.run(game);
+        long abEndTime = System.nanoTime();
+        long abDuration = (abEndTime - abStartTime) / 1000000;
+
+        long mmStartTime = System.nanoTime();
+        MiniMax miniMax = MiniMax.run(game);
+        long mmEndTime = System.nanoTime();
+        long mmDuration = (mmEndTime - mmStartTime) / 1000000;
+
+        assertEquals(8, alphaBeta.getMove());
+        assertEquals(8, miniMax.getMove());
+        System.out.println("AlphaBeta: " + abDuration + ", MiniMax: " + mmDuration);
     }
 
     @Test
