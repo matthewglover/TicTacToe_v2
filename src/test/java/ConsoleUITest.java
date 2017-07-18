@@ -49,6 +49,7 @@ public class ConsoleUITest {
         ConsoleUI UI = buildUIWithInput("4");
         UI.promptForMove(Player.X, board);
         assertLinesEqual(new String[]{
+                "",
                 " X | O | O ",
                 "--- --- ---",
                 " 4 | 5 | 6 ",
@@ -66,6 +67,7 @@ public class ConsoleUITest {
         ConsoleUI UI = buildUIWithInput("4");
         UI.promptForMove(Player.X, board);
         assertLinesEqual(new String[]{
+                "",
                 "  X |  O |  3 |  4 ",
                 "---- ---- ---- ----",
                 "  5 |  6 |  7 |  8 ",

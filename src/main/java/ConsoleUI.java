@@ -38,6 +38,7 @@ public class ConsoleUI implements GameUI {
 
     private void printRequestMove(Player player, Board board) {
         BoardFormatter boardFormatter = new BoardFormatter(board);
+        out.println();
         out.println(boardFormatter.format());
         out.print(formatPlayerPrompt(player));
     }
