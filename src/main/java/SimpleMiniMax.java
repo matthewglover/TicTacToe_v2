@@ -8,8 +8,6 @@ public class SimpleMiniMax extends MiniMax {
 
     public SimpleMiniMax(Game game, int depth, boolean isMaximising) {
         super(game, depth, isMaximising);
-
-        selectedScore = isMaximising ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     }
 
     @Override

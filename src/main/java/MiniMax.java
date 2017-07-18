@@ -11,18 +11,35 @@ public abstract class MiniMax {
         this.isMaximising = isMaximising;
         this.game = game;
         this.depth = depth;
+
+        selectedScore = isMaximising ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     }
 
     public int getMove() {
         return selectedMove;
     }
 
-    public abstract void execute();
-
-    int calculateMoveScore(Game gameMove) {
+    protected int calculateMoveScore(Game gameMove) {
         return gameMove.isOver()
                 ? calculateFinalMoveScore(gameMove)
                 : calculateInterimMoveScore(gameMove);
+    }
+
+    protected int nextDepth() {
+        return depth + 1;
+    }
+
+    protected boolean isNextMaximising() {
+        return !isMaximising;
+    }
+
+    protected int getScore() {
+        return selectedScore;
+    }
+
+    protected void updateSelected(int score, int move) {
+        selectedScore = score;
+        selectedMove = move;
     }
 
     private int calculateFinalMoveScore(Game gameMove) {
@@ -41,24 +58,9 @@ public abstract class MiniMax {
         return isMaximising ? -depth : depth;
     }
 
+    public abstract void execute();
+
     protected abstract int calculateInterimMoveScore(Game gameMove);
-
-    protected int nextDepth() {
-        return depth + 1;
-    }
-
-    protected boolean isNextMaximising() {
-        return !isMaximising;
-    }
-
-    protected int getScore() {
-        return selectedScore;
-    }
-
-    void updateSelected(int score, int move) {
-        selectedScore = score;
-        selectedMove = move;
-    }
 
     protected abstract boolean isBetterScore(int currentScore);
 }

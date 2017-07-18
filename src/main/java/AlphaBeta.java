@@ -15,8 +15,6 @@ public class AlphaBeta extends MiniMax {
         super(game, depth, isMaximising);
         this.alpha = alpha;
         this.beta = beta;
-
-        selectedScore = isMaximising ? MINIMUM_ALPHA : MAXIMUM_BETA;
     }
 
     @Override
@@ -43,18 +41,18 @@ public class AlphaBeta extends MiniMax {
         return alphaBeta.getScore();
     }
 
+    @Override
+    protected boolean isBetterScore(int currentScore) {
+        return isMaximising
+                ? currentScore > alpha
+                : currentScore < beta;
+    }
+
     private void updateAlphaBeta(int score) {
         if (isMaximising) {
             alpha = score;
         } else {
             beta = score;
         }
-    }
-
-    @Override
-    protected boolean isBetterScore(int currentScore) {
-        return isMaximising
-                ? currentScore > alpha
-                : currentScore < beta;
     }
 }
