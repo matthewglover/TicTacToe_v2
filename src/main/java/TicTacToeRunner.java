@@ -9,7 +9,7 @@ public class TicTacToeRunner {
     }
 
     public TicTacToeRunner(GameUI UI) {
-       this.UI = UI;
+        this.UI = UI;
     }
 
     public void execute() {
@@ -19,7 +19,8 @@ public class TicTacToeRunner {
         reportGameResult();
         if (checkPlayAgain()) {
             execute();
-        };
+        }
+        ;
     }
 
     private int promptForBoardSize() {
@@ -31,7 +32,7 @@ public class TicTacToeRunner {
     }
 
     private void runGame() {
-        int squareNumber = UI.promptForMove(game.getCurrentPlayer(), game.getBoard());
+        int squareNumber = UI.promptForMove(game.getNextPlayer(), game.getBoard());
         game.move(squareNumber);
 
         if (!game.isOver()) {

@@ -18,6 +18,7 @@
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
+.idea/gradle.xml
 
 # CMake
 cmake-build-debug/
@@ -63,7 +64,6 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip

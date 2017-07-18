@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
 public class GameTest {
 
     private Game game = new Game(3);
@@ -24,7 +25,7 @@ public class GameTest {
         game.move(1);
         game.move(1);
         assertEquals(Player.X, board.getSquare(1));
-        assertEquals(Player.O, game.getCurrentPlayer());
+        assertEquals(Player.O, game.getNextPlayer());
     }
 
     @Test
@@ -113,5 +114,26 @@ public class GameTest {
         game.move(4);
         assertTrue(game.isWinner());
         assertEquals(Player.X, game.getWinner());
+    }
+
+    @Test
+    public void duplicateHasSameMovesAsOriginal() {
+        game.move(1);
+        game.move(2);
+        game.move(3);
+        Game duplicateGame = game.duplicate();
+        Board duplicateBoard = duplicateGame.getBoard();
+        assertEquals(game.getNextPlayer(), duplicateGame.getNextPlayer());
+        for (int i = 1; i <= board.getTotalSquares(); i++) {
+            assertEquals(board.getSquare(i), duplicateBoard.getSquare(i));
+        }
+    }
+
+    @Test
+    public void duplicateHasSameCurrentPlayerAsOriginal() {
+       game.move(1);
+       game.move(2);
+       Game duplicateGame = game.duplicate();
+       assertEquals(game.getNextPlayer(), duplicateGame.getNextPlayer());
     }
 }
