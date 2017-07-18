@@ -1,49 +1,28 @@
-public class MiniMax {
+public abstract class MiniMax {
     private static final int DRAW_SCORE = 0;
     private static final int WINNING_SCORE = 10;
-
-    private final Game game;
-    private final int depth;
-    private final boolean isMaximising;
-
-    private int selectedScore;
+    protected final Game game;
+    protected final int depth;
+    protected final boolean isMaximising;
+    protected int selectedScore;
     private int selectedMove;
 
-    public static MiniMax run(Game game) {
-        MiniMax miniMax = new MiniMax(game, 0, true);
-        miniMax.execute();
-        return miniMax;
-    }
-
     public MiniMax(Game game, int depth, boolean isMaximising) {
+        this.isMaximising = isMaximising;
         this.game = game;
         this.depth = depth;
-        this.isMaximising = isMaximising;
-
-        selectedScore = isMaximising ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     }
 
     public int getMove() {
         return selectedMove;
     }
 
-    public int getScore() {
-        return selectedScore;
-    }
+    public abstract void execute();
 
-    public void execute() {
-        for (Game gameMove : game.getNextMoves()) {
-            int currentMoveScore = calculateMoveScore(gameMove);
-
-            if (isBetterScore(currentMoveScore)) {
-                selectedScore = currentMoveScore;
-                selectedMove = gameMove.getCurrentMove();
-            }
-        }
-    }
-
-    private int calculateMoveScore(Game gameMove) {
-        return gameMove.isOver() ? calculateFinalMoveScore(gameMove) : calculateInterimMoveScore(gameMove);
+    int calculateMoveScore(Game gameMove) {
+        return gameMove.isOver()
+                ? calculateFinalMoveScore(gameMove)
+                : calculateInterimMoveScore(gameMove);
     }
 
     private int calculateFinalMoveScore(Game gameMove) {
@@ -62,23 +41,24 @@ public class MiniMax {
         return isMaximising ? -depth : depth;
     }
 
-    private int calculateInterimMoveScore(Game gameMove) {
-        MiniMax miniMax = new MiniMax(gameMove, nextDepth(), isNextMaximising());
-        miniMax.execute();
-        return miniMax.getScore();
-    }
+    protected abstract int calculateInterimMoveScore(Game gameMove);
 
-    private int nextDepth() {
+    protected int nextDepth() {
         return depth + 1;
     }
 
-    private boolean isNextMaximising() {
+    protected boolean isNextMaximising() {
         return !isMaximising;
     }
 
-    private boolean isBetterScore(int currentScore) {
-        return isMaximising
-                ? currentScore > selectedScore
-                : currentScore < selectedScore;
+    protected int getScore() {
+        return selectedScore;
     }
+
+    void updateSelected(int score, int move) {
+        selectedScore = score;
+        selectedMove = move;
+    }
+
+    protected abstract boolean isBetterScore(int currentScore);
 }
