@@ -47,13 +47,13 @@ public class AlphaBetaTest {
         long abDuration = (abEndTime - abStartTime) / 1000000;
 
         long mmStartTime = System.nanoTime();
-        MiniMax miniMax = MiniMax.run(game);
+        SimpleMiniMax miniMax = SimpleMiniMax.run(game);
         long mmEndTime = System.nanoTime();
         long mmDuration = (mmEndTime - mmStartTime) / 1000000;
 
         assertEquals(8, alphaBeta.getMove());
         assertEquals(8, miniMax.getMove());
-        System.out.println("AlphaBeta: " + abDuration + ", MiniMax: " + mmDuration);
+        System.out.println("AlphaBeta: " + abDuration + ", SimpleMiniMax: " + mmDuration);
     }
 
     @Test
