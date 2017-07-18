@@ -25,7 +25,7 @@ public class GameTest {
         game.move(1);
         game.move(1);
         assertEquals(Player.X, board.getSquare(1));
-        assertEquals(Player.O, game.getCurrentPlayer());
+        assertEquals(Player.O, game.getNextPlayer());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class GameTest {
         game.move(3);
         Game duplicateGame = game.duplicate();
         Board duplicateBoard = duplicateGame.getBoard();
-        assertEquals(game.getCurrentPlayer(), duplicateGame.getCurrentPlayer());
+        assertEquals(game.getNextPlayer(), duplicateGame.getNextPlayer());
         for (int i = 1; i <= board.getTotalSquares(); i++) {
             assertEquals(board.getSquare(i), duplicateBoard.getSquare(i));
         }
@@ -134,6 +134,6 @@ public class GameTest {
        game.move(1);
        game.move(2);
        Game duplicateGame = game.duplicate();
-       assertEquals(game.getCurrentPlayer(), duplicateGame.getCurrentPlayer());
+       assertEquals(game.getNextPlayer(), duplicateGame.getNextPlayer());
     }
 }

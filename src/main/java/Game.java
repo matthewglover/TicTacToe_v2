@@ -4,8 +4,8 @@ import java.util.stream.Collectors;
 
 public class Game {
     private Board board;
-    private Player currentPlayer = Player.X;
-    private int lastMove;
+    private Player nextPlayer = Player.X;
+    private int currentMove;
 
     public Game(int boardSize) {
         buildBoard(boardSize);
@@ -15,8 +15,8 @@ public class Game {
         return board;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+    public Player getNextPlayer() {
+        return nextPlayer;
     }
 
     public Player getWinner() {
@@ -28,8 +28,8 @@ public class Game {
         return Player.NEITHER;
     }
 
-    public int getLastMove() {
-        return lastMove;
+    public int getCurrentMove() {
+        return currentMove;
     }
 
     public List<Game> getNextMoves() {
@@ -49,9 +49,9 @@ public class Game {
 
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
-            lastMove = squareNumber;
-            board.setSquare(squareNumber, getCurrentPlayer());
-            toggleCurrentPlayer();
+            currentMove = squareNumber;
+            board.setSquare(squareNumber, getNextPlayer());
+            toggleNextPlayer();
         }
     }
 
@@ -64,8 +64,8 @@ public class Game {
                 duplicateBoard.setSquare(i, crntSquare);
             }
         }
-        duplicateGame.currentPlayer = currentPlayer;
-        duplicateGame.lastMove = lastMove;
+        duplicateGame.nextPlayer = nextPlayer;
+        duplicateGame.currentMove = currentMove;
         return duplicateGame;
     }
 
@@ -81,8 +81,8 @@ public class Game {
         };
     }
 
-    private void toggleCurrentPlayer() {
-        currentPlayer = (currentPlayer == Player.X) ? Player.O : Player.X;
+    private void toggleNextPlayer() {
+        nextPlayer = (nextPlayer == Player.X) ? Player.O : Player.X;
     }
 
     private void buildBoard(int boardSize) {

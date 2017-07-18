@@ -32,7 +32,7 @@ public class TicTacToeRunner {
     }
 
     private void runGame() {
-        int squareNumber = UI.promptForMove(game.getCurrentPlayer(), game.getBoard());
+        int squareNumber = UI.promptForMove(game.getNextPlayer(), game.getBoard());
         game.move(squareNumber);
 
         if (!game.isOver()) {

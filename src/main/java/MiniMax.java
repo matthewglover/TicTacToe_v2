@@ -37,7 +37,7 @@ public class MiniMax {
 
             if (isBetterScore(currentMoveScore)) {
                 selectedScore = currentMoveScore;
-                selectedMove = gameMove.getLastMove();
+                selectedMove = gameMove.getCurrentMove();
             }
         }
     }

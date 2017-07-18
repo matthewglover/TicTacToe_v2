@@ -14,9 +14,9 @@ public class AlphaBeta {
     private int selectedMove;
 
     public static AlphaBeta run(Game game) {
-        AlphaBeta strategies = new AlphaBeta(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
-        strategies.execute();
-        return strategies;
+        AlphaBeta alphaBeta = new AlphaBeta(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
+        alphaBeta.execute();
+        return alphaBeta;
     }
 
     public AlphaBeta(Game game, int depth, boolean isMaximising, int alpha, int beta) {
@@ -33,18 +33,14 @@ public class AlphaBeta {
         return selectedMove;
     }
 
-    public int getScore() {
-        return selectedScore;
-    }
-
     public void execute() {
         for (Game gameMove : game.getNextMoves()) {
-            int currentMoveScore = calculateMoveScore(gameMove);
+            int currentScore = calculateMoveScore(gameMove);
+            int currentMove = gameMove.getCurrentMove();
 
-            if (isBetterScore(currentMoveScore)) {
-                selectedScore = currentMoveScore;
-                selectedMove = gameMove.getLastMove();
-                updateAlphaBeta(currentMoveScore);
+            if (isBetterScore(currentScore)) {
+                updateSelected(currentScore, currentMove);
+                updateAlphaBeta(currentScore);
             }
 
             if (beta <= alpha) {
@@ -54,7 +50,9 @@ public class AlphaBeta {
     }
 
     private int calculateMoveScore(Game gameMove) {
-        return gameMove.isOver() ? calculateFinalMoveScore(gameMove) : calculateInterimMoveScore(gameMove);
+        return gameMove.isOver()
+                ? calculateFinalMoveScore(gameMove)
+                : calculateInterimMoveScore(gameMove);
     }
 
     private int calculateFinalMoveScore(Game gameMove) {
@@ -87,10 +85,19 @@ public class AlphaBeta {
         return !isMaximising;
     }
 
+    private int getScore() {
+        return selectedScore;
+    }
+
     private boolean isBetterScore(int currentScore) {
         return isMaximising
                 ? currentScore > alpha
                 : currentScore < beta;
+    }
+
+    private void updateSelected(int score, int move) {
+        selectedScore = score;
+        selectedMove = move;
     }
 
     private void updateAlphaBeta(int score) {
