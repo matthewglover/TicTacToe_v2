@@ -12,8 +12,8 @@ public class ConsoleUI implements GameUI {
         this.scanner = new Scanner(in);
     }
 
-    public int promptForMove(Player player, Board board) {
-        printRequestMove(player, board);
+    public int promptForMove(PlayerSymbol playerSymbol, Board board) {
+        printRequestMove(playerSymbol, board);
         return getBoardMove(board);
     }
 
@@ -21,8 +21,8 @@ public class ConsoleUI implements GameUI {
         out.print(UIMessages.GAME_DRAWN);
     }
 
-    public void reportWinner(Player player) {
-        out.print(String.format(UIMessages.GAME_WON, player.toString()));
+    public void reportWinner(PlayerSymbol playerSymbol) {
+        out.print(String.format(UIMessages.GAME_WON, playerSymbol.toString()));
     }
 
     public boolean promptPlayAgain() {
@@ -36,11 +36,11 @@ public class ConsoleUI implements GameUI {
         return getBoardSize(minBoardSize, maxBoardSize);
     }
 
-    private void printRequestMove(Player player, Board board) {
+    private void printRequestMove(PlayerSymbol playerSymbol, Board board) {
         BoardFormatter boardFormatter = new BoardFormatter(board);
         out.println();
         out.println(boardFormatter.format());
-        out.print(formatPlayerPrompt(player));
+        out.print(formatPlayerPrompt(playerSymbol));
     }
 
     private int getBoardMove(Board board) {
@@ -94,7 +94,7 @@ public class ConsoleUI implements GameUI {
         return boardSize >= minBoardSize && boardSize <= maxBoardSize;
     }
 
-    private String formatPlayerPrompt(Player player) {
-        return String.format(UIMessages.PLAYER_MOVE_PROMPT, player.toString());
+    private String formatPlayerPrompt(PlayerSymbol playerSymbol) {
+        return String.format(UIMessages.PLAYER_MOVE_PROMPT, playerSymbol.toString());
     }
 }

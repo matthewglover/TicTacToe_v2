@@ -1,54 +1,47 @@
 public class TicTacToeRunner {
-    private GameUI UI;
+    private final GameOptionsUI gameOptionsUI;
+    private final PlayerUI playerUI;
+    private GameOptions gameOptions;
     private Game game;
+    private Player playerX;
+    private Player playerO;
 
     public static void main(String[] args) {
-        GameUI UI = new ConsoleUI(System.in, System.out);
-        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(UI);
+        GameOptionsUI gameOptionsUI = new GameOptionsUI(System.in, System.out);
+        PlayerUI playerUI = new PlayerUI(System.in, System.out);
+        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(gameOptionsUI, playerUI);
         ticTacToeRunner.execute();
     }
 
-    public TicTacToeRunner(GameUI UI) {
-        this.UI = UI;
+    public TicTacToeRunner(GameOptionsUI gameOptionsUI, PlayerUI playerUI) {
+        this.gameOptionsUI = gameOptionsUI;
+        this.playerUI = playerUI;
     }
 
     public void execute() {
-        int boardSize = promptForBoardSize();
-        startNewGame(boardSize);
-        runGame();
-        reportGameResult();
-        if (checkPlayAgain()) {
-            execute();
-        }
-        ;
+        buildGameOptions();
+        buildGame();
+        startGame();
     }
 
-    private int promptForBoardSize() {
-        return UI.promptForBoardSize(Board.MIN_SIZE, Board.MAX_SIZE);
+    private void buildGameOptions() {
+        gameOptions = new GameOptions(gameOptionsUI);
+        gameOptions.execute();
     }
 
-    private void startNewGame(int boardSize) {
-        game = new Game(boardSize);
+    private void buildGame() {
+        game = new Game(gameOptions.getBoardSize());
+        playerX = new Player(playerUI, PlayerSymbol.X);
+        playerO = new Player(playerUI, PlayerSymbol.O);
+        game.addObserver(playerX);
+        game.addObserver(playerO);
     }
 
-    private void runGame() {
-        int squareNumber = UI.promptForMove(game.getNextPlayer(), game.getBoard());
-        game.move(squareNumber);
-
-        if (!game.isOver()) {
-            runGame();
-        }
+    private void startGame() {
+        game.start();
     }
 
-    private void reportGameResult() {
-        if (game.isWinner()) {
-            UI.reportWinner(game.getWinner());
-        } else {
-            UI.reportDraw();
-        }
-    }
-
-    private boolean checkPlayAgain() {
-        return UI.promptPlayAgain();
+    public PlayerSymbol getWinner() {
+        return game.getWinner();
     }
 }

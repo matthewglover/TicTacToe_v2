@@ -1,10 +1,11 @@
 import java.util.List;
+import java.util.Observable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Game {
+public class Game extends Observable {
     private Board board;
-    private Player nextPlayer = Player.X;
+    private PlayerSymbol nextPlayerSymbol = PlayerSymbol.X;
     private int currentMove;
 
     public Game(int boardSize) {
@@ -15,17 +16,17 @@ public class Game {
         return board;
     }
 
-    public Player getNextPlayer() {
-        return nextPlayer;
+    public PlayerSymbol getNextPlayerSymbol() {
+        return nextPlayerSymbol;
     }
 
-    public Player getWinner() {
-        if (board.isAnyWinningLine(Player.X)) {
-            return Player.X;
-        } else if (board.isAnyWinningLine(Player.O)) {
-            return Player.O;
+    public PlayerSymbol getWinner() {
+        if (board.isAnyWinningLine(PlayerSymbol.X)) {
+            return PlayerSymbol.X;
+        } else if (board.isAnyWinningLine(PlayerSymbol.O)) {
+            return PlayerSymbol.O;
         }
-        return Player.NEITHER;
+        return PlayerSymbol.NEITHER;
     }
 
     public int getCurrentMove() {
@@ -47,11 +48,16 @@ public class Game {
         return !getWinner().isEmpty();
     }
 
+    public void start() {
+        notifyChange();
+    }
+
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
             currentMove = squareNumber;
-            board.setSquare(squareNumber, getNextPlayer());
+            board.setSquare(squareNumber, getNextPlayerSymbol());
             toggleNextPlayer();
+            notifyChange();
         }
     }
 
@@ -59,12 +65,12 @@ public class Game {
         Game duplicateGame = new Game(board.getSize());
         Board duplicateBoard = duplicateGame.getBoard();
         for (int i = Board.FIRST_SQUARE_NUMBER; i <= board.getTotalSquares(); i++) {
-            Player crntSquare = board.getSquare(i);
+            PlayerSymbol crntSquare = board.getSquare(i);
             if (!crntSquare.isEmpty()) {
                 duplicateBoard.setSquare(i, crntSquare);
             }
         }
-        duplicateGame.nextPlayer = nextPlayer;
+        duplicateGame.nextPlayerSymbol = nextPlayerSymbol;
         duplicateGame.currentMove = currentMove;
         return duplicateGame;
     }
@@ -81,8 +87,13 @@ public class Game {
         };
     }
 
+    private void notifyChange() {
+        setChanged();
+        notifyObservers(getNextPlayerSymbol());
+    }
+
     private void toggleNextPlayer() {
-        nextPlayer = (nextPlayer == Player.X) ? Player.O : Player.X;
+        nextPlayerSymbol = (nextPlayerSymbol == PlayerSymbol.X) ? PlayerSymbol.O : PlayerSymbol.X;
     }
 
     private void buildBoard(int boardSize) {

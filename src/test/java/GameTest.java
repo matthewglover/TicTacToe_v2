@@ -10,22 +10,22 @@ public class GameTest {
     @Test
     public void xMovesFirst() {
         game.move(1);
-        assertEquals(Player.X, board.getSquare(1));
+        assertEquals(PlayerSymbol.X, board.getSquare(1));
     }
 
     @Test
     public void playersTakeTurns() {
         game.move(1);
         game.move(2);
-        assertEquals(Player.O, board.getSquare(2));
+        assertEquals(PlayerSymbol.O, board.getSquare(2));
     }
 
     @Test
     public void playerCanOnlyTakeEmptySquares() {
         game.move(1);
         game.move(1);
-        assertEquals(Player.X, board.getSquare(1));
-        assertEquals(Player.O, game.getNextPlayer());
+        assertEquals(PlayerSymbol.X, board.getSquare(1));
+        assertEquals(PlayerSymbol.O, game.getNextPlayerSymbol());
     }
 
     @Test
@@ -36,7 +36,7 @@ public class GameTest {
         game.move(3);
         game.move(7);
         assertTrue(game.isWinner());
-        assertEquals(Player.X, game.getWinner());
+        assertEquals(PlayerSymbol.X, game.getWinner());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class GameTest {
         game.move(7);
         game.move(3);
         assertTrue(game.isWinner());
-        assertEquals(Player.O, game.getWinner());
+        assertEquals(PlayerSymbol.O, game.getWinner());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class GameTest {
         game.move(13);
         game.move(4);
         assertTrue(game.isWinner());
-        assertEquals(Player.X, game.getWinner());
+        assertEquals(PlayerSymbol.X, game.getWinner());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class GameTest {
         game.move(3);
         Game duplicateGame = game.duplicate();
         Board duplicateBoard = duplicateGame.getBoard();
-        assertEquals(game.getNextPlayer(), duplicateGame.getNextPlayer());
+        assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
         for (int i = 1; i <= board.getTotalSquares(); i++) {
             assertEquals(board.getSquare(i), duplicateBoard.getSquare(i));
         }
@@ -134,6 +134,14 @@ public class GameTest {
        game.move(1);
        game.move(2);
        Game duplicateGame = game.duplicate();
-       assertEquals(game.getNextPlayer(), duplicateGame.getNextPlayer());
+       assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
+    }
+
+    @Test
+    public void startGameNotifiesObserversWithNextPlayer() {
+        TestGameObserver testGameObserver = new TestGameObserver();
+        game.addObserver(testGameObserver);
+        game.start();
+        assertEquals(game.getNextPlayerSymbol(), testGameObserver.getNextPlayerSymbol());
     }
 }

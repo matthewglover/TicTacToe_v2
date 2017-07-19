@@ -31,7 +31,7 @@ public class BoardFormatter {
         };
     }
 
-    private String getSquareString(Player square, int squareNumber) {
+    private String getSquareString(PlayerSymbol square, int squareNumber) {
         return (square.isEmpty()) ? Integer.toString(squareNumber) : square.toString();
     }
 

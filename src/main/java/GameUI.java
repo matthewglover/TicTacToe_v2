@@ -1,9 +1,9 @@
 public interface GameUI {
-    int promptForMove(Player player, Board board);
+    int promptForMove(PlayerSymbol playerSymbol, Board board);
 
     void reportDraw();
 
-    void reportWinner(Player player);
+    void reportWinner(PlayerSymbol playerSymbol);
 
     boolean promptPlayAgain();
 

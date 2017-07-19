@@ -1,66 +1,61 @@
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
 public class GameOptionsUITest {
-    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private PrintStream outputStream = new PrintStream(outContent);
-
     @Test
     public void printRequestBoardSizeOutputsMessage() {
-        InputStream inputStream = new ByteArrayInputStream("".getBytes());
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(inputStream, outputStream);
-        gameOptionsUI.printRequestBoardSize();
-        assertEquals(GameOptionsMessages.REQUEST_BOARD_SIZE + "\n", outContent.toString());
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("");
+        builder.getGameOptionsUI().printRequestBoardSize();
+        assertEquals(GameOptionsMessages.REQUEST_BOARD_SIZE + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
     public void printRequestGameTypeOutputsMessage() {
-        InputStream inputStream = new ByteArrayInputStream("".getBytes());
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(inputStream, outputStream);
-        gameOptionsUI.printRequestGameType();
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("");
+        builder.getGameOptionsUI().printRequestGameType();
         assertEquals(GameOptionsMessages.REQUEST_GAME_TYPE_INTRO + "\n" +
                 "(1) " + GameType.HUMAN_HUMAN.getDescription() + "\n" +
                 "(2) " + GameType.HUMAN_COMPUTER.getDescription() + "\n" +
-                "(3) " + GameType.COMPUTER_COMPUTER.getDescription() + "\n", outContent.toString());
+                "(3) " + GameType.COMPUTER_COMPUTER.getDescription() + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
     public void promptForBoardSizeReturnsSizeForValidInteger() {
-        InputStream inputStream = new ByteArrayInputStream("3\n".getBytes());
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(inputStream, outputStream);
-        int boardSize = gameOptionsUI.promptForBoardSize();
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("3\n");
+        int boardSize = builder.getGameOptionsUI().promptForBoardSize();
         assertEquals(3, boardSize);
     }
 
     @Test
     public void promptForBoardSizeReportsErrorAndPromptsForValidInput() {
-        InputStream inputStream = new ByteArrayInputStream("invalid input\n3\n".getBytes());
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(inputStream, outputStream);
-        int boardSize = gameOptionsUI.promptForBoardSize();
-        assertEquals(GameOptionsMessages.INVALID_INPUT + "\n", outContent.toString());
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("invalid\n3\n");
+        int boardSize = builder.getGameOptionsUI().promptForBoardSize();
+        assertEquals(GameOptionsMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
         assertEquals(3, boardSize);
     }
 
     @Test
     public void promptForGameTypeReturnsGameTypeForCorrespondingValue() {
-        InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(inputStream, outputStream);
-        GameType gameType = gameOptionsUI.promptForGameType();
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("1\n");
+        GameType gameType = builder.getGameOptionsUI().promptForGameType();
         assertEquals(GameType.values()[0], gameType);
     }
 
     @Test
-    public void promptForGameTypeReportsErrorAndPromptsForValidInput() {
-        InputStream inputStream = new ByteArrayInputStream("4\n2".getBytes());
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(inputStream, outputStream);
-        GameType gameType = gameOptionsUI.promptForGameType();
-        assertEquals(GameOptionsMessages.INVALID_INPUT + "\n", outContent.toString());
+    public void promptForGameTypeReportsErrorAndPromptsForValidInputForOutOfRangeInput() {
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("4\n2\n");
+        GameType gameType = builder.getGameOptionsUI().promptForGameType();
+        assertEquals(GameOptionsMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
         assertEquals(GameType.values()[1], gameType);
+    }
+
+    @Test
+    public void promptForGameTypeReportsErrorAndPromptsForValidInputForNonIntegerInput() {
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("non integer\n3\n");
+        GameType gameType = builder.getGameOptionsUI().promptForGameType();
+        assertEquals(GameOptionsMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
+        assertEquals(GameType.values()[2], gameType);
     }
 }

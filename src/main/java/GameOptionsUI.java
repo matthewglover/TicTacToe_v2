@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class GameOptionsUI {
 
-    private final PrintStream out;
     private final Scanner scanner;
+    private final PrintStream out;
 
     public GameOptionsUI(InputStream in, PrintStream out) {
         scanner = new Scanner(in);

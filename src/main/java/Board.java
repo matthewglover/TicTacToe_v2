@@ -13,7 +13,7 @@ public class Board {
     public static final int FIRST_SQUARE_NUMBER = 1;
 
     private final int size;
-    private Player[] grid;
+    private PlayerSymbol[] grid;
 
     public Board(int size) {
         this.size = size;
@@ -39,20 +39,20 @@ public class Board {
         return getGroupOfLinesOfSquareNumbers(size, 1);
     }
 
-    public Player getSquare(int squareNumber) {
+    public PlayerSymbol getSquare(int squareNumber) {
         return grid[squareNumber - 1];
     }
 
-    public void setSquare(int squareNumber, Player player) {
-        grid[squareNumber - 1] = player;
+    public void setSquare(int squareNumber, PlayerSymbol playerSymbol) {
+        grid[squareNumber - 1] = playerSymbol;
     }
 
     public boolean isEmptySquare(int squareNumber) {
         return getSquare(squareNumber).isEmpty();
     }
 
-    public boolean isAnyWinningLine(Player player) {
-        return getLines().anyMatch(line -> isWinningLine(line, player));
+    public boolean isAnyWinningLine(PlayerSymbol playerSymbol) {
+        return getLines().anyMatch(line -> isWinningLine(line, playerSymbol));
     }
 
     public boolean isFull() {
@@ -60,41 +60,41 @@ public class Board {
     }
 
     private void setupGrid() {
-        grid = new Player[getTotalSquares()];
-        fill(grid, Player.NEITHER);
+        grid = new PlayerSymbol[getTotalSquares()];
+        fill(grid, PlayerSymbol.NEITHER);
     }
 
-    private boolean isWinningLine(Stream<Player> line, Player player) {
-        return line.allMatch(square -> square == player);
+    private boolean isWinningLine(Stream<PlayerSymbol> line, PlayerSymbol playerSymbol) {
+        return line.allMatch(square -> square == playerSymbol);
     }
 
-    private Stream<Stream<Player>> getLines() {
+    private Stream<Stream<PlayerSymbol>> getLines() {
         return Stream.concat(getRows(), Stream.concat(getColumns(), getDiagonals()));
     }
 
-    private Stream<Stream<Player>> getRows() {
+    private Stream<Stream<PlayerSymbol>> getRows() {
         return getRowsOfSquareNumbers()
                 .map(line -> line.map(this::getSquare));
     }
 
-    private Stream<Stream<Player>> getColumns() {
+    private Stream<Stream<PlayerSymbol>> getColumns() {
         return getGroupOfLinesOfSquareNumbers(1, size)
                 .map(line -> line.map(this::getSquare));
     }
 
-    private Stream<Stream<Player>> getDiagonals() {
+    private Stream<Stream<PlayerSymbol>> getDiagonals() {
         return Stream.of(getDiagonalTopLeft(), getDiagonalTopRight());
     }
 
-    private Stream<Player> getDiagonalTopLeft() {
+    private Stream<PlayerSymbol> getDiagonalTopLeft() {
         return getDiagonal(1, size + 1);
     }
 
-    private Stream<Player> getDiagonalTopRight() {
+    private Stream<PlayerSymbol> getDiagonalTopRight() {
         return getDiagonal(size, size - 1);
     }
 
-    private Stream<Player> getDiagonal(int startSquare, int squareIncrementer) {
+    private Stream<PlayerSymbol> getDiagonal(int startSquare, int squareIncrementer) {
         return getLineOfSquareNumbers(squareIncrementer).apply(startSquare).map(this::getSquare);
     }
 
