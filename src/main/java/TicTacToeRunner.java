@@ -63,8 +63,8 @@ public class TicTacToeRunner implements Observer {
     }
 
     private void buildPlayers() {
-        playerX = new Player(playerUI, PlayerSymbol.X);
-        playerO = new Player(playerUI, PlayerSymbol.O);
+        playerX = new HumanPlayer(playerUI, PlayerSymbol.X);
+        playerO = new HumanPlayer(playerUI, PlayerSymbol.O);
     }
 
     private void buildGame() {
