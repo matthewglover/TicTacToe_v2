@@ -43,6 +43,14 @@ public class TicTacToeRunner implements Observer {
         return gameCount;
     }
 
+    public Player getPlayerX() {
+        return playerX;
+    }
+
+    public Player getPlayerO() {
+        return playerO;
+    }
+
     public void execute() {
         buildGameOptions();
         buildGameStatus();
@@ -63,8 +71,14 @@ public class TicTacToeRunner implements Observer {
     }
 
     private void buildPlayers() {
-        playerX = new HumanPlayer(playerUI, PlayerSymbol.X);
-        playerO = new HumanPlayer(playerUI, PlayerSymbol.O);
+        playerX = buildPlayer(PlayerSymbol.X, gameOptions.getPlayer1());
+        playerO = buildPlayer(PlayerSymbol.O, gameOptions.getPlayer2());
+    }
+
+    private Player buildPlayer(PlayerSymbol playerSymbol, PlayerType playerType) {
+        return (playerType == PlayerType.HUMAN)
+                ? new HumanPlayer(playerUI, playerSymbol)
+                : new ComputerPlayer(playerSymbol);
     }
 
     private void buildGame() {

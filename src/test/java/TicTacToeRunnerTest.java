@@ -30,4 +30,32 @@ public class TicTacToeRunnerTest {
         runner.execute();
         assertEquals(2, runner.gameCount());
     }
+
+    @Test
+    public void humanComputerMakesPlayer2AComputer() {
+        GameOptionsUIBuilder optionsBuilder = new GameOptionsUIBuilder("3\n2\n");
+        PlayerUIBuilder playerBuilder = new PlayerUIBuilder("1\n2\n3\n4\n5\n6\n7\n8\n9\n");
+        GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
+        TicTacToeRunner runner = new TicTacToeRunner(
+                optionsBuilder.getGameOptionsUI(),
+                playerBuilder.getPlayerUI(),
+                gameStatusBuilder.getGameStatusUI());
+        runner.execute();
+        assertTrue(runner.getPlayerX() instanceof HumanPlayer);
+        assertTrue(runner.getPlayerO() instanceof ComputerPlayer);
+    }
+
+    @Test
+    public void computerComputerMakesBothPlayersComputer() {
+        GameOptionsUIBuilder optionsBuilder = new GameOptionsUIBuilder("3\n3\n");
+        PlayerUIBuilder playerBuilder = new PlayerUIBuilder("");
+        GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
+        TicTacToeRunner runner = new TicTacToeRunner(
+                optionsBuilder.getGameOptionsUI(),
+                playerBuilder.getPlayerUI(),
+                gameStatusBuilder.getGameStatusUI());
+        runner.execute();
+        assertTrue(runner.getPlayerX() instanceof ComputerPlayer);
+        assertTrue(runner.getPlayerO() instanceof ComputerPlayer);
+    }
 }

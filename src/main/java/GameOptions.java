@@ -15,6 +15,14 @@ public class GameOptions {
         return gameType;
     }
 
+    public PlayerType getPlayer1() {
+        return gameType.getPlayer1();
+    }
+
+    public PlayerType getPlayer2() {
+        return gameType.getPlayer2();
+    }
+
     public void execute() {
         obtainBoardSize();
         obtainGameType();
