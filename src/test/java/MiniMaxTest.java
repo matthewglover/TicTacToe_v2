@@ -8,7 +8,8 @@ public class MiniMaxTest {
         // x o x
         // x o o
         // 7 8 x
-        Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
+        Game game = new Game(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 3, 5, 4, 6, 9});
         SimpleMiniMax miniMax = SimpleMiniMax.run(game);
         assertEquals(8, miniMax.getMove());
     }
@@ -18,7 +19,8 @@ public class MiniMaxTest {
         // x o x
         // 4 5 6
         // 7 o 9
-        Game game = makeMoves(new int[]{1, 2, 3, 8});
+        Game game = new Game(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 3, 8});
         SimpleMiniMax miniMax = SimpleMiniMax.run(game);
         assertEquals(5, miniMax.getMove());
     }
@@ -28,16 +30,9 @@ public class MiniMaxTest {
         // x o 3
         // 4 x 6
         // 7 8 o
-        Game game = makeMoves(new int[]{1, 2, 5, 9});
+        Game game = new Game(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 5, 9});
         SimpleMiniMax miniMax = SimpleMiniMax.run(game);
         assertEquals(4, miniMax.getMove());
-    }
-
-    private Game makeMoves(int[] moves) {
-        Game game = new Game(3);
-        for (int squareNumber : moves) {
-            game.move(squareNumber);
-        }
-        return game;
     }
 }

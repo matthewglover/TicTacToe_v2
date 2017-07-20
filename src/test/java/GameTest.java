@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import static org.junit.Assert.*;
 
 public class GameTest {
@@ -15,38 +18,27 @@ public class GameTest {
 
     @Test
     public void playersTakeTurns() {
-        game.move(1);
-        game.move(2);
+        GameTestHelper.runGame(game, new int[]{1, 2});
         assertEquals(PlayerSymbol.O, board.getSquare(2));
     }
 
     @Test
     public void playerCanOnlyTakeEmptySquares() {
-        game.move(1);
-        game.move(1);
+        GameTestHelper.runGame(game, new int[]{1, 1});
         assertEquals(PlayerSymbol.X, board.getSquare(1));
         assertEquals(PlayerSymbol.O, game.getNextPlayerSymbol());
     }
 
     @Test
     public void xWinsWhenHasWinningLine() {
-        game.move(1);
-        game.move(2);
-        game.move(4);
-        game.move(3);
-        game.move(7);
+        GameTestHelper.runGame(game, new int[]{1, 2, 4, 3, 7});
         assertTrue(game.isWinner());
         assertEquals(PlayerSymbol.X, game.getWinner());
     }
 
     @Test
     public void oWinsWhenHasWinningLine() {
-        game.move(5);
-        game.move(1);
-        game.move(6);
-        game.move(2);
-        game.move(7);
-        game.move(3);
+        GameTestHelper.runGame(game, new int[]{5, 1, 6, 2, 7, 3});
         assertTrue(game.isWinner());
         assertEquals(PlayerSymbol.O, game.getWinner());
     }
@@ -58,25 +50,13 @@ public class GameTest {
 
     @Test
     public void gameOverWhenThereIsAWinner() {
-        game.move(1);
-        game.move(5);
-        game.move(2);
-        game.move(6);
-        game.move(3);
+        GameTestHelper.runGame(game, new int[]{1, 5, 2, 6, 3});
         assertTrue(game.isOver());
     }
 
     @Test
     public void gameOverWhenBoardIsFullAndNoWinner() {
-        game.move(1);
-        game.move(5);
-        game.move(3);
-        game.move(2);
-        game.move(4);
-        game.move(7);
-        game.move(6);
-        game.move(9);
-        game.move(8);
+        GameTestHelper.runGame(game, new int[]{1, 5, 3, 2, 4, 7, 6, 9, 8});
         assertTrue(game.isOver());
     }
 
@@ -90,37 +70,21 @@ public class GameTest {
     @Test
     public void noWinnerIfLineOf3in4x4Game() {
         game = new Game(4);
-        game.move(1);
-        game.move(5);
-        game.move(2);
-        game.move(9);
-        game.move(3);
-        game.move(13);
-        game.move(6);
-        game.move(15);
-        game.move(11);
+        GameTestHelper.runGame(game, new int[]{1, 5, 2, 9, 3, 13, 6, 15, 11});
         assertFalse(game.isWinner());
     }
 
     @Test
     public void winnerIfLineOf4in4x4Game() {
         game = new Game(4);
-        game.move(1);
-        game.move(5);
-        game.move(2);
-        game.move(9);
-        game.move(3);
-        game.move(13);
-        game.move(4);
+        GameTestHelper.runGame(game, new int[]{1, 5, 2, 9, 3, 13, 4});
         assertTrue(game.isWinner());
         assertEquals(PlayerSymbol.X, game.getWinner());
     }
 
     @Test
     public void duplicateHasSameMovesAsOriginal() {
-        game.move(1);
-        game.move(2);
-        game.move(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 3});
         Game duplicateGame = game.duplicate();
         Board duplicateBoard = duplicateGame.getBoard();
         assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
@@ -131,10 +95,9 @@ public class GameTest {
 
     @Test
     public void duplicateHasSameCurrentPlayerAsOriginal() {
-       game.move(1);
-       game.move(2);
-       Game duplicateGame = game.duplicate();
-       assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
+        GameTestHelper.runGame(game, new int[]{1, 2});
+        Game duplicateGame = game.duplicate();
+        assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
     }
 
     @Test
@@ -143,5 +106,19 @@ public class GameTest {
         game.addObserver(testGameObserver);
         game.start();
         assertEquals(game.getNextPlayerSymbol(), testGameObserver.getNextPlayerSymbol());
+    }
+
+    public static class TestGameObserver implements Observer {
+
+        private PlayerSymbol nextPlayerSymbol;
+
+        @Override
+        public void update(Observable game, Object arg) {
+            nextPlayerSymbol = (PlayerSymbol) arg;
+        }
+
+        public PlayerSymbol getNextPlayerSymbol() {
+            return nextPlayerSymbol;
+        }
     }
 }
