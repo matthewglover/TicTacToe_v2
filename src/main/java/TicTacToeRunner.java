@@ -9,8 +9,8 @@ public class TicTacToeRunner implements Observer {
     private Game game;
     private Player playerX;
     private Player playerO;
-    private boolean active = true;
     private GameStatus gameStatus;
+    private int gameCount;
 
     public static void main(String[] args) {
         GameOptionsUI gameOptionsUI = new GameOptionsUI(System.in, System.out);
@@ -28,15 +28,19 @@ public class TicTacToeRunner implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        active = (Boolean) arg;
+        boolean isActive = (Boolean) arg;
 
-        if (active) {
+        if (isActive) {
             execute();
         }
     }
 
     public PlayerSymbol getWinner() {
         return game.getWinner();
+    }
+
+    public int gameCount() {
+        return gameCount;
     }
 
     public void execute() {
@@ -47,10 +51,6 @@ public class TicTacToeRunner implements Observer {
         registerGameObservers();
         observeGameStatus();
         startGame();
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     private void buildGameOptions() {
@@ -69,6 +69,7 @@ public class TicTacToeRunner implements Observer {
 
     private void buildGame() {
         game = new Game(gameOptions.getBoardSize());
+        gameCount++;
     }
 
     private void registerGameObservers() {
