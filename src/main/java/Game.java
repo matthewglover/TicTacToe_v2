@@ -65,9 +65,9 @@ public class Game extends Observable {
         Game duplicateGame = new Game(board.getSize());
         Board duplicateBoard = duplicateGame.getBoard();
         for (int i = Board.FIRST_SQUARE_NUMBER; i <= board.getTotalSquares(); i++) {
-            PlayerSymbol crntSquare = board.getSquare(i);
-            if (!crntSquare.isEmpty()) {
-                duplicateBoard.setSquare(i, crntSquare);
+            PlayerSymbol currentSquare = board.getSquare(i);
+            if (!currentSquare.isEmpty()) {
+                duplicateBoard.setSquare(i, currentSquare);
             }
         }
         duplicateGame.nextPlayerSymbol = nextPlayerSymbol;

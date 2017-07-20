@@ -20,6 +20,10 @@ public class IOTestHelper {
         return inputStream;
     }
 
+    public String[] getOutContentAsLines() {
+        return getOutContentString().split("\\n");
+    }
+
     public String getOutContentString() {
         return getOutContent().toString();
     }
