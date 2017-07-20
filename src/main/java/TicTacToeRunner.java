@@ -76,7 +76,7 @@ public class TicTacToeRunner implements Observer {
     }
 
     private Player buildPlayer(PlayerSymbol playerSymbol, PlayerType playerType) {
-        return (playerType == PlayerType.HUMAN)
+        return (playerType.isHuman())
                 ? new HumanPlayer(playerUI, playerSymbol)
                 : new ComputerPlayer(playerSymbol);
     }

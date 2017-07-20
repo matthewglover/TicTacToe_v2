@@ -9,7 +9,8 @@ public class AlphaBetaTest {
         // x o x
         // x o o
         // 7 8 x
-        Game game = makeMoves(new int[]{1, 2, 3, 5, 4, 6, 9});
+        Game game = new Game(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 3, 5, 4, 6, 9});
         AlphaBeta alphaBeta = AlphaBeta.run(game);
         assertEquals(8, alphaBeta.getMove());
     }
@@ -19,7 +20,8 @@ public class AlphaBetaTest {
         // x o x
         // 4 5 6
         // 7 o 9
-        Game game = makeMoves(new int[]{1, 2, 3, 8});
+        Game game = new Game(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 3, 8});
         AlphaBeta alphaBeta = AlphaBeta.run(game);
         assertEquals(5, alphaBeta.getMove());
     }
@@ -27,9 +29,18 @@ public class AlphaBetaTest {
     @Test
     public void runsBiggerGame() {
         Game game = new Game(4);
-        for (int squareNumber : new int[]{1, 5, 2, 6, 3, 7}) {
-            game.move(squareNumber);
-        }
+        GameTestHelper.runGame(game, new int[]{1, 5, 2, 6, 3, 7});
+        AlphaBeta alphaBeta = AlphaBeta.run(game);
+        assertEquals(4, alphaBeta.getMove());
+    }
+
+    @Test
+    public void maximisingPlayerWinInTwoMovesSelectsFirstMove() {
+        // x o 3
+        // 4 x 6
+        // 7 8 o
+        Game game = new Game(3);
+        GameTestHelper.runGame(game, new int[]{1, 2, 5, 9});
         AlphaBeta alphaBeta = AlphaBeta.run(game);
         assertEquals(4, alphaBeta.getMove());
     }
@@ -38,9 +49,8 @@ public class AlphaBetaTest {
     @Ignore
     public void runs4x4Game() {
         Game game = new Game(4);
-        for (int squareNumber : new int[]{5, 9, 6, 10, 7, 11}) {
-            game.move(squareNumber);
-        }
+        GameTestHelper.runGame(game, new int[]{5, 9, 6, 10, 7, 11});
+
         long abStartTime = System.nanoTime();
         AlphaBeta alphaBeta = AlphaBeta.run(game);
         long abEndTime = System.nanoTime();
@@ -54,23 +64,5 @@ public class AlphaBetaTest {
         assertEquals(8, alphaBeta.getMove());
         assertEquals(8, miniMax.getMove());
         System.out.println("AlphaBeta: " + abDuration + ", SimpleMiniMax: " + mmDuration);
-    }
-
-    @Test
-    public void maximisingPlayerWinInTwoMovesSelectsFirstMove() {
-        // x o 3
-        // 4 x 6
-        // 7 8 o
-        Game game = makeMoves(new int[]{1, 2, 5, 9});
-        AlphaBeta alphaBeta = AlphaBeta.run(game);
-        assertEquals(4, alphaBeta.getMove());
-    }
-
-    private Game makeMoves(int[] moves) {
-        Game game = new Game(3);
-        for (int squareNumber : moves) {
-            game.move(squareNumber);
-        }
-        return game;
     }
 }

@@ -7,8 +7,6 @@ public enum GameType {
     HUMAN_COMPUTER,
     COMPUTER_COMPUTER;
 
-    private PlayerType player2;
-
     public String getDescription() {
         return Arrays.stream(getPlayers())
                 .map(String::toLowerCase)

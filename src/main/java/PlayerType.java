@@ -1,3 +1,7 @@
 public enum PlayerType {
-    COMPUTER, HUMAN
+    COMPUTER, HUMAN;
+
+    public boolean isHuman() {
+        return this == PlayerType.HUMAN;
+    }
 }

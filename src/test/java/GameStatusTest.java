@@ -1,6 +1,5 @@
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,7 +16,7 @@ public class GameStatusTest {
         // x x x
         // o o 6
         // 7 8 9
-        runGame(game, new int[]{1, 4, 2, 5, 3});
+        GameTestHelper.runGame(game, new int[]{1, 4, 2, 5, 3});
         String winningMessage = String.format(GameStatusMessages.REPORT_WINNER, PlayerSymbol.X);
         String[] lines = builder.getIoTestHelper().getOutContentAsLines();
         assertEquals(winningMessage, lines[0]);
@@ -33,7 +32,7 @@ public class GameStatusTest {
         // x o x
         // o o x
         // x x o
-        runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
+        GameTestHelper.runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
         String[] lines = builder.getIoTestHelper().getOutContentAsLines();
         assertEquals(GameStatusMessages.REPORT_DRAW, lines[0]);
         assertEquals(GameStatusMessages.REQUEST_PLAY_AGAIN, lines[1]);
@@ -49,7 +48,7 @@ public class GameStatusTest {
         gameStatus.addObserver(gameStatusObserver);
         game.addObserver(gameStatus);
 
-        runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
+        GameTestHelper.runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
         assertTrue(gameStatusObserver.newGameRequested());
     }
 
@@ -63,7 +62,7 @@ public class GameStatusTest {
         gameStatus.addObserver(gameStatusObserver);
         game.addObserver(gameStatus);
 
-        runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
+        GameTestHelper.runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
         assertTrue(gameStatusObserver.newGameRequested());
     }
 
@@ -77,13 +76,8 @@ public class GameStatusTest {
         gameStatus.addObserver(gameStatusObserver);
         game.addObserver(gameStatus);
 
-        runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
+        GameTestHelper.runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
         assertFalse(gameStatusObserver.newGameRequested());
-    }
-
-    private void runGame(Game game, int[] moves) {
-        game.start();
-        Arrays.stream(moves).forEach(game::move);
     }
 
     private class GameStatusObserver implements Observer {
