@@ -24,8 +24,11 @@ public class GameOptions {
     }
 
     public void execute() {
+        gameOptionsUI.clearScreen();
         obtainBoardSize();
+        gameOptionsUI.clearScreen();
         obtainGameType();
+        gameOptionsUI.clearScreen();
     }
 
     private void obtainGameType() {

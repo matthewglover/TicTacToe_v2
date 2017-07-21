@@ -36,4 +36,8 @@ public class PlayerUI {
     public void printInvalidInput() {
         out.println(PlayerMessages.INVALID_INPUT);
     }
+
+    public void clearScreen() {
+        out.print("\033[H\033[2J");
+    }
 }
