@@ -8,10 +8,28 @@ import static org.junit.Assert.*;
 public class GameStatusTest {
 
     @Test
-    public void reportsWinnerOnGameOver() {
+    public void printsFinalBoardState() {
+        GameStatusObserver gameStatusObserver = new GameStatusObserver();
         GameStatusUIBuilder builder = new GameStatusUIBuilder("n\n");
         GameStatus gameStatus = new GameStatus(builder.getGameStatusUI());
         Game game = new Game(3);
+
+        gameStatus.addObserver(gameStatusObserver);
+        game.addObserver(gameStatus);
+
+        GameTestHelper.runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
+        String[] lines = builder.getIoTestHelper().getOutContentAsLines();
+        assertEquals(new BoardFormatter(game.getBoard()).format(),
+                IOTestHelper.removeClearLine(lines[0]) + "\n" + lines[1] + "\n" + lines[2] + "\n" + lines[3] + "\n" + lines[4]);
+    }
+
+    @Test
+    public void reportsWinnerOnGameOver() {
+        GameStatusUIBuilder builder = new GameStatusUIBuilder("n\n");
+        GameStatus gameStatus = new GameStatus(builder.getGameStatusUI());
+        int boardSize = 3;
+        Game game = new Game(boardSize);
+        int boardLineOffset = boardSize + 2;
         game.addObserver(gameStatus);
         // x x x
         // o o 6
@@ -19,23 +37,25 @@ public class GameStatusTest {
         GameTestHelper.runGame(game, new int[]{1, 4, 2, 5, 3});
         String winningMessage = String.format(GameStatusMessages.REPORT_WINNER, PlayerSymbol.X);
         String[] lines = builder.getIoTestHelper().getOutContentAsLines();
-        assertEquals(winningMessage, lines[0]);
-        assertEquals(GameStatusMessages.REQUEST_PLAY_AGAIN, lines[1]);
+        assertEquals(winningMessage, lines[0 + boardLineOffset]);
+        assertEquals(GameStatusMessages.REQUEST_PLAY_AGAIN, lines[1 + boardLineOffset]);
     }
 
     @Test
     public void reportsDrawOnGameOver() {
         GameStatusUIBuilder builder = new GameStatusUIBuilder("n\n");
         GameStatus gameStatus = new GameStatus(builder.getGameStatusUI());
-        Game game = new Game(3);
+        int boardSize = 3;
+        Game game = new Game(boardSize);
+        int boardLineOffset = boardSize + 2;
         game.addObserver(gameStatus);
         // x o x
         // o o x
         // x x o
         GameTestHelper.runGame(game, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
         String[] lines = builder.getIoTestHelper().getOutContentAsLines();
-        assertEquals(GameStatusMessages.REPORT_DRAW, lines[0]);
-        assertEquals(GameStatusMessages.REQUEST_PLAY_AGAIN, lines[1]);
+        assertEquals(GameStatusMessages.REPORT_DRAW, lines[0 + boardLineOffset]);
+        assertEquals(GameStatusMessages.REQUEST_PLAY_AGAIN, lines[1 + boardLineOffset]);
     }
 
     @Test

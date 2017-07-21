@@ -29,4 +29,12 @@ public class GameStatusUI {
         String input = scanner.nextLine();
         return input.trim().toLowerCase().matches("y");
     }
+
+    public void clearScreen() {
+        out.print("\033[H\033[2J");
+    }
+
+    public void printBoard(Board board) {
+        out.println(new BoardFormatter(board).format());
+    }
 }

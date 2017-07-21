@@ -8,6 +8,10 @@ public class IOTestHelper {
     private PrintStream outputStream = new PrintStream(outContent);
     private InputStream inputStream = new ByteArrayInputStream("".getBytes());
 
+    static String removeClearLine(String line) {
+        return line.replace("\033[H\033[2J", "");
+    }
+
     public ByteArrayOutputStream getOutContent() {
         return outContent;
     }

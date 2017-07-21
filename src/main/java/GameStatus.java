@@ -16,6 +16,8 @@ public class GameStatus extends Observable implements Observer {
             return;
         }
 
+        gameStatusUI.clearScreen();
+        gameStatusUI.printBoard(game.getBoard());
         reportCompletedGame(game);
         printPlayAgainRequest();
         promptForPlayAgain();
