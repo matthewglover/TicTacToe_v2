@@ -2,12 +2,12 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class PlayerUI {
+public class HumanPlayerUI {
 
     private final PrintStream out;
     private final Scanner scanner;
 
-    public PlayerUI(InputStream in, PrintStream out) {
+    public HumanPlayerUI(InputStream in, PrintStream out) {
         this.out = out;
         scanner = new Scanner(in);
     }

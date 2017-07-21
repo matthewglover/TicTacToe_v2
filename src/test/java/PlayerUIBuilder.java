@@ -1,17 +1,17 @@
 public class PlayerUIBuilder {
     private final IOTestHelper ioTestHelper = new IOTestHelper();
-    private final PlayerUI playerUI;
+    private final HumanPlayerUI humanPlayerUI;
 
     public PlayerUIBuilder(String input) {
         ioTestHelper.setInputStream(input);
-        playerUI = new PlayerUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream());
+        humanPlayerUI = new HumanPlayerUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream());
     }
 
     public IOTestHelper getIoTestHelper() {
         return ioTestHelper;
     }
 
-    public PlayerUI getPlayerUI() {
-        return playerUI;
+    public HumanPlayerUI getHumanPlayerUI() {
+        return humanPlayerUI;
     }
 }

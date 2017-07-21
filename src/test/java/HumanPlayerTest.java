@@ -7,7 +7,7 @@ public class HumanPlayerTest {
     public void printBoardPrintsCurrentBoard() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("");
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
         player.printBoard(game.getBoard());
 
         String printableBoard = new BoardFormatter(game.getBoard()).format();
@@ -18,7 +18,7 @@ public class HumanPlayerTest {
     public void printMoveRequestPrintsMessageForPlayer() {
         PlayerUIBuilder builder = new PlayerUIBuilder("");
         PlayerSymbol currentPlayerSymbol = PlayerSymbol.X;
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), currentPlayerSymbol);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), currentPlayerSymbol);
         player.printMoveRequest();
 
         String message = String.format(PlayerMessages.MOVE_REQUEST, currentPlayerSymbol);
@@ -29,7 +29,7 @@ public class HumanPlayerTest {
     public void obtainMoveParsesAndReturnsValidInput() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("3\n");
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
         game.move(1);
         game.move(2);
 
@@ -40,7 +40,7 @@ public class HumanPlayerTest {
     public void obtainMoveReportsErrorAndRequestsValidInputWhenNonIntegerMove() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("invalid move\n3\n");
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
 
         int move = player.obtainMove(game.getBoard());
         assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
@@ -51,7 +51,7 @@ public class HumanPlayerTest {
     public void obtainMoveReportsErrorAndRequestsValidInputWhenMoveAlreadyTaken() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("1\n3\n");
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
         game.move(1);
         game.move(2);
 
@@ -64,7 +64,7 @@ public class HumanPlayerTest {
     public void obtainMoveReportsErrorAndRequestsValidInputWhenMoveOutOfBounds() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("11\n3\n");
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
 
         int move = player.obtainMove(game.getBoard());
         assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
@@ -75,7 +75,7 @@ public class HumanPlayerTest {
     public void playerXObtainsMoveOnGameStart() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("2\n5\n");
-        HumanPlayer player = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
+        HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
         game.addObserver(player);
         game.start();
         assertEquals(PlayerSymbol.X, game.getBoard().getSquare(2));
@@ -85,8 +85,8 @@ public class HumanPlayerTest {
     public void playersObtainMovesInTurnUntilGameOver() {
         Game game = new Game(3);
         PlayerUIBuilder builder = new PlayerUIBuilder("1\n4\n2\n5\n3\n");
-        HumanPlayer playerX = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.X);
-        HumanPlayer playerO = new HumanPlayer(builder.getPlayerUI(), PlayerSymbol.O);
+        HumanPlayer playerX = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
+        HumanPlayer playerO = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.O);
         game.addObserver(playerX);
         game.addObserver(playerO);
         game.start();

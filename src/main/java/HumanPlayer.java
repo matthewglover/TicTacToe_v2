@@ -1,34 +1,34 @@
 public class HumanPlayer extends Player {
-    private PlayerUI playerUI;
+    private HumanPlayerUI humanPlayerUI;
 
-    public HumanPlayer(PlayerUI playerUI, PlayerSymbol playerSymbol) {
+    public HumanPlayer(HumanPlayerUI humanPlayerUI, PlayerSymbol playerSymbol) {
         super(playerSymbol);
-        this.playerUI = playerUI;
+        this.humanPlayerUI = humanPlayerUI;
     }
 
     @Override
     protected void makeMove(Game game) {
         Board board = game.getBoard();
-        playerUI.clearScreen();
+        humanPlayerUI.clearScreen();
         printBoard(board);
         printMoveRequest();
         game.move(obtainMove(board));
     }
 
     public void printBoard(Board board) {
-        playerUI.printBoard(board);
+        humanPlayerUI.printBoard(board);
     }
 
     public void printMoveRequest() {
-        playerUI.printMoveRequest(playerSymbol);
+        humanPlayerUI.printMoveRequest(playerSymbol);
     }
 
     public int obtainMove(Board board) {
-        int move = playerUI.promptForMove();
+        int move = humanPlayerUI.promptForMove();
         if (isValidMove(move, board)) {
             return move;
         } else {
-            playerUI.printInvalidInput();
+            humanPlayerUI.printInvalidInput();
             return obtainMove(board);
         }
     }

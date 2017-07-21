@@ -3,7 +3,7 @@ import java.util.Observer;
 
 public class TicTacToeRunner implements Observer {
     private final GameOptionsUI gameOptionsUI;
-    private final PlayerUI playerUI;
+    private final HumanPlayerUI humanPlayerUI;
     private GameStatusUI gameStatusUI;
     private GameOptions gameOptions;
     private Game game;
@@ -14,15 +14,15 @@ public class TicTacToeRunner implements Observer {
 
     public static void main(String[] args) {
         GameOptionsUI gameOptionsUI = new GameOptionsUI(System.in, System.out);
-        PlayerUI playerUI = new PlayerUI(System.in, System.out);
+        HumanPlayerUI humanPlayerUI = new HumanPlayerUI(System.in, System.out);
         GameStatusUI gameStatusUI = new GameStatusUI(System.in, System.out);
-        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(gameOptionsUI, playerUI, gameStatusUI);
+        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(gameOptionsUI, humanPlayerUI, gameStatusUI);
         ticTacToeRunner.execute();
     }
 
-    public TicTacToeRunner(GameOptionsUI gameOptionsUI, PlayerUI playerUI, GameStatusUI gameStatusUI) {
+    public TicTacToeRunner(GameOptionsUI gameOptionsUI, HumanPlayerUI humanPlayerUI, GameStatusUI gameStatusUI) {
         this.gameOptionsUI = gameOptionsUI;
-        this.playerUI = playerUI;
+        this.humanPlayerUI = humanPlayerUI;
         this.gameStatusUI = gameStatusUI;
     }
 
@@ -77,7 +77,7 @@ public class TicTacToeRunner implements Observer {
 
     private Player buildPlayer(PlayerSymbol playerSymbol, PlayerType playerType) {
         return (playerType.isHuman())
-                ? new HumanPlayer(playerUI, playerSymbol)
+                ? new HumanPlayer(humanPlayerUI, playerSymbol)
                 : new ComputerPlayer(playerSymbol);
     }
 

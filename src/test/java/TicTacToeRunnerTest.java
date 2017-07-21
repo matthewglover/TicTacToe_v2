@@ -11,7 +11,7 @@ public class TicTacToeRunnerTest {
         GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
-                playerBuilder.getPlayerUI(),
+                playerBuilder.getHumanPlayerUI(),
                 gameStatusBuilder.getGameStatusUI());
         runner.execute();
         assertEquals(PlayerSymbol.X, runner.getWinner());
@@ -25,7 +25,7 @@ public class TicTacToeRunnerTest {
         GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("y\nn\n");
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
-                playerBuilder.getPlayerUI(),
+                playerBuilder.getHumanPlayerUI(),
                 gameStatusBuilder.getGameStatusUI());
         runner.execute();
         assertEquals(2, runner.gameCount());
@@ -38,7 +38,7 @@ public class TicTacToeRunnerTest {
         GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
-                playerBuilder.getPlayerUI(),
+                playerBuilder.getHumanPlayerUI(),
                 gameStatusBuilder.getGameStatusUI());
         runner.execute();
         assertTrue(runner.getPlayerX() instanceof HumanPlayer);
@@ -52,7 +52,7 @@ public class TicTacToeRunnerTest {
         GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
-                playerBuilder.getPlayerUI(),
+                playerBuilder.getHumanPlayerUI(),
                 gameStatusBuilder.getGameStatusUI());
         runner.execute();
         assertTrue(runner.getPlayerX() instanceof ComputerPlayer);
