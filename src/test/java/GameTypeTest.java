@@ -1,3 +1,5 @@
+import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.PlayerType;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

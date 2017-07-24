@@ -1,4 +1,4 @@
-package com.mattheglover.tictactoe.core;
+package com.matthewglover.tictactoe.core;
 
 public class SimpleMiniMax extends MiniMax {
 

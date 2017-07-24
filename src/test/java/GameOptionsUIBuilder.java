@@ -1,3 +1,5 @@
+import com.matthewglover.tictactoe.consoleui.GameOptionsUI;
+
 public class GameOptionsUIBuilder {
     private final IOTestHelper ioTestHelper = new IOTestHelper();
     private final GameOptionsUI gameOptionsUI;

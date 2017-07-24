@@ -1,4 +1,4 @@
-package com.mattheglover.tictactoe.core;
+package com.matthewglover.tictactoe.core;
 
 import java.util.List;
 import java.util.Observable;

@@ -1,6 +1,6 @@
-import com.mattheglover.tictactoe.core.Board;
-import com.mattheglover.tictactoe.core.Game;
-import com.mattheglover.tictactoe.core.PlayerSymbol;
+import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.Game;
+import com.matthewglover.tictactoe.core.PlayerSymbol;
 import org.junit.Test;
 
 import java.util.Observable;

@@ -1,3 +1,5 @@
+import com.matthewglover.tictactoe.consoleui.GameOptionsMessages;
+import com.matthewglover.tictactoe.core.GameType;
 import org.junit.Test;
 
 

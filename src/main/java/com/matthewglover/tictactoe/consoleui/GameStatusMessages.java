@@ -1,3 +1,5 @@
+package com.matthewglover.tictactoe.consoleui;
+
 public class GameStatusMessages {
     public static final String REPORT_WINNER = "%s wins!!";
     public static final String REPORT_DRAW = "It's a draw!!";

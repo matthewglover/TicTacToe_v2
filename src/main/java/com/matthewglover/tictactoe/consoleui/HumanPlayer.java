@@ -1,6 +1,9 @@
-import com.mattheglover.tictactoe.core.Board;
-import com.mattheglover.tictactoe.core.Game;
-import com.mattheglover.tictactoe.core.PlayerSymbol;
+package com.matthewglover.tictactoe.consoleui;
+
+import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.Game;
+import com.matthewglover.tictactoe.core.Player;
+import com.matthewglover.tictactoe.core.PlayerSymbol;
 
 public class HumanPlayer extends Player {
     private HumanPlayerUI humanPlayerUI;

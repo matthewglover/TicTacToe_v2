@@ -1,3 +1,8 @@
+package com.matthewglover.tictactoe.consoleui;
+
+import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.PlayerType;
+
 public class GameOptions {
     private final GameOptionsUI gameOptionsUI;
     private int boardSize;

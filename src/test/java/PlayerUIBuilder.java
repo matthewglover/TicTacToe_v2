@@ -1,3 +1,5 @@
+import com.matthewglover.tictactoe.consoleui.HumanPlayerUI;
+
 public class PlayerUIBuilder {
     private final IOTestHelper ioTestHelper = new IOTestHelper();
     private final HumanPlayerUI humanPlayerUI;

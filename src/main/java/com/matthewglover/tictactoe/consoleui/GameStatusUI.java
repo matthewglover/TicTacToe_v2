@@ -1,5 +1,8 @@
-import com.mattheglover.tictactoe.core.Board;
-import com.mattheglover.tictactoe.core.PlayerSymbol;
+package com.matthewglover.tictactoe.consoleui;
+
+import com.matthewglover.tictactoe.consoleui.BoardFormatter;
+import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.PlayerSymbol;
 
 import java.io.InputStream;
 import java.io.PrintStream;

@@ -1,5 +1,5 @@
-import com.mattheglover.tictactoe.core.Game;
-import com.mattheglover.tictactoe.core.SimpleMiniMax;
+import com.matthewglover.tictactoe.core.Game;
+import com.matthewglover.tictactoe.core.SimpleMiniMax;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

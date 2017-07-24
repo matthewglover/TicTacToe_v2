@@ -1,4 +1,7 @@
-import com.mattheglover.tictactoe.core.Board;
+package com.matthewglover.tictactoe.consoleui;
+
+import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.GameType;
 
 import java.io.InputStream;
 import java.io.PrintStream;
