@@ -1,45 +1,18 @@
 # Tic Tac Toe in Java
 
-## Game Requirements
+## What
+- A Tic Tac Toe game in Java
+- Playable as (1) Human vs Human, (2) Human vs Computer and (3) Computer vs Computer
+- Command line interface
 
-- A command line application
-- Two players can play tic tac toe
-- Each player is prompted in turn to make his/her move
-- After making a move, an updated tic tac toe board will be rendered with the last player's requested move
-- Following display of the updated board, the next player will be prompted for their next move
-- This process will repeat until the game is over
-- On Game Over, the application will indicate whether the game was won by X, O or was a draw
+# Why
+An application to learn Java.
 
+# How
+## Gradle
+The project uses gradle and so follows the gradle project.
 
-## Technical requirements
+In order to build the project, run `./gradlew bulid`
+In order to run the project via gradle, run: `./gradlew run`
+In order to run the project as a jar, make sure you've built it, and then run: `java -jar build/libs/TicTacToe_v2-1.0-SNAPSHOT.jar`
 
-- Built in Java
-- Built using TDD (no new code written without a failing unit test)
-- 100% test coverage (except for main)
-
-
-## Implementation
-
-- Board Class:
-    - [x] makes moves (throws error if square already taken)
-    - [x] records moves
-    - [x] checks if player has won
-    - [x] checks if board is complete
-
-- Game Class:
-    - [x] stores current player
-    - [x] makes move on board
-    - [x] reports on current status of game (isGameOver, isWinner, getWinner)
-
-- ConsoleUI:
-    - [x] renders board
-    - [x] prompts for user input
-    - [x] accepts, parses and validates user input
-
-- TicTacToeRunner:
-    - [x] initialises a Game
-    - [x] requests current player's move
-    - [x] makes move and renders updated game
-    - [x] if game over, reports winner or draw and offers a play again option
-    - [x] if not game over, requests current player's move
-    - [x] allows Game to be quit
