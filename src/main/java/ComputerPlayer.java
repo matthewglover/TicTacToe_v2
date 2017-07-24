@@ -1,3 +1,7 @@
+import com.mattheglover.tictactoe.core.AlphaBeta;
+import com.mattheglover.tictactoe.core.Game;
+import com.mattheglover.tictactoe.core.PlayerSymbol;
+
 public class ComputerPlayer extends Player {
 
     public ComputerPlayer(PlayerSymbol playerSymbol) {

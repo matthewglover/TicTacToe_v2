@@ -1,3 +1,5 @@
+package com.mattheglover.tictactoe.core;
+
 public abstract class MiniMax {
     private static final int DRAW_SCORE = 0;
     private static final int WINNING_SCORE = 10;

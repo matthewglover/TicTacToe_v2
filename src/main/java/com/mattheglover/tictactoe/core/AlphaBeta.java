@@ -1,3 +1,5 @@
+package com.mattheglover.tictactoe.core;
+
 public class AlphaBeta extends MiniMax {
     private static final int MINIMUM_ALPHA = Integer.MIN_VALUE;
     private static final int MAXIMUM_BETA = Integer.MAX_VALUE;

@@ -1,3 +1,4 @@
+import com.mattheglover.tictactoe.core.PlayerSymbol;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,3 +1,5 @@
+package com.mattheglover.tictactoe.core;
+
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Function;

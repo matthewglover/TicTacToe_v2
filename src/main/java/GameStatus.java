@@ -1,3 +1,5 @@
+import com.mattheglover.tictactoe.core.Game;
+
 import java.util.Observable;
 import java.util.Observer;
 

@@ -1,3 +1,5 @@
+package com.mattheglover.tictactoe.core;
+
 public enum PlayerSymbol {
     NEITHER,
     X,

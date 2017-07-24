@@ -1,3 +1,5 @@
+package com.mattheglover.tictactoe.core;
+
 public class SimpleMiniMax extends MiniMax {
 
     public static SimpleMiniMax run(Game game) {

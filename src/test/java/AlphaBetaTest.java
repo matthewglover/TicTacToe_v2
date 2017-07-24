@@ -1,3 +1,6 @@
+import com.mattheglover.tictactoe.core.AlphaBeta;
+import com.mattheglover.tictactoe.core.Game;
+import com.mattheglover.tictactoe.core.SimpleMiniMax;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -63,6 +66,6 @@ public class AlphaBetaTest {
 
         assertEquals(8, alphaBeta.getMove());
         assertEquals(8, miniMax.getMove());
-        System.out.println("AlphaBeta: " + abDuration + ", SimpleMiniMax: " + mmDuration);
+        System.out.println("AlphaBeta: " + abDuration + ", com.mattheglover.tictactoe.core.SimpleMiniMax: " + mmDuration);
     }
 }
