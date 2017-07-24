@@ -1,8 +1,8 @@
-import com.matthewglover.tictactoe.consoleui.BoardFormatter;
-import com.matthewglover.tictactoe.consoleui.HumanPlayer;
-import com.matthewglover.tictactoe.consoleui.PlayerMessages;
+package com.matthewglover.tictactoe.consoleui;
+
 import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,7 +16,7 @@ public class HumanPlayerTest {
         player.printBoard(game.getBoard());
 
         String printableBoard = new BoardFormatter(game.getBoard()).format();
-        assertEquals(printableBoard + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(printableBoard + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class HumanPlayerTest {
         player.printMoveRequest();
 
         String message = String.format(PlayerMessages.MOVE_REQUEST, currentPlayerSymbol);
-        assertEquals(message + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(message + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class HumanPlayerTest {
         HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
 
         int move = player.obtainMove(game.getBoard());
-        assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
         assertEquals(3, move);
     }
 
@@ -61,7 +61,7 @@ public class HumanPlayerTest {
         game.move(2);
 
         int move = player.obtainMove(game.getBoard());
-        assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
         assertEquals(3, move);
     }
 
@@ -72,7 +72,7 @@ public class HumanPlayerTest {
         HumanPlayer player = new HumanPlayer(builder.getHumanPlayerUI(), PlayerSymbol.X);
 
         int move = player.obtainMove(game.getBoard());
-        assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
         assertEquals(3, move);
     }
 

@@ -1,6 +1,5 @@
-import com.matthewglover.tictactoe.core.AlphaBeta;
-import com.matthewglover.tictactoe.core.Game;
-import com.matthewglover.tictactoe.core.SimpleMiniMax;
+package com.matthewglover.tictactoe.core;
+
 import org.junit.Ignore;
 import org.junit.Test;
 

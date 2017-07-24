@@ -1,4 +1,5 @@
-import com.matthewglover.tictactoe.consoleui.GameStatusUI;
+package com.matthewglover.tictactoe.consoleui;
+
 
 public class GameStatusUIBuilder {
     private final IOTestHelper ioTestHelper = new IOTestHelper();

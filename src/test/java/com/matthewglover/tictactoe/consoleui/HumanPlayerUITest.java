@@ -1,7 +1,8 @@
-import com.matthewglover.tictactoe.consoleui.BoardFormatter;
-import com.matthewglover.tictactoe.consoleui.PlayerMessages;
+package com.matthewglover.tictactoe.consoleui;
+
 import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,7 +17,7 @@ public class HumanPlayerUITest {
         builder.getHumanPlayerUI().printBoard(game.getBoard());
 
         String printableBoard = new BoardFormatter(game.getBoard()).format();
-        assertEquals(printableBoard + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(printableBoard + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
@@ -26,7 +27,7 @@ public class HumanPlayerUITest {
         builder.getHumanPlayerUI().printMoveRequest(currentPlayerSymbol);
 
         String message = String.format(PlayerMessages.MOVE_REQUEST, currentPlayerSymbol);
-        assertEquals(message + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(message + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
@@ -35,6 +36,6 @@ public class HumanPlayerUITest {
 
         int move = builder.getHumanPlayerUI().promptForMove();
         assertEquals(3, move);
-        assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(PlayerMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
     }
 }

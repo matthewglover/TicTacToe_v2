@@ -1,6 +1,5 @@
-import com.matthewglover.tictactoe.core.ComputerPlayer;
-import com.matthewglover.tictactoe.core.Game;
-import com.matthewglover.tictactoe.core.PlayerSymbol;
+package com.matthewglover.tictactoe.core;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

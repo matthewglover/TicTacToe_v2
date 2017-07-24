@@ -1,4 +1,4 @@
-import com.matthewglover.tictactoe.core.Game;
+package com.matthewglover.tictactoe.core;
 
 import java.util.Arrays;
 
