@@ -21,7 +21,8 @@ public class GameOptionsUITest {
         assertEquals(GameOptionsMessages.REQUEST_GAME_TYPE_INTRO + "\n" +
                 "(1) " + GameType.HUMAN_HUMAN.getDescription() + "\n" +
                 "(2) " + GameType.HUMAN_COMPUTER.getDescription() + "\n" +
-                "(3) " + GameType.COMPUTER_COMPUTER.getDescription() + "\n", builder.getIoTestHelper().getOutContentString());
+                "(3) " + GameType.COMPUTER_HUMAN.getDescription() + "\n" +
+                "(4) " + GameType.COMPUTER_COMPUTER.getDescription() + "\n", builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
@@ -48,7 +49,7 @@ public class GameOptionsUITest {
 
     @Test
     public void promptForGameTypeReportsErrorAndPromptsForValidInputForOutOfRangeInput() {
-        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("4\n2\n");
+        GameOptionsUIBuilder builder = new GameOptionsUIBuilder("5\n2\n");
         GameType gameType = builder.getGameOptionsUI().promptForGameType();
         assertEquals(GameOptionsMessages.INVALID_INPUT + "\n", builder.getIoTestHelper().getOutContentString());
         assertEquals(GameType.values()[1], gameType);

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public enum GameType {
     HUMAN_HUMAN,
     HUMAN_COMPUTER,
+    COMPUTER_HUMAN,
     COMPUTER_COMPUTER;
 
     public String getDescription() {

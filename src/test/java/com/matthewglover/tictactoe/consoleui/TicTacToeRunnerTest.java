@@ -50,8 +50,22 @@ public class TicTacToeRunnerTest {
     }
 
     @Test
-    public void computerComputerMakesBothPlayersComputer() {
+    public void computerHumanMakesPlayer1AComputer() {
         GameOptionsUIBuilder optionsBuilder = new GameOptionsUIBuilder("3\n3\n");
+        PlayerUIBuilder playerBuilder = new PlayerUIBuilder("1\n2\n3\n4\n5\n6\n7\n8\n9\n");
+        GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
+        TicTacToeRunner runner = new TicTacToeRunner(
+                optionsBuilder.getGameOptionsUI(),
+                playerBuilder.getHumanPlayerUI(),
+                gameStatusBuilder.getGameStatusUI());
+        runner.execute();
+        assertTrue(runner.getPlayerX() instanceof ComputerPlayer);
+        assertTrue(runner.getPlayerO() instanceof HumanPlayer);
+    }
+
+    @Test
+    public void computerComputerMakesBothPlayersComputer() {
+        GameOptionsUIBuilder optionsBuilder = new GameOptionsUIBuilder("3\n4\n");
         PlayerUIBuilder playerBuilder = new PlayerUIBuilder("");
         GameStatusUIBuilder gameStatusBuilder = new GameStatusUIBuilder("n\n");
         TicTacToeRunner runner = new TicTacToeRunner(
