@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/matthewglover/TicTacToe_v2.svg?branch=master)](https://travis-ci.org/matthewglover/TicTacToe_v2)
 # Tic Tac Toe in Java
 
 ## What
