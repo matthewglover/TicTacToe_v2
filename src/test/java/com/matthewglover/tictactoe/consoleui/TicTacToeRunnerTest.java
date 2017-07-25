@@ -15,6 +15,7 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
+                playerBuilder.getComputerPlayerUI(),
                 gameStatusBuilder.getGameStatusUI(),
                 0);
         runner.execute();
@@ -30,6 +31,7 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
+                playerBuilder.getComputerPlayerUI(),
                 gameStatusBuilder.getGameStatusUI(),
                 0);
         runner.execute();
@@ -44,6 +46,7 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
+                playerBuilder.getComputerPlayerUI(),
                 gameStatusBuilder.getGameStatusUI(),
                 0);
         runner.execute();
@@ -59,6 +62,7 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
+                playerBuilder.getComputerPlayerUI(),
                 gameStatusBuilder.getGameStatusUI(),
                 0);
         runner.execute();
@@ -74,6 +78,7 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
+                playerBuilder.getComputerPlayerUI(),
                 gameStatusBuilder.getGameStatusUI(),
                 0);
         runner.execute();

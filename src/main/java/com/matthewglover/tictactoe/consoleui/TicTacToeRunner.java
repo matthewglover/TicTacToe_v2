@@ -8,6 +8,7 @@ import java.util.Observer;
 public class TicTacToeRunner implements Observer {
     private final GameOptionsUI gameOptionsUI;
     private final HumanPlayerUI humanPlayerUI;
+    private final ComputerPlayerUI computerPlayerUI;
     private GameStatusUI gameStatusUI;
     private final int withDelay;
     private GameOptions gameOptions;
@@ -20,14 +21,26 @@ public class TicTacToeRunner implements Observer {
     public static void main(String[] args) {
         GameOptionsUI gameOptionsUI = new GameOptionsUI(System.in, System.out);
         HumanPlayerUI humanPlayerUI = new HumanPlayerUI(System.in, System.out);
+        ComputerPlayerUI computerPlayerUI = new ComputerPlayerUI(System.in, System.out);
         GameStatusUI gameStatusUI = new GameStatusUI(System.in, System.out);
-        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(gameOptionsUI, humanPlayerUI, gameStatusUI, 2000);
+        TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(
+                gameOptionsUI,
+                humanPlayerUI,
+                computerPlayerUI,
+                gameStatusUI,
+                2000);
         ticTacToeRunner.execute();
     }
 
-    public TicTacToeRunner(GameOptionsUI gameOptionsUI, HumanPlayerUI humanPlayerUI, GameStatusUI gameStatusUI, int withDelay) {
+    public TicTacToeRunner(
+            GameOptionsUI gameOptionsUI,
+            HumanPlayerUI humanPlayerUI,
+            ComputerPlayerUI computerPlayerUI,
+            GameStatusUI gameStatusUI,
+            int withDelay) {
         this.gameOptionsUI = gameOptionsUI;
         this.humanPlayerUI = humanPlayerUI;
+        this.computerPlayerUI = computerPlayerUI;
         this.gameStatusUI = gameStatusUI;
         this.withDelay = withDelay;
     }
@@ -84,7 +97,7 @@ public class TicTacToeRunner implements Observer {
     private Player buildPlayer(PlayerSymbol playerSymbol, PlayerType playerType) {
         return (playerType.isHuman())
                 ? new HumanPlayer(humanPlayerUI, playerSymbol)
-                : new ComputerPlayer(playerSymbol, withDelay);
+                : new ComputerPlayer(computerPlayerUI, playerSymbol, withDelay);
     }
 
     private void buildGame() {

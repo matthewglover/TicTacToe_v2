@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.consoleui;
 
-
 import com.matthewglover.tictactoe.core.AlphaBeta;
 import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.Player;
@@ -11,11 +10,6 @@ public class ComputerPlayer extends Player {
     private static final int MAX_SEARCH_DEPTH = 6;
     private final int withDelay;
     private ComputerPlayerUI computerPlayerUI;
-
-    public ComputerPlayer(PlayerSymbol playerSymbol, int withDelay) {
-        super(playerSymbol);
-        this.withDelay = withDelay;
-    }
 
     public ComputerPlayer(ComputerPlayerUI computerPlayerUI, PlayerSymbol playerSymbol, int withDelay) {
         super(playerSymbol);

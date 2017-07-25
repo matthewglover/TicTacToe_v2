@@ -9,10 +9,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ComputerPlayerTest {
+
+    private final IOTestHelper ioTestHelper = new IOTestHelper();
+    private final ComputerPlayerUI computerPlayerUI = new ComputerPlayerUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream());
+    private final ComputerPlayer computerPlayer = new ComputerPlayer(computerPlayerUI, PlayerSymbol.X, 0);
+    private final Game game = new Game(3);
+
     @Test
     public void takesWinningMoveWhenAvailable() {
-        Game game = new Game(3);
-        ComputerPlayer computerPlayer = new ComputerPlayer(PlayerSymbol.X, 0);
         game.start();
         game.move(1);
         game.move(4);
@@ -25,10 +29,6 @@ public class ComputerPlayerTest {
 
     @Test
     public void printsBoardBeforeMove() {
-        Game game = new Game(3);
-        IOTestHelper ioTestHelper = new IOTestHelper();
-        ComputerPlayerUI computerPlayerUI = new ComputerPlayerUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream());
-        ComputerPlayer computerPlayer = new ComputerPlayer(computerPlayerUI, PlayerSymbol.X, 0);
         game.addObserver(computerPlayer);
         String initialBoard = new BoardFormatter(game.getBoard()).format();
         game.start();
