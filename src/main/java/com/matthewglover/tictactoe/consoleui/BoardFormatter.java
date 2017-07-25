@@ -1,3 +1,8 @@
+package com.matthewglover.tictactoe.consoleui;
+
+import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.PlayerSymbol;
+
 import java.util.Collections;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -31,7 +36,7 @@ public class BoardFormatter {
         };
     }
 
-    private String getSquareString(Player square, int squareNumber) {
+    private String getSquareString(PlayerSymbol square, int squareNumber) {
         return (square.isEmpty()) ? Integer.toString(squareNumber) : square.toString();
     }
 

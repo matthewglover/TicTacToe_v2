@@ -1,22 +1,35 @@
+package com.matthewglover.tictactoe.core;
+
 public abstract class MiniMax {
-    private static final int DRAW_SCORE = 0;
-    private static final int WINNING_SCORE = 10;
+    protected final int DRAW_SCORE = 0;
+    private final int winningScore;
     protected final Game game;
+    protected final int maxSearchDepth;
     protected final int depth;
     protected final boolean isMaximising;
     protected int selectedScore;
     private int selectedMove;
 
-    public MiniMax(Game game, int depth, boolean isMaximising) {
-        this.isMaximising = isMaximising;
+    public MiniMax(Game game, int maxSearchDepth, int depth, boolean isMaximising) {
         this.game = game;
+        this.maxSearchDepth = maxSearchDepth;
         this.depth = depth;
+        this.isMaximising = isMaximising;
 
         selectedScore = isMaximising ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        winningScore = game.getBoard().getTotalSquares();
     }
 
     public int getMove() {
         return selectedMove;
+    }
+
+    public void execute() {
+        if (isOutOfDepth()) {
+            setOutOfDepthScore();
+        } else {
+            calculateBestScore();
+        }
     }
 
     protected int calculateMoveScore(Game gameMove) {
@@ -37,10 +50,22 @@ public abstract class MiniMax {
         return selectedScore;
     }
 
+    protected void setOutOfDepthScore() {
+        int currentScore = DRAW_SCORE;
+        int currentMove = game.getNextMoves().get(0).getCurrentMove();
+        updateSelected(currentScore, currentMove);
+    }
+
     protected void updateSelected(int score, int move) {
         selectedScore = score;
         selectedMove = move;
     }
+
+    protected abstract void calculateBestScore();
+
+    protected abstract int calculateInterimMoveScore(Game gameMove);
+
+    protected abstract boolean isBetterScore(int currentScore);
 
     private int calculateFinalMoveScore(Game gameMove) {
         if (gameMove.isWinner()) {
@@ -50,17 +75,15 @@ public abstract class MiniMax {
         }
     }
 
+    private boolean isOutOfDepth() {
+        return depth >= maxSearchDepth;
+    }
+
     private int getBaseScore() {
-        return isMaximising ? WINNING_SCORE : -WINNING_SCORE;
+        return isMaximising ? winningScore : -winningScore;
     }
 
     private int getDepthOffset() {
         return isMaximising ? -depth : depth;
     }
-
-    public abstract void execute();
-
-    protected abstract int calculateInterimMoveScore(Game gameMove);
-
-    protected abstract boolean isBetterScore(int currentScore);
 }

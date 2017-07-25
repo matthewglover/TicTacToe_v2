@@ -1,17 +1,19 @@
+package com.matthewglover.tictactoe.core;
+
 public class SimpleMiniMax extends MiniMax {
 
-    public static SimpleMiniMax run(Game game) {
-        SimpleMiniMax miniMax = new SimpleMiniMax(game, 0, true);
+    public static SimpleMiniMax run(Game game, int maxSearchDepth) {
+        SimpleMiniMax miniMax = new SimpleMiniMax(game, maxSearchDepth, 0, true);
         miniMax.execute();
         return miniMax;
     }
 
-    public SimpleMiniMax(Game game, int depth, boolean isMaximising) {
-        super(game, depth, isMaximising);
+    public SimpleMiniMax(Game game, int maxSearchDepth, int depth, boolean isMaximising) {
+        super(game, maxSearchDepth, depth, isMaximising);
     }
 
     @Override
-    public void execute() {
+    protected void calculateBestScore() {
         for (Game gameMove : game.getNextMoves()) {
             int currentScore = calculateMoveScore(gameMove);
             int currentMove = gameMove.getCurrentMove();
@@ -24,7 +26,7 @@ public class SimpleMiniMax extends MiniMax {
 
     @Override
     protected int calculateInterimMoveScore(Game gameMove) {
-        SimpleMiniMax miniMax = new SimpleMiniMax(gameMove, nextDepth(), isNextMaximising());
+        SimpleMiniMax miniMax = new SimpleMiniMax(gameMove, maxSearchDepth, nextDepth(), isNextMaximising());
         miniMax.execute();
         return miniMax.getScore();
     }
