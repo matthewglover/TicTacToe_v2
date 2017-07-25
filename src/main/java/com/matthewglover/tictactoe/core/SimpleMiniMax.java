@@ -13,7 +13,7 @@ public class SimpleMiniMax extends MiniMax {
     }
 
     @Override
-    public void execute() {
+    protected void calculateBestScore() {
         for (Game gameMove : game.getNextMoves()) {
             int currentScore = calculateMoveScore(gameMove);
             int currentMove = gameMove.getCurrentMove();

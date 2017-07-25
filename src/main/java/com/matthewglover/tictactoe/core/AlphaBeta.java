@@ -21,14 +21,7 @@ public class AlphaBeta extends MiniMax {
     }
 
     @Override
-    public void execute() {
-        if (depth == maxSearchDepth) {
-            int currentScore = 0;
-            int currentMove = game.getNextMoves().get(0).getCurrentMove();
-            updateSelected(currentScore, currentMove);
-            updateAlphaBeta(currentScore);
-            return;
-        }
+    protected void calculateBestScore() {
         for (Game gameMove : game.getNextMoves()) {
             int currentScore = calculateMoveScore(gameMove);
             int currentMove = gameMove.getCurrentMove();
@@ -45,6 +38,12 @@ public class AlphaBeta extends MiniMax {
     }
 
     @Override
+    protected void setOutOfDepthScore() {
+        super.setOutOfDepthScore();
+        updateAlphaBeta(DRAW_SCORE);
+    }
+
+    @Override
     protected int calculateInterimMoveScore(Game gameMove) {
         AlphaBeta alphaBeta = new AlphaBeta(gameMove, maxSearchDepth,nextDepth(), isNextMaximising(), alpha, beta);
         alphaBeta.execute();
@@ -58,7 +57,7 @@ public class AlphaBeta extends MiniMax {
                 : currentScore < beta;
     }
 
-    private void updateAlphaBeta(int score) {
+    protected void updateAlphaBeta(int score) {
         if (isMaximising) {
             alpha = score;
         } else {

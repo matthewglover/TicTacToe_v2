@@ -1,7 +1,7 @@
 package com.matthewglover.tictactoe.core;
 
 public abstract class MiniMax {
-    private static final int DRAW_SCORE = 0;
+    protected final int DRAW_SCORE = 0;
     private final int winningScore;
     protected final Game game;
     protected final int maxSearchDepth;
@@ -24,6 +24,14 @@ public abstract class MiniMax {
         return selectedMove;
     }
 
+    public void execute() {
+        if (isOutOfDepth()) {
+            setOutOfDepthScore();
+        } else {
+            calculateBestScore();
+        }
+    }
+
     protected int calculateMoveScore(Game gameMove) {
         return gameMove.isOver()
                 ? calculateFinalMoveScore(gameMove)
@@ -42,10 +50,22 @@ public abstract class MiniMax {
         return selectedScore;
     }
 
+    protected void setOutOfDepthScore() {
+        int currentScore = DRAW_SCORE;
+        int currentMove = game.getNextMoves().get(0).getCurrentMove();
+        updateSelected(currentScore, currentMove);
+    }
+
     protected void updateSelected(int score, int move) {
         selectedScore = score;
         selectedMove = move;
     }
+
+    protected abstract void calculateBestScore();
+
+    protected abstract int calculateInterimMoveScore(Game gameMove);
+
+    protected abstract boolean isBetterScore(int currentScore);
 
     private int calculateFinalMoveScore(Game gameMove) {
         if (gameMove.isWinner()) {
@@ -55,6 +75,10 @@ public abstract class MiniMax {
         }
     }
 
+    private boolean isOutOfDepth() {
+        return depth >= maxSearchDepth;
+    }
+
     private int getBaseScore() {
         return isMaximising ? winningScore : -winningScore;
     }
@@ -62,10 +86,4 @@ public abstract class MiniMax {
     private int getDepthOffset() {
         return isMaximising ? -depth : depth;
     }
-
-    public abstract void execute();
-
-    protected abstract int calculateInterimMoveScore(Game gameMove);
-
-    protected abstract boolean isBetterScore(int currentScore);
 }
