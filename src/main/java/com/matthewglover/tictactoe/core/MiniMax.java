@@ -2,19 +2,22 @@ package com.matthewglover.tictactoe.core;
 
 public abstract class MiniMax {
     private static final int DRAW_SCORE = 0;
-    private static final int WINNING_SCORE = 10;
+    private final int winningScore;
     protected final Game game;
+    protected final int maxSearchDepth;
     protected final int depth;
     protected final boolean isMaximising;
     protected int selectedScore;
     private int selectedMove;
 
-    public MiniMax(Game game, int depth, boolean isMaximising) {
-        this.isMaximising = isMaximising;
+    public MiniMax(Game game, int maxSearchDepth, int depth, boolean isMaximising) {
         this.game = game;
+        this.maxSearchDepth = maxSearchDepth;
         this.depth = depth;
+        this.isMaximising = isMaximising;
 
         selectedScore = isMaximising ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        winningScore = game.getBoard().getTotalSquares();
     }
 
     public int getMove() {
@@ -53,7 +56,7 @@ public abstract class MiniMax {
     }
 
     private int getBaseScore() {
-        return isMaximising ? WINNING_SCORE : -WINNING_SCORE;
+        return isMaximising ? winningScore : -winningScore;
     }
 
     private int getDepthOffset() {

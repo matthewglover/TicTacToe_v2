@@ -5,6 +5,9 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 public class MiniMaxTest {
+
+    int MAX_SEARCH_DEPTH = 6;
+
     @Test
     public void selectsWinningMoveOverLosingMove() {
         // x o x
@@ -12,7 +15,7 @@ public class MiniMaxTest {
         // 7 8 x
         Game game = new Game(3);
         GameTestHelper.runGame(game, new int[]{1, 2, 3, 5, 4, 6, 9});
-        SimpleMiniMax miniMax = SimpleMiniMax.run(game);
+        SimpleMiniMax miniMax = SimpleMiniMax.run(game, MAX_SEARCH_DEPTH);
         assertEquals(8, miniMax.getMove());
     }
 
@@ -23,7 +26,7 @@ public class MiniMaxTest {
         // 7 o 9
         Game game = new Game(3);
         GameTestHelper.runGame(game, new int[]{1, 2, 3, 8});
-        SimpleMiniMax miniMax = SimpleMiniMax.run(game);
+        SimpleMiniMax miniMax = SimpleMiniMax.run(game, MAX_SEARCH_DEPTH);
         assertEquals(5, miniMax.getMove());
     }
 
@@ -34,7 +37,7 @@ public class MiniMaxTest {
         // 7 8 o
         Game game = new Game(3);
         GameTestHelper.runGame(game, new int[]{1, 2, 5, 9});
-        SimpleMiniMax miniMax = SimpleMiniMax.run(game);
+        SimpleMiniMax miniMax = SimpleMiniMax.run(game, MAX_SEARCH_DEPTH);
         assertEquals(4, miniMax.getMove());
     }
 }
