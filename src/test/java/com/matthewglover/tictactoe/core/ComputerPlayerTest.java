@@ -8,7 +8,7 @@ public class ComputerPlayerTest {
     @Test
     public void takesWinningMoveWhenAvailable() {
         Game game = new Game(3);
-        ComputerPlayer computerPlayer = new ComputerPlayer(PlayerSymbol.X);
+        ComputerPlayer computerPlayer = new ComputerPlayer(PlayerSymbol.X, 0);
         game.start();
         game.move(1);
         game.move(4);
