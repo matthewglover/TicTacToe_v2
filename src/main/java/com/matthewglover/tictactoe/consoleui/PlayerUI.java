@@ -6,6 +6,7 @@ import java.io.PrintStream;
 
 public class PlayerUI {
     protected final PrintStream out;
+    private final String CLEAR_LINE = "\033[H\033[2J";
 
     public PlayerUI(PrintStream out) {
         this.out = out;
@@ -13,10 +14,15 @@ public class PlayerUI {
 
     public void printBoard(Board board) {
         String printableBoard = new BoardFormatter(board).format();
-        out.println(printableBoard);
+        clearAndPrint(printableBoard);
     }
 
-    public void clearScreen() {
-        out.print("\033[H\033[2J");
+    protected void clearAndPrint(String str) {
+        clearScreen();
+        out.println(str);
+    }
+
+    private void clearScreen() {
+        out.print(CLEAR_LINE);
     }
 }

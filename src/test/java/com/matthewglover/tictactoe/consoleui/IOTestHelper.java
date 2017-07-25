@@ -6,12 +6,13 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 public class IOTestHelper {
+    public static final String CLEAR_LINE = "\033[H\033[2J";
     private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private PrintStream outputStream = new PrintStream(outContent);
     private InputStream inputStream = new ByteArrayInputStream("".getBytes());
 
     static String removeClearLine(String line) {
-        return line.replace("\033[H\033[2J", "");
+        return line.replace(CLEAR_LINE, "");
     }
 
     public ByteArrayOutputStream getOutContent() {

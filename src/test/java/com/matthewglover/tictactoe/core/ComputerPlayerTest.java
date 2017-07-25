@@ -33,6 +33,8 @@ public class ComputerPlayerTest {
         String initialBoard = new BoardFormatter(game.getBoard()).format();
         game.start();
         String output = ioTestHelper.getOutContentString();
-        assertEquals(initialBoard + "\n", output);
+        assertEquals(
+                IOTestHelper.CLEAR_LINE + initialBoard + "\n",
+                output);
     }
 }

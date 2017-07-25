@@ -17,7 +17,9 @@ public class HumanPlayerUITest {
         builder.getHumanPlayerUI().printBoard(game.getBoard());
 
         String printableBoard = new BoardFormatter(game.getBoard()).format();
-        Assert.assertEquals(printableBoard + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(
+                IOTestHelper.CLEAR_LINE + printableBoard + "\n",
+                builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
@@ -27,7 +29,9 @@ public class HumanPlayerUITest {
         builder.getHumanPlayerUI().printMoveRequest(currentPlayerSymbol);
 
         String message = String.format(PlayerMessages.MOVE_REQUEST, currentPlayerSymbol);
-        Assert.assertEquals(message + "\n", builder.getIoTestHelper().getOutContentString());
+        Assert.assertEquals(
+                message + "\n",
+                builder.getIoTestHelper().getOutContentString());
     }
 
     @Test
