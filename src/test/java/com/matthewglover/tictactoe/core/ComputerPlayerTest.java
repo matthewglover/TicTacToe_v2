@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.core;
 
+import com.matthewglover.tictactoe.consoleui.ComputerPlayer;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

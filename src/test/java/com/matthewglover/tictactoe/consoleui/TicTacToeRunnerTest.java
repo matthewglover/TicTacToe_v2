@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.core.ComputerPlayer;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import org.junit.Test;
 
