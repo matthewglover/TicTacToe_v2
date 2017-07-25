@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.consoleui.BoardFormatter;
 import com.matthewglover.tictactoe.core.Board;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 
