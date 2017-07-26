@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -23,10 +24,14 @@ public class TestSimpleController extends ApplicationTest {
     private TestObservable testObserver = new TestObservable();
     private GuiBoard guiBoard;
     private Parent mainNode;
+    private Game game;
 
     @Override
     public void start(Stage stage) throws Exception {
-        guiBoard = new GuiBoard(3);
+        game = new Game(3);
+        guiBoard = new GuiBoard();
+        game.addObserver(guiBoard);
+        game.start();
         guiBoard.addObserver(testObserver);
         mainNode = guiBoard.getNode();
         stage.setScene(new Scene(mainNode, 100, 100));
