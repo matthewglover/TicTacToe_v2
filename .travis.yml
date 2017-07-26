@@ -42,7 +42,7 @@ matrix:
   # By listing them here, one can quickly add additional debugging flags
   script:
     - gradle assemble
-    - gradle check # for better debug output, use "--debug --stacktrace" flags on this line
+    - gradle -Pheadless=true test  # for better debug output, use "--debug --stacktrace" flags on this line
 
   # If your JVM crashes and you want to debug it, use these lines instead and "script.sh"
   #script:
