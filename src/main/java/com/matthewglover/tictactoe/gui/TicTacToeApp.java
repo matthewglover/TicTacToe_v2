@@ -1,12 +1,13 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.Game;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class TicTacToeApp extends Application {
 
-    private GuiBoard guiBoard;
+    private GuiGame guiGame;
     private Scene scene;
     private Stage primaryStage;
 
@@ -24,11 +25,14 @@ public class TicTacToeApp extends Application {
     }
 
     private void buildBoard() {
-        guiBoard = new GuiBoard();
+        guiGame = new GuiGame();
+        Game game = new Game(3);
+        game.addObserver(guiGame);
+        game.start();
     }
 
     private void buildScene() {
-        scene = new Scene(guiBoard.getNode(), 300, 300);
+        scene = new Scene(guiGame.getNode(), 300, 300);
     }
 
     private void assembleStage() {
