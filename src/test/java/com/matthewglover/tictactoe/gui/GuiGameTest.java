@@ -36,10 +36,18 @@ public class GuiGameTest extends ApplicationTest {
     }
 
     @Test
-    public void clickOnSquareNotifiesObserver() {
+    public void clickOnSquareUpdatesBoard() {
         clickOn("#square_1");
         assertTrue(getSquare(1).isDisable());
         assertEquals(PlayerSymbol.X.toString(), getSquare(1).getText());
+    }
+
+    @Test
+    public void clickOnSquareUpdatesGameState() {
+        clickOn("#square_1");
+        clickOn("#square_2");
+        assertTrue(getSquare(2).isDisable());
+        assertEquals(PlayerSymbol.O.toString(), getSquare(2).getText());
     }
 
     private void buildGameUI() {
