@@ -7,13 +7,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+import java.util.Observable;
+import java.util.Observer;
 
-public class GuiBoard {
+
+public class GuiBoard implements Observer {
     private final GridPane grid = new GridPane();
-    private final GuiGame guiGame;
 
-    public GuiBoard(GuiGame guiGame) {
-        this.guiGame = guiGame;
+    public GuiBoard() {
         formatGrid();
     }
 
@@ -50,7 +51,7 @@ public class GuiBoard {
         button.setId("square_" + squareNumber);
 
         if (square.isEmpty()) {
-            button.setOnAction(event -> guiGame.makeMove(game, squareNumber));
+            button.setOnAction(event -> makeMove(game, squareNumber));
         } else {
             button.setText(square.toString());
             button.setDisable(true);
@@ -62,5 +63,15 @@ public class GuiBoard {
     private int calcSquareNumber(int gridSize, int row, int column) {
         int squareOffset = (row - 1) * gridSize;
         return squareOffset + column;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Game game = (Game) o;
+        buildGrid(game);
+    }
+
+    private void makeMove(Game game, int squareNumber) {
+        game.move(squareNumber);
     }
 }

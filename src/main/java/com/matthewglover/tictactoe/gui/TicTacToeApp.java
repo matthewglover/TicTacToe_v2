@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class TicTacToeApp extends Application {
 
-    private GuiGame guiGame;
+    private GuiBoard guiBoard;
     private Scene scene;
     private Stage primaryStage;
 
@@ -25,14 +25,14 @@ public class TicTacToeApp extends Application {
     }
 
     private void buildBoard() {
-        guiGame = new GuiGame();
+        guiBoard = new GuiBoard();
         Game game = new Game(3);
-        game.addObserver(guiGame);
+        game.addObserver(guiBoard);
         game.start();
     }
 
     private void buildScene() {
-        scene = new Scene(guiGame.getNode(), 300, 300);
+        scene = new Scene(guiBoard.getNode(), 300, 300);
     }
 
     private void assembleStage() {

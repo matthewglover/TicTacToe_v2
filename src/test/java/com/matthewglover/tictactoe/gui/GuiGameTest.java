@@ -16,15 +16,15 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
 public class GuiGameTest extends ApplicationTest {
-    private GuiGame guiGame;
+    private GuiBoard guiBoard;
     private Parent mainNode;
     private Game game;
 
     @Override
     public void start(Stage stage) throws Exception {
         game = new Game(3);
-        guiGame = new GuiGame();
-        mainNode = guiGame.getNode();
+        guiBoard = new GuiBoard();
+        mainNode = guiBoard.getNode();
 
         buildGameUI();
         buildStage(stage);
@@ -51,7 +51,7 @@ public class GuiGameTest extends ApplicationTest {
     }
 
     private void buildGameUI() {
-        game.addObserver(guiGame);
+        game.addObserver(guiBoard);
         game.start();
     }
 
