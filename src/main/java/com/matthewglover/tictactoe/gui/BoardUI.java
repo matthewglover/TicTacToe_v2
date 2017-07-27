@@ -1,7 +1,7 @@
 package com.matthewglover.tictactoe.gui;
 
-import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
+import com.matthewglover.tictactoe.core.PlayerType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,10 +11,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class GuiBoard implements Observer {
+public class BoardUI implements Observer {
     private final GridPane grid = new GridPane();
 
-    public GuiBoard() {
+    public BoardUI() {
         formatGrid();
     }
 
@@ -24,7 +24,7 @@ public class GuiBoard implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Game game = (Game) o;
+        GuiGame game = (GuiGame) o;
         buildGrid(game);
     }
 
@@ -35,7 +35,7 @@ public class GuiBoard implements Observer {
         grid.setPadding(new Insets(25, 25, 25, 25));
     }
 
-    private void buildGrid(Game game) {
+    private void buildGrid(GuiGame game) {
         grid.getChildren().clear();
 
         for (int rowIndex = 1; rowIndex <= game.getBoardSize(); rowIndex++) {
@@ -43,27 +43,35 @@ public class GuiBoard implements Observer {
         }
     }
 
-    private void addRow(Game game, int row) {
+    private void addRow(GuiGame game, int row) {
         for (int column = 1; column <= game.getBoardSize(); column++) {
             addSquare(game, row, column);
         }
     }
 
-    private void addSquare(Game game, int row, int column) {
+    private void addSquare(GuiGame game, int row, int column) {
         int squareNumber = calcSquareNumber(game.getBoardSize(), row, column);
         PlayerSymbol square = game.getBoardSquare(squareNumber);
+        Button button = buildSquareButton(game, square, squareNumber);
+        grid.add(button, column, row);
+    }
 
+    private Button buildSquareButton(GuiGame game, PlayerSymbol square, int squareNumber) {
         Button button = new Button();
         button.setId("square_" + squareNumber);
 
-        if (square.isEmpty()) {
+        if (isHumanPlayersTurn(game) && square.isEmpty()) {
             button.setOnAction(event -> makeMove(game, squareNumber));
         } else {
             button.setText(square.toString());
             button.setDisable(true);
         }
 
-        grid.add(button, column, row);
+        return button;
+    }
+
+    private boolean isHumanPlayersTurn(GuiGame game) {
+        return game.getNextPlayerType() == PlayerType.HUMAN;
     }
 
     private int calcSquareNumber(int gridSize, int row, int column) {
@@ -71,7 +79,7 @@ public class GuiBoard implements Observer {
         return squareOffset + column;
     }
 
-    private void makeMove(Game game, int squareNumber) {
+    private void makeMove(GuiGame game, int squareNumber) {
         game.move(squareNumber);
     }
 }
