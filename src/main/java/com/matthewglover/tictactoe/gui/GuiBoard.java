@@ -22,12 +22,10 @@ public class GuiBoard implements Observer {
         return grid;
     }
 
-    public void buildGrid(Game game) {
-        grid.getChildren().clear();
-
-        for (int rowIndex = 1; rowIndex <= game.getBoardSize(); rowIndex++) {
-            addRow(game, rowIndex);
-        }
+    @Override
+    public void update(Observable o, Object arg) {
+        Game game = (Game) o;
+        buildGrid(game);
     }
 
     private void formatGrid() {
@@ -35,6 +33,14 @@ public class GuiBoard implements Observer {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+    }
+
+    private void buildGrid(Game game) {
+        grid.getChildren().clear();
+
+        for (int rowIndex = 1; rowIndex <= game.getBoardSize(); rowIndex++) {
+            addRow(game, rowIndex);
+        }
     }
 
     private void addRow(Game game, int row) {
@@ -63,12 +69,6 @@ public class GuiBoard implements Observer {
     private int calcSquareNumber(int gridSize, int row, int column) {
         int squareOffset = (row - 1) * gridSize;
         return squareOffset + column;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        Game game = (Game) o;
-        buildGrid(game);
     }
 
     private void makeMove(Game game, int squareNumber) {
