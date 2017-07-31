@@ -32,4 +32,8 @@ public enum GameType {
     private Function<String, String> capitalize() {
         return (String player) -> Character.toUpperCase(player.charAt(0)) + player.substring(1);
     }
+
+    public PlayerType getPlayerType(PlayerSymbol playerSymbol) {
+        return PlayerType.valueOf(getPlayers()[playerSymbol.getPlayerIndex()]);
+    }
 }

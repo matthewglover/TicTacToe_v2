@@ -1,11 +1,10 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
-import com.matthewglover.tictactoe.core.PlayerType;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
@@ -17,17 +16,15 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
 public class BoardUITest extends ApplicationTest {
-    private BoardUI boardUI;
     private Parent mainNode;
-    private GuiGame game;
+    private final Model model = new Model();
 
     @Override
     public void start(Stage stage) throws Exception {
-        game = new GuiGame(3, PlayerType.HUMAN, PlayerType.COMPUTER);
-        boardUI = new BoardUI();
+        BoardUI boardUI = new BoardUI(model);
         mainNode = boardUI.getNode();
-
-        buildGameUI();
+        model.setGameType(GameType.HUMAN_COMPUTER);
+        model.createGame(3);
         buildStage(stage);
     }
 
@@ -44,16 +41,9 @@ public class BoardUITest extends ApplicationTest {
     }
 
     @Test
-    public void clickOnSquareDoesNothingIfComputerPlayersTurn() {
+    public void computerMovesUpdateAutomatically() {
         clickOn("#square_1");
-        clickOn("#square_2");
-        assertTrue(getSquare(2).isDisable());
-        assertNotEquals(PlayerSymbol.O.toString(), getSquare(2).getText());
-    }
-
-    private void buildGameUI() {
-        game.addObserver(boardUI);
-        game.start();
+        assertEquals(PlayerSymbol.X, model.getNextPlayerSymbol());
     }
 
     private void buildStage(Stage stage) {

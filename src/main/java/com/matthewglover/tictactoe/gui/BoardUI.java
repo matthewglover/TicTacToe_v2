@@ -12,74 +12,100 @@ import java.util.Observer;
 
 
 public class BoardUI implements Observer {
-    private final GridPane grid = new GridPane();
+    private final GridPane board;
+    private final Model model;
 
-    public BoardUI() {
-        formatGrid();
+    public BoardUI(Model model) {
+        this.model = model;
+        this.model.addObserver(this);
+        board = new GridPane();
+        formatBoard();
     }
 
     public GridPane getNode() {
-        return grid;
+        return board;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        GuiGame game = (GuiGame) o;
-        buildGrid(game);
-    }
+        ModelUpdate modelUpdate = (ModelUpdate) arg;
 
-    private void formatGrid() {
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-    }
-
-    private void buildGrid(GuiGame game) {
-        grid.getChildren().clear();
-
-        for (int rowIndex = 1; rowIndex <= game.getBoardSize(); rowIndex++) {
-            addRow(game, rowIndex);
+        if (isBoardStateChange(modelUpdate)) {
+            buildBoard();
         }
     }
 
-    private void addRow(GuiGame game, int row) {
-        for (int column = 1; column <= game.getBoardSize(); column++) {
-            addSquare(game, row, column);
+    private void formatBoard() {
+        board.setAlignment(Pos.CENTER);
+        board.setHgap(10);
+        board.setVgap(10);
+        board.setPadding(new Insets(25, 25, 25, 25));
+    }
+
+    private boolean isBoardStateChange(ModelUpdate modelUpdate) {
+        return modelUpdate == ModelUpdate.CREATE_GAME ||
+                modelUpdate == ModelUpdate.MOVE ||
+                modelUpdate == ModelUpdate.GAME_OVER;
+    }
+
+    private void buildBoard() {
+        if (!board.getChildren().isEmpty()) {
+            board.getChildren().clear();
+        }
+
+        for (int rowIndex = 1; rowIndex <= model.getBoardSize(); rowIndex++) {
+            addRow(rowIndex);
         }
     }
 
-    private void addSquare(GuiGame game, int row, int column) {
-        int squareNumber = calcSquareNumber(game.getBoardSize(), row, column);
-        PlayerSymbol square = game.getBoardSquare(squareNumber);
-        Button button = buildSquareButton(game, square, squareNumber);
-        grid.add(button, column, row);
+    private void addRow(int row) {
+        for (int column = 1; column <= model.getBoardSize(); column++) {
+            addSquare(row, column);
+        }
     }
 
-    private Button buildSquareButton(GuiGame game, PlayerSymbol square, int squareNumber) {
+    private void addSquare(int row, int column) {
+        int squareNumber = calcSquareNumber(row, column);
+        PlayerSymbol square = model.getBoardSquare(squareNumber);
+        Button button = buildSquareButton(square, squareNumber);
+        board.add(button, column, row);
+    }
+
+    private Button buildSquareButton(PlayerSymbol square, int squareNumber) {
         Button button = new Button();
         button.setId("square_" + squareNumber);
 
-        if (isHumanPlayersTurn(game) && square.isEmpty()) {
-            button.setOnAction(event -> makeMove(game, squareNumber));
+        if (isActiveGame() && isActiveSquare(square)) {
+            button.setOnAction(event -> makeMove(squareNumber));
         } else {
-            button.setText(square.toString());
+            button.setText(formatSquare(square));
             button.setDisable(true);
         }
 
         return button;
     }
 
-    private boolean isHumanPlayersTurn(GuiGame game) {
-        return game.getNextPlayerType() == PlayerType.HUMAN;
+    private String formatSquare(PlayerSymbol square) {
+        return square.isEmpty()
+                ? ""
+                : square.toString();
     }
 
-    private int calcSquareNumber(int gridSize, int row, int column) {
-        int squareOffset = (row - 1) * gridSize;
+    private boolean isActiveGame() {
+        return !model.isGameOver();
+    }
+
+    private boolean isActiveSquare(PlayerSymbol square) {
+        return model.getNextPlayerType() == PlayerType.HUMAN
+                && square.isEmpty();
+    }
+
+    private int calcSquareNumber(int row, int column) {
+        int squareOffset = (row - 1) * model.getBoardSize();
         return squareOffset + column;
     }
 
-    private void makeMove(GuiGame game, int squareNumber) {
-        game.move(squareNumber);
+    private void makeMove(int squareNumber) {
+        model.move(squareNumber);
     }
 }

@@ -5,14 +5,19 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-import java.util.Observable;
 
-public class GameOptionsUI extends Observable {
+public class GameOptionsUI {
 
     private final GridPane grid = new GridPane();
+    private final Model model;
 
-    GameOptionsUI() {
+    GameOptionsUI(Model model) {
+        this.model = model;
         buildForm();
+    }
+
+    public Parent getNode() {
+        return  grid;
     }
 
     private void buildForm() {
@@ -26,16 +31,9 @@ public class GameOptionsUI extends Observable {
     private void addGameTypeButton(int row, GameType gameType) {
         Button button = new Button();
         button.setText(gameType.getDescription());
-        button.setOnAction(event -> notifyChange(gameType));
+        button.setOnAction(event -> {
+            model.setGameType(gameType);
+        });
         grid.add(button, 0, row);
-    }
-
-    private void notifyChange(GameType gameType) {
-        setChanged();
-        notifyObservers(gameType);
-    }
-
-    public Parent getNode() {
-        return  grid;
     }
 }
