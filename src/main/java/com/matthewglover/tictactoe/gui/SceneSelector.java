@@ -19,10 +19,12 @@ public class SceneSelector implements Observer {
     public SceneSelector(Model model, int gameStatusDelay) {
         this.model = model;
         this.gameStatusDelay = gameStatusDelay;
+
         gameOptionsUI = new GameOptionsUI(model);
         boardUI = new BoardUI(model);
         gameStatusUI = new GameStatusUI(model);
         scene = new Scene(gameOptionsUI.getNode(), 100, 100);
+
         model.addObserver(this);
     }
 
@@ -34,18 +36,22 @@ public class SceneSelector implements Observer {
     public void update(Observable o, Object arg) {
         ModelUpdate modelUpdate = (ModelUpdate) arg;
 
-        if (modelUpdate.isSetGameType()) {
-            model.createGame(3);
-            selectBoardUI();
+        switch (modelUpdate) {
+            case SET_GAME_TYPE:
+                model.createGame(3);
+                selectBoardUI();
+                break;
+            case START_NEW_GAME:
+                selectGameOptionsUI();
+                break;
+            case GAME_OVER:
+                selectGameStatusUI();
+                break;
         }
+    }
 
-        if (modelUpdate == ModelUpdate.GAME_OVER) {
-            selectGameStatusUI();
-        }
-
-        if (modelUpdate == ModelUpdate.START_NEW_GAME) {
-            selectGameOptionsUI();
-        }
+    private void selectBoardUI() {
+        scene.setRoot(boardUI.getNode());
     }
 
     private void selectGameOptionsUI() {
@@ -56,10 +62,6 @@ public class SceneSelector implements Observer {
         runDelayed(gameStatusDelay, event -> {
             scene.setRoot(gameStatusUI.getNode());
         });
-    }
-
-    private void selectBoardUI() {
-        scene.setRoot(boardUI.getNode());
     }
 
     private void runDelayed(int milliSecondsDelay, EventHandler eventHandler) {
