@@ -7,41 +7,26 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-import java.util.Observable;
-import java.util.Observer;
 
-
-public class BoardUI implements Observer {
-    private final GridPane board;
-    private final Model model;
+public class BoardUI extends UI {
 
     public BoardUI(Model model) {
-        this.model = model;
-        this.model.addObserver(this);
-
-        board = new GridPane();
-
+        super(model, new GridPane());
         formatBoard();
     }
 
-    public GridPane getNode() {
-        return board;
-    }
-
     @Override
-    public void update(Observable o, Object arg) {
-        ModelUpdate modelUpdate = (ModelUpdate) arg;
-
+    public void update(ModelUpdate modelUpdate) {
         if (isBoardStateChange(modelUpdate)) {
             buildBoard();
         }
     }
 
     private void formatBoard() {
-        board.setAlignment(Pos.CENTER);
-        board.setHgap(10);
-        board.setVgap(10);
-        board.setPadding(new Insets(25, 25, 25, 25));
+        getBoard().setAlignment(Pos.CENTER);
+        getBoard().setHgap(10);
+        getBoard().setVgap(10);
+        getBoard().setPadding(new Insets(25, 25, 25, 25));
     }
 
     private boolean isBoardStateChange(ModelUpdate modelUpdate) {
@@ -51,13 +36,15 @@ public class BoardUI implements Observer {
     }
 
     private void buildBoard() {
-        if (!board.getChildren().isEmpty()) {
-            board.getChildren().clear();
-        }
+        getBoard().getChildren().clear();
 
         for (int rowIndex = 1; rowIndex <= model.getBoardSize(); rowIndex++) {
             addRow(rowIndex);
         }
+    }
+
+    private GridPane getBoard() {
+        return (GridPane) rootNode;
     }
 
     private void addRow(int row) {
@@ -70,7 +57,7 @@ public class BoardUI implements Observer {
         int squareNumber = calcSquareNumber(row, column);
         PlayerSymbol square = model.getBoardSquare(squareNumber);
         Button button = buildSquareButton(square, squareNumber);
-        board.add(button, column, row);
+        getBoard().add(button, column, row);
     }
 
     private Button buildSquareButton(PlayerSymbol square, int squareNumber) {
@@ -78,7 +65,7 @@ public class BoardUI implements Observer {
         button.setId("square_" + squareNumber);
 
         if (isActiveGame() && isActiveSquare(square)) {
-            button.setOnAction(event -> makeMove(squareNumber));
+            button.setOnAction(event -> move(squareNumber));
         } else {
             button.setText(formatSquare(square));
             button.setDisable(true);
@@ -107,7 +94,7 @@ public class BoardUI implements Observer {
         return squareOffset + column;
     }
 
-    private void makeMove(int squareNumber) {
+    private void move(int squareNumber) {
         model.move(squareNumber);
     }
 }
