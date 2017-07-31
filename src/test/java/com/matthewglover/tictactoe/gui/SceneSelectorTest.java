@@ -36,8 +36,14 @@ public class SceneSelectorTest extends ApplicationTest {
     }
 
     @Test
-    public void sceneIsBoardAfterGameTypeSelected() {
-        model.setGameType(GameType.HUMAN_HUMAN);
+    public void sceneIsBoardAfterGameTypeSelected() throws Exception {
+        FutureTask<Void> query = new FutureTask<>(() -> {
+            model.setGameType(GameType.HUMAN_HUMAN);
+            return null;
+        });
+
+        Platform.runLater(query);
+        query.get();
         verifyBoardScene();
     }
 

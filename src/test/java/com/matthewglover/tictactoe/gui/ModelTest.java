@@ -13,8 +13,6 @@ import java.util.Observer;
 import static org.junit.Assert.assertEquals;
 
 public class ModelTest {
-
-
     private final Model model = new Model();
     private final TestObserver testObserver = new TestObserver();
 
@@ -55,7 +53,7 @@ public class ModelTest {
         model.setGameType(GameType.HUMAN_COMPUTER);
         model.createGame(3);
         model.move(1);
-        assertEquals(PlayerType.HUMAN, model.getNextPlayerType());
+        assertEquals(PlayerType.COMPUTER, model.getNextPlayerType());
     }
 
     private class TestObserver implements Observer {
