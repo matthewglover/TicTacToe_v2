@@ -18,7 +18,9 @@ public class BoardUI implements Observer {
     public BoardUI(Model model) {
         this.model = model;
         this.model.addObserver(this);
+
         board = new GridPane();
+
         formatBoard();
     }
 
