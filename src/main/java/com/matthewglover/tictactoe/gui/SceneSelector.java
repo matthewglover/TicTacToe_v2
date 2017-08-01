@@ -23,7 +23,7 @@ public class SceneSelector implements Observer {
         gameOptionsUI = new GameOptionsUI(model);
         boardUI = new BoardUI(model);
         gameStatusUI = new GameStatusUI(model);
-        scene = new Scene(gameOptionsUI.getNode(), 100, 100);
+        scene = new Scene(gameOptionsUI.getNode(), 300, 300);
 
         model.addObserver(this);
     }
