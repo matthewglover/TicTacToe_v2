@@ -38,4 +38,9 @@ public class IOTestHelper {
     public void setInputStream(String input) {
         inputStream = new ByteArrayInputStream(input.getBytes());
     }
+
+    public String getLastLineOfOutput() {
+        String[] lines = getOutContentAsLines();
+        return lines[lines.length - 1];
+    }
 }

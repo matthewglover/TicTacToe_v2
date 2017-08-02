@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GameOptionsUITest {
+public class OldGameOptionsUITest {
     @Test
     public void printRequestBoardSizeOutputsMessage() {
         GameOptionsUIBuilder builder = new GameOptionsUIBuilder("");
