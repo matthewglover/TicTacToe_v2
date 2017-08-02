@@ -23,7 +23,6 @@ targetCompatibility = 1.8
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.testfx:testfx-junit:4.0+'
-    testCompile 'org.testfx:testfx-junit:4.0+'
     testRuntime 'org.testfx:openjfx-monocle:1.8.0_20'
 }
 
@@ -34,6 +33,21 @@ if (project.hasProperty('headless') ? project.headless : false) {
     println "Running UI Tests Headless"
     test {
         jvmArgs = ['-Djava.awt.headless=true', '-Dtestfx.robot=glass', '-Dtestfx.headless=true', '-Dprism.order=sw', '-Dprism.text=t2k']
+        testLogging {
+            // set options for log level LIFECYCLE
+            events "failed"
+            exceptionFormat "short"
+
+            // set options for log level DEBUG
+            debug {
+                events "started", "skipped", "failed"
+                exceptionFormat "full"
+            }
+
+            // remove standard output/error logging from --info builds
+            // by assigning only 'failed' and 'skipped' events
+            info.events = ["failed", "skipped"]
+        }
     }
 }
 
