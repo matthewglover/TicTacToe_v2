@@ -1,5 +1,7 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.ModelUpdate;
+import com.matthewglover.tictactoe.core.TicTacToeModel;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;

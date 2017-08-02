@@ -1,6 +1,5 @@
-package com.matthewglover.tictactoe.gui;
+package com.matthewglover.tictactoe.core;
 
-import com.matthewglover.tictactoe.core.*;
 import javafx.application.Platform;
 
 import java.util.Observable;

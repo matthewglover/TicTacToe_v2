@@ -1,9 +1,5 @@
-package com.matthewglover.tictactoe.gui;
+package com.matthewglover.tictactoe.core;
 
-import com.matthewglover.tictactoe.core.Game;
-import com.matthewglover.tictactoe.core.GameType;
-import com.matthewglover.tictactoe.core.PlayerSymbol;
-import com.matthewglover.tictactoe.core.PlayerType;
 import org.junit.Test;
 
 import java.util.ArrayList;

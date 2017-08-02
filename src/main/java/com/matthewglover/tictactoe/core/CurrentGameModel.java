@@ -1,6 +1,4 @@
-package com.matthewglover.tictactoe.gui;
-
-import com.matthewglover.tictactoe.core.Game;
+package com.matthewglover.tictactoe.core;
 
 import java.util.Observable;
 import java.util.Observer;

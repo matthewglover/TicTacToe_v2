@@ -1,6 +1,5 @@
-package com.matthewglover.tictactoe.gui;
+package com.matthewglover.tictactoe.core;
 
-import com.matthewglover.tictactoe.core.*;
 
 public class CurrentGameTypeModel {
     private final TicTacToeModel ticTacToeModel;

@@ -18,10 +18,6 @@ public class Game extends Observable {
         return board;
     }
 
-    public PlayerSymbol getBoardSquare(int squareNumber) {
-        return board.getSquare(squareNumber);
-    }
-
     public PlayerSymbol getNextPlayerSymbol() {
         return nextPlayerSymbol;
     }
@@ -33,10 +29,6 @@ public class Game extends Observable {
             return PlayerSymbol.O;
         }
         return PlayerSymbol.NEITHER;
-    }
-
-    public int getBoardSize() {
-        return board.getSize();
     }
 
     public int getCurrentMove() {

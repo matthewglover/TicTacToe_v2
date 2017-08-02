@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.TicTacToeModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -1,6 +1,8 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.ModelUpdate;
+import com.matthewglover.tictactoe.core.TicTacToeModel;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
