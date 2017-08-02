@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.ModelObserver;
 import com.matthewglover.tictactoe.core.ModelUpdate;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 import javafx.concurrent.Task;
