@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-public class BoardSizeUI {
+public class BoardSizeUI implements UI {
 
     private final TicTacToeModel ticTacToeModel;
     private final GridPane rootNode;
@@ -16,6 +16,7 @@ public class BoardSizeUI {
         buildForm();
     }
 
+    @Override
     public Parent getNode() {
         return rootNode;
     }

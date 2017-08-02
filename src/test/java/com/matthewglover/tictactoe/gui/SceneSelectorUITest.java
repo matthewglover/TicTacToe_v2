@@ -17,16 +17,16 @@ import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 
-public class SceneSelectorTest extends ApplicationTest {
+public class SceneSelectorUITest extends ApplicationTest {
 
     private final int GAME_STATUS_DELAY = 0;
     private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
-    private SceneSelector sceneSelector;
+    private SceneSelectorUI sceneSelectorUI;
 
     @Override
     public void start(Stage stage) throws Exception {
-        sceneSelector = new SceneSelector(ticTacToeModel, GAME_STATUS_DELAY);
-        stage.setScene(sceneSelector.getScene());
+        sceneSelectorUI = new SceneSelectorUI(ticTacToeModel, GAME_STATUS_DELAY);
+        stage.setScene(sceneSelectorUI.getScene());
         stage.show();
         stage.toFront();
     }
@@ -87,7 +87,7 @@ public class SceneSelectorTest extends ApplicationTest {
     }
 
     private void verifyBoardSizeScene() {
-        Parent mainNode = sceneSelector.getScene().getRoot();
+        Parent mainNode = sceneSelectorUI.getScene().getRoot();
         verifyThat(mainNode, hasChildren(2, ".button"));
         for (int i = 3; i < 4; i++) {
             Button currentButton = from(mainNode).lookup(".button").nth(i - 3).query();
@@ -117,7 +117,7 @@ public class SceneSelectorTest extends ApplicationTest {
     }
 
     private Parent getRootNode() {
-        return sceneSelector.getScene().getRoot();
+        return sceneSelectorUI.getScene().getRoot();
     }
 
     private FutureTask<Void> runWinningGameForX() {

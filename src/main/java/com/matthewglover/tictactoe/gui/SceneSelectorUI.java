@@ -6,10 +6,7 @@ import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 
-import java.util.Observable;
-import java.util.Observer;
-
-public class SceneSelector implements Observer {
+public class SceneSelectorUI extends ModelObserver {
 
     private final GameOptionsUI gameOptionsUI;
     private final BoardSizeUI boardSizeUI;
@@ -18,7 +15,8 @@ public class SceneSelector implements Observer {
     private final int gameStatusDelay;
     private final Scene scene;
 
-    public SceneSelector(TicTacToeModel ticTacToeModel, int gameStatusDelay) {
+    public SceneSelectorUI(TicTacToeModel ticTacToeModel, int gameStatusDelay) {
+        super(ticTacToeModel);
         this.gameStatusDelay = gameStatusDelay;
 
         gameOptionsUI = new GameOptionsUI(ticTacToeModel);
@@ -26,18 +24,10 @@ public class SceneSelector implements Observer {
         boardUI = new BoardUI(ticTacToeModel);
         gameStatusUI = new GameStatusUI(ticTacToeModel);
         scene = new Scene(gameOptionsUI.getNode(), 300, 300);
-
-        ticTacToeModel.addObserver(this);
-    }
-
-    public Scene getScene() {
-        return scene;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        ModelUpdate modelUpdate = (ModelUpdate) arg;
-
+    protected void update(ModelUpdate modelUpdate) {
         switch (modelUpdate) {
             case START_NEW_GAME:
                 selectGameOptionsUI();
@@ -52,6 +42,10 @@ public class SceneSelector implements Observer {
                 selectGameStatusUI();
                 break;
         }
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
     private void selectBoardSizeUI() {

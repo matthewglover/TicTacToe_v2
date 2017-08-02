@@ -3,14 +3,17 @@ package com.matthewglover.tictactoe.gui;
 import com.matthewglover.tictactoe.core.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 
-public class BoardUI extends UI {
+public class BoardUI extends ModelObserver implements UI {
+    private final GridPane rootNode;
 
     public BoardUI(TicTacToeModel ticTacToeModel) {
-        super(ticTacToeModel, new GridPane());
+        super(ticTacToeModel);
+        this.rootNode = new GridPane();
         formatBoard();
     }
 
@@ -21,11 +24,16 @@ public class BoardUI extends UI {
         }
     }
 
+    @Override
+    public Parent getNode() {
+        return rootNode;
+    }
+
     private void formatBoard() {
-        getGrid().setAlignment(Pos.CENTER);
-        getGrid().setHgap(10);
-        getGrid().setVgap(10);
-        getGrid().setPadding(new Insets(25, 25, 25, 25));
+        rootNode.setAlignment(Pos.CENTER);
+        rootNode.setHgap(10);
+        rootNode.setVgap(10);
+        rootNode.setPadding(new Insets(25, 25, 25, 25));
     }
 
     private boolean isBoardStateChange(ModelUpdate modelUpdate) {
@@ -35,7 +43,7 @@ public class BoardUI extends UI {
     }
 
     private void buildBoard() {
-        getGrid().getChildren().clear();
+        rootNode.getChildren().clear();
 
         for (int rowIndex = 1; rowIndex <= getBoardSize(); rowIndex++) {
             addRow(rowIndex);
@@ -44,10 +52,6 @@ public class BoardUI extends UI {
 
     private int getBoardSize() {
         return getBoard().getSize();
-    }
-
-    private GridPane getGrid() {
-        return (GridPane) rootNode;
     }
 
     private void addRow(int row) {
@@ -60,7 +64,7 @@ public class BoardUI extends UI {
         int squareNumber = calcSquareNumber(row, column);
         PlayerSymbol square = getBoardSquare(squareNumber);
         Button button = buildSquareButton(square, squareNumber);
-        getGrid().add(button, column, row);
+        rootNode.add(button, column, row);
     }
 
     private Board getBoard() {

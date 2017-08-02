@@ -14,13 +14,13 @@ public class TicTacToeApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         TicTacToeModel ticTacToeModel = new TicTacToeModel();
         ticTacToeModel.setComputerMoveDelay(1000);
-        SceneSelector sceneSelector = new SceneSelector(ticTacToeModel, 1000);
-        assembleStage(primaryStage, sceneSelector);
+        SceneSelectorUI sceneSelectorUI = new SceneSelectorUI(ticTacToeModel, 1000);
+        assembleStage(primaryStage, sceneSelectorUI);
     }
 
-    private void assembleStage(Stage primaryStage, SceneSelector sceneSelector) {
+    private void assembleStage(Stage primaryStage, SceneSelectorUI sceneSelectorUI) {
         primaryStage.setTitle("Tic Tac Toe");
         primaryStage.show();
-        primaryStage.setScene(sceneSelector.getScene());
+        primaryStage.setScene(sceneSelectorUI.getScene());
     }
 }

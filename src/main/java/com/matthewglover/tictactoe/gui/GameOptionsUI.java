@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 
-public class GameOptionsUI {
+public class GameOptionsUI implements UI {
 
     private final GridPane grid = new GridPane();
     private final TicTacToeModel ticTacToeModel;

@@ -2,16 +2,19 @@ package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.ModelUpdate;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 
-public class GameStatusUI extends UI {
+public class GameStatusUI extends ModelObserver implements UI {
     private Label label;
+    private final GridPane rootNode;
 
     public GameStatusUI(TicTacToeModel ticTacToeModel) {
-        super(ticTacToeModel, new GridPane());
+        super(ticTacToeModel);
+        rootNode = new GridPane();
         build();
     }
 
@@ -22,10 +25,15 @@ public class GameStatusUI extends UI {
         }
     }
 
+    @Override
+    public Parent getNode() {
+        return rootNode;
+    }
+
     private void build() {
         label = new Label();
         label.setId("game_result");
-        getGridPane().add(label, 1, 1);
+        rootNode.add(label, 1, 1);
 
         Button button = new Button();
         button.setId("new_game");
@@ -33,11 +41,7 @@ public class GameStatusUI extends UI {
         button.setOnAction(event -> {
             ticTacToeModel.reset();
         });
-        getGridPane().add(button, 1, 2);
-    }
-
-    private GridPane getGridPane() {
-        return (GridPane) rootNode;
+        rootNode.add(button, 1, 2);
     }
 
     private void displayMessage() {
@@ -46,5 +50,4 @@ public class GameStatusUI extends UI {
                 : "It's a draw!";
         label.setText(resultMessage);
     }
-
 }
