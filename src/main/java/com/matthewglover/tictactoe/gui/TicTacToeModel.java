@@ -2,148 +2,75 @@ package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.*;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 
 import java.util.Observable;
-import java.util.Observer;
 
-public class Model extends Observable {
-    private Game game;
-    private GameType gameType;
+public class TicTacToeModel extends Observable {
     private int computerMoveDelay = 0;
-    private SimplePlayer playerX;
-    private SimplePlayer playerO;
+    private final CurrentGameModel currentGameModel;
+    private final CurrentGameTypeModel currentGameTypeModel;
+
+
+    public TicTacToeModel() {
+        super();
+        currentGameModel = new CurrentGameModel(this);
+        currentGameTypeModel = new CurrentGameTypeModel(this);
+    }
+
+    public CurrentGameTypeModel getCurrentGameTypeModel() {
+        return currentGameTypeModel;
+    }
+
+    public Game getCurrentGame() {
+        return currentGameModel.getGame();
+    }
 
     public PlayerType getNextPlayerType() {
-        return getPlayerType(getNextPlayerSymbol());
+        PlayerSymbol playerSymbol = getCurrentGame().getNextPlayerSymbol();
+        return currentGameTypeModel.getPlayerType(playerSymbol);
     }
 
-    public int getBoardSize() {
-        return game.getBoardSize();
+    public void setComputerMoveDelay(int computerMoveDelay) {
+        this.computerMoveDelay = computerMoveDelay;
     }
 
-    public PlayerSymbol getBoardSquare(int squareNumber) {
-        return game.getBoardSquare(squareNumber);
-    }
-
-    public void setComputerMoveDelay(int withDelay) {
-        this.computerMoveDelay = withDelay;
-    }
-
-    public void move(int squareNumber) {
-        game.move(squareNumber);
-    }
-
-    public void setGameType(GameType gameType) {
-        this.gameType = gameType;
-        playerX = createPlayer(PlayerSymbol.X, getPlayerXType());
-        playerO = createPlayer(PlayerSymbol.O, getPlayerOType());
-        notifyUpdate(ModelUpdate.SET_GAME_TYPE);
+    public void setCurrentGameType(GameType gameType) {
+        currentGameTypeModel.setGameType(gameType);
     }
 
     public void createGame(int boardSize) {
-        game = new Game(boardSize);
-        GameObserver gameObserver = new GameObserver(this);
-        game.addObserver(gameObserver);
-        game.start();
-        notifyUpdate(ModelUpdate.CREATE_GAME);
+        currentGameModel.createGame(boardSize);
     }
 
-    private SimplePlayer createPlayer(PlayerSymbol playerSymbol, PlayerType playerType) {
-        return (playerType == PlayerType.HUMAN)
-                ? new SimpleHumanPlayer(playerSymbol)
-                : new SimpleComputerPlayer(playerSymbol);
-    }
-
-    private void notifyUpdate(ModelUpdate modelUpdate) {
-        setChanged();
-        notifyObservers(modelUpdate);
-    }
-
-    public GameType getGameType() {
-        return gameType;
-    }
-
-    public PlayerType getPlayerXType() {
-        return gameType.getPlayer1();
-    }
-
-    public PlayerType getPlayerOType() {
-        return gameType.getPlayer2();
-    }
-
-    public PlayerType getPlayerType(PlayerSymbol playerSymbol) {
-        return gameType.getPlayerType(playerSymbol);
-    }
-
-    public PlayerSymbol getNextPlayerSymbol() {
-        return game.getNextPlayerSymbol();
-    }
-
-    public PlayerSymbol getGameWinner() {
-        return game.getWinner();
-    }
-
-    public boolean isGameOver() {
-        return game.isOver();
+    public void gameMove(int squareNumber) {
+        currentGameModel.move(squareNumber);
     }
 
     public void reset() {
-        game = null;
-        gameType = null;
-        playerX = null;
-        playerO = null;
+        currentGameModel.reset();
+        currentGameTypeModel.reset();
         notifyUpdate(ModelUpdate.START_NEW_GAME);
     }
 
-    private void notifyPlayer() {
-        SimplePlayer nextPlayer = getNextPlayerSymbol() == PlayerSymbol.X
-                ? playerX
-                : playerO;
+    protected void notifyUpdate(ModelUpdate modelUpdate) {
+        setChanged();
+        notifyObservers(modelUpdate);
 
-        if (nextPlayer.isComputer()) {
-            runMove(nextPlayer);
+        if (isComputerPlayersMove(modelUpdate)) {
+            DelayedRunner.run(computerMoveDelay, getRunComputerMove());
         }
     }
 
-    private void runMove(SimplePlayer nextPlayer) {
-        Task<Void> task = new Task<Void>() {
-
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    Thread.sleep(computerMoveDelay);
-                } catch (Exception e) {
-                }
-
-                Platform.runLater(() -> move(nextPlayer.getMove(game)));
-                return null;
-            }
-        };
-
-        new Thread(task).start();
+    private SimplePlayer getNextPlayer() {
+        PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
+        return currentGameTypeModel.getPlayer(nextPlayerSymbol);
     }
 
-    public boolean isGameWinner() {
-        return game.isWinner();
+    private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
+        return modelUpdate == ModelUpdate.MOVE && getNextPlayer().isComputer();
     }
 
-    private class GameObserver implements Observer {
-
-        private final Model model;
-
-        public GameObserver(Model model) {
-            this.model = model;
-        }
-        @Override
-        public void update(Observable o, Object arg) {
-            if (game.isOver()) {
-                model.notifyUpdate(ModelUpdate.GAME_OVER);
-            } else {
-                model.notifyUpdate(ModelUpdate.MOVE);
-                model.notifyPlayer();
-            }
-        }
-
+    private Runnable getRunComputerMove() {
+        return () -> Platform.runLater(() -> gameMove(getNextPlayer().getMove(currentGameModel.getGame())));
     }
 }

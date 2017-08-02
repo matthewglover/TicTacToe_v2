@@ -19,12 +19,12 @@ import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 public class SceneSelectorTest extends ApplicationTest {
 
     private final int GAME_STATUS_DELAY = 0;
-    private final Model model = new Model();
+    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
     private SceneSelector sceneSelector;
 
     @Override
     public void start(Stage stage) throws Exception {
-        sceneSelector = new SceneSelector(model, GAME_STATUS_DELAY);
+        sceneSelector = new SceneSelector(ticTacToeModel, GAME_STATUS_DELAY);
         stage.setScene(sceneSelector.getScene());
         stage.show();
         stage.toFront();
@@ -38,7 +38,7 @@ public class SceneSelectorTest extends ApplicationTest {
     @Test
     public void sceneIsBoardAfterGameTypeSelected() throws Exception {
         FutureTask<Void> query = new FutureTask<>(() -> {
-            model.setGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
             return null;
         });
 
@@ -99,15 +99,15 @@ public class SceneSelectorTest extends ApplicationTest {
 
     private FutureTask<Void> runWinningGameForX() {
         return new FutureTask<>(() -> {
-            model.setGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
             // x x x
             // o o 6
             // 7 8 9
-            model.move(1);
-            model.move(4);
-            model.move(2);
-            model.move(5);
-            model.move(3);
+            ticTacToeModel.gameMove(1);
+            ticTacToeModel.gameMove(4);
+            ticTacToeModel.gameMove(2);
+            ticTacToeModel.gameMove(5);
+            ticTacToeModel.gameMove(3);
             return null;
         });
     }

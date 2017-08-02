@@ -15,11 +15,11 @@ import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 public class GameOptionsUITest extends ApplicationTest {
 
     private Parent mainNode;
-    private Model model = new Model();
+    private TicTacToeModel ticTacToeModel = new TicTacToeModel();
 
     @Override
     public void start(Stage stage) throws Exception {
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(model);
+        GameOptionsUI gameOptionsUI = new GameOptionsUI(ticTacToeModel);
 
         mainNode = gameOptionsUI.getNode();
         buildStage(stage);
@@ -39,7 +39,7 @@ public class GameOptionsUITest extends ApplicationTest {
         for (int i = 0; i < GameType.values().length; i++) {
             Button currentButton = from(mainNode).lookup(".button").nth(i).query();
             clickOn(currentButton);
-            assertEquals(GameType.values()[i], model.getGameType());
+            assertEquals(GameType.values()[i], ticTacToeModel.getCurrentGameTypeModel().getGameType());
         }
     }
 

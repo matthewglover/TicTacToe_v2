@@ -8,8 +8,8 @@ import javafx.scene.layout.GridPane;
 public class GameStatusUI extends UI {
     private Label label;
 
-    public GameStatusUI(Model model) {
-        super(model, new GridPane());
+    public GameStatusUI(TicTacToeModel ticTacToeModel) {
+        super(ticTacToeModel, new GridPane());
         build();
     }
 
@@ -29,7 +29,7 @@ public class GameStatusUI extends UI {
         button.setId("new_game");
         button.setText("New Game");
         button.setOnAction(event -> {
-            model.reset();
+            ticTacToeModel.reset();
         });
         getGridPane().add(button, 1, 2);
     }
@@ -39,8 +39,8 @@ public class GameStatusUI extends UI {
     }
 
     private void displayMessage() {
-        String resultMessage = model.isGameWinner()
-                ? model.getGameWinner() + " wins!"
+        String resultMessage = ticTacToeModel.getCurrentGame().isWinner()
+                ? ticTacToeModel.getCurrentGame().getWinner() + " wins!"
                 : "It's a draw!";
         label.setText(resultMessage);
     }

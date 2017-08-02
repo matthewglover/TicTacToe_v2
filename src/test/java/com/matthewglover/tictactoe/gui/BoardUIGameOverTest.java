@@ -15,20 +15,20 @@ import static org.junit.Assert.assertEquals;
 public class BoardUIGameOverTest extends ApplicationTest {
 
     private Parent mainNode;
-    private Model model;
+    private TicTacToeModel ticTacToeModel;
 
     @Override
     public void start(Stage stage) throws Exception {
-        model = new Model();
-        BoardUI boardUI = new BoardUI(model);
+        ticTacToeModel = new TicTacToeModel();
+        BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
-        model.setGameType(GameType.HUMAN_HUMAN);
-        model.createGame(3);
-        model.move(1);
-        model.move(4);
-        model.move(2);
-        model.move(5);
-        model.move(3);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.createGame(3);
+        ticTacToeModel.gameMove(1);
+        ticTacToeModel.gameMove(4);
+        ticTacToeModel.gameMove(2);
+        ticTacToeModel.gameMove(5);
+        ticTacToeModel.gameMove(3);
         buildStage(stage);
     }
 

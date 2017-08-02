@@ -9,10 +9,10 @@ import javafx.scene.layout.GridPane;
 public class GameOptionsUI {
 
     private final GridPane grid = new GridPane();
-    private final Model model;
+    private final TicTacToeModel ticTacToeModel;
 
-    GameOptionsUI(Model model) {
-        this.model = model;
+    GameOptionsUI(TicTacToeModel ticTacToeModel) {
+        this.ticTacToeModel = ticTacToeModel;
         buildForm();
     }
 
@@ -32,7 +32,7 @@ public class GameOptionsUI {
         Button button = new Button();
         button.setText(gameType.getDescription());
         button.setOnAction(event -> {
-            model.setGameType(gameType);
+            ticTacToeModel.setCurrentGameType(gameType);
         });
         grid.add(button, 0, row);
     }

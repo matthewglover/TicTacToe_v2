@@ -17,14 +17,14 @@ import javafx.scene.control.Button;
 
 public class BoardUITest extends ApplicationTest {
     private Parent mainNode;
-    private final Model model = new Model();
+    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
 
     @Override
     public void start(Stage stage) throws Exception {
-        BoardUI boardUI = new BoardUI(model);
+        BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
-        model.setGameType(GameType.HUMAN_COMPUTER);
-        model.createGame(3);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
+        ticTacToeModel.createGame(3);
         buildStage(stage);
     }
 
@@ -43,7 +43,7 @@ public class BoardUITest extends ApplicationTest {
     @Test
     public void computerMovesUpdateAutomatically() {
         clickOn("#square_1");
-        assertEquals(PlayerSymbol.X, model.getNextPlayerSymbol());
+        assertEquals(PlayerSymbol.X, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
     }
 
     private void buildStage(Stage stage) {

@@ -18,17 +18,17 @@ import java.util.concurrent.FutureTask;
 import static org.junit.Assert.assertEquals;
 
 public class GameStatusUITest extends ApplicationTest {
-    private Model model = new Model();
+    private TicTacToeModel ticTacToeModel = new TicTacToeModel();
     private Parent mainNode;
 
 
     @Override
     public void start(Stage stage) throws Exception {
-        GameStatusUI gameStatusUI = new GameStatusUI(model);
+        GameStatusUI gameStatusUI = new GameStatusUI(ticTacToeModel);
         mainNode = gameStatusUI.getNode();
         buildStage(stage);
-        model.setGameType(GameType.HUMAN_HUMAN);
-        model.createGame(3);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.createGame(3);
     }
 
     @Test
@@ -37,11 +37,11 @@ public class GameStatusUITest extends ApplicationTest {
             // x x x
             // o o 6
             // 7 8 9
-            model.move(1);
-            model.move(4);
-            model.move(2);
-            model.move(5);
-            model.move(3);
+            ticTacToeModel.gameMove(1);
+            ticTacToeModel.gameMove(4);
+            ticTacToeModel.gameMove(2);
+            ticTacToeModel.gameMove(5);
+            ticTacToeModel.gameMove(3);
             Label label = from(mainNode).lookup("#game_result").query();
             return label.getText();
         });
@@ -56,12 +56,12 @@ public class GameStatusUITest extends ApplicationTest {
             // o o o
             // x x 6
             // 7 8 x
-            model.move(4);
-            model.move(1);
-            model.move(5);
-            model.move(2);
-            model.move(9);
-            model.move(3);
+            ticTacToeModel.gameMove(4);
+            ticTacToeModel.gameMove(1);
+            ticTacToeModel.gameMove(5);
+            ticTacToeModel.gameMove(2);
+            ticTacToeModel.gameMove(9);
+            ticTacToeModel.gameMove(3);
             Label label = from(mainNode).lookup("#game_result").query();
             return label.getText();
         });
@@ -76,15 +76,15 @@ public class GameStatusUITest extends ApplicationTest {
             // o o x
             // x x o
             // o x x
-            model.move(4);
-            model.move(1);
-            model.move(5);
-            model.move(2);
-            model.move(9);
-            model.move(6);
-            model.move(3);
-            model.move(7);
-            model.move(8);
+            ticTacToeModel.gameMove(4);
+            ticTacToeModel.gameMove(1);
+            ticTacToeModel.gameMove(5);
+            ticTacToeModel.gameMove(2);
+            ticTacToeModel.gameMove(9);
+            ticTacToeModel.gameMove(6);
+            ticTacToeModel.gameMove(3);
+            ticTacToeModel.gameMove(7);
+            ticTacToeModel.gameMove(8);
             Label label = from(mainNode).lookup("#game_result").query();
             return label.getText();
         });
@@ -96,7 +96,7 @@ public class GameStatusUITest extends ApplicationTest {
     @Test
     public void clickOnNewGameFiresEvent() {
         TestObserver testObserver = new TestObserver();
-        model.addObserver(testObserver);
+        ticTacToeModel.addObserver(testObserver);
         clickOn("#new_game");
         assertEquals(ModelUpdate.START_NEW_GAME, testObserver.getLastUpdate());
     }

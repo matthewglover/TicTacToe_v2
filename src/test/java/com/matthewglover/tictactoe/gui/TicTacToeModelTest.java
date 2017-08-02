@@ -12,48 +12,48 @@ import java.util.Observer;
 
 import static org.junit.Assert.assertEquals;
 
-public class ModelTest {
-    private final Model model = new Model();
+public class TicTacToeModelTest {
+    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
     private final TestObserver testObserver = new TestObserver();
 
     @Test
     public void setGameTypeNotifiesObservers() {
-        model.addObserver(testObserver);
-        model.setGameType(GameType.COMPUTER_HUMAN);
+        ticTacToeModel.addObserver(testObserver);
+        ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
         assertEquals(ModelUpdate.SET_GAME_TYPE, testObserver.getLastUpdate());
     }
 
     @Test
     public void getPlayerTypeBasedOnGameType() {
-        model.addObserver(testObserver);
-        model.setGameType(GameType.COMPUTER_HUMAN);
-        assertEquals(PlayerType.COMPUTER, model.getPlayerXType());
-        assertEquals(PlayerType.HUMAN, model.getPlayerOType());
+        ticTacToeModel.addObserver(testObserver);
+        ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
+        assertEquals(PlayerType.COMPUTER, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.X));
+        assertEquals(PlayerType.HUMAN, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.O));
     }
 
     @Test
     public void createGameNotifiesObservers() {
-        model.addObserver(testObserver);
-        model.setGameType(GameType.HUMAN_HUMAN);
-        model.createGame(3);
+        ticTacToeModel.addObserver(testObserver);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.createGame(3);
         assertEquals(ModelUpdate.CREATE_GAME, testObserver.getLastUpdate());
     }
 
     @Test
     public void tracksGameAndCurrentPlayer() {
-        model.setGameType(GameType.HUMAN_HUMAN);
-        model.createGame(3);
-        assertEquals(PlayerSymbol.X, model.getNextPlayerSymbol());
-        model.move(1);
-        assertEquals(PlayerSymbol.O, model.getNextPlayerSymbol());
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.createGame(3);
+        assertEquals(PlayerSymbol.X, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
+        ticTacToeModel.gameMove(1);
+        assertEquals(PlayerSymbol.O, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
     }
 
     @Test
     public void delegatesMoveToComputer () {
-        model.setGameType(GameType.HUMAN_COMPUTER);
-        model.createGame(3);
-        model.move(1);
-        assertEquals(PlayerType.COMPUTER, model.getNextPlayerType());
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
+        ticTacToeModel.createGame(3);
+        ticTacToeModel.gameMove(1);
+        assertEquals(PlayerType.COMPUTER, ticTacToeModel.getNextPlayerType());
     }
 
     private class TestObserver implements Observer {

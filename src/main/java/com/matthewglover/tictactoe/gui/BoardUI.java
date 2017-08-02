@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.Board;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import com.matthewglover.tictactoe.core.PlayerType;
 import javafx.geometry.Insets;
@@ -10,8 +11,8 @@ import javafx.scene.layout.GridPane;
 
 public class BoardUI extends UI {
 
-    public BoardUI(Model model) {
-        super(model, new GridPane());
+    public BoardUI(TicTacToeModel ticTacToeModel) {
+        super(ticTacToeModel, new GridPane());
         formatBoard();
     }
 
@@ -23,10 +24,10 @@ public class BoardUI extends UI {
     }
 
     private void formatBoard() {
-        getBoard().setAlignment(Pos.CENTER);
-        getBoard().setHgap(10);
-        getBoard().setVgap(10);
-        getBoard().setPadding(new Insets(25, 25, 25, 25));
+        getGrid().setAlignment(Pos.CENTER);
+        getGrid().setHgap(10);
+        getGrid().setVgap(10);
+        getGrid().setPadding(new Insets(25, 25, 25, 25));
     }
 
     private boolean isBoardStateChange(ModelUpdate modelUpdate) {
@@ -36,28 +37,40 @@ public class BoardUI extends UI {
     }
 
     private void buildBoard() {
-        getBoard().getChildren().clear();
+        getGrid().getChildren().clear();
 
-        for (int rowIndex = 1; rowIndex <= model.getBoardSize(); rowIndex++) {
+        for (int rowIndex = 1; rowIndex <= getBoardSize(); rowIndex++) {
             addRow(rowIndex);
         }
     }
 
-    private GridPane getBoard() {
+    private int getBoardSize() {
+        return getBoard().getSize();
+    }
+
+    private GridPane getGrid() {
         return (GridPane) rootNode;
     }
 
     private void addRow(int row) {
-        for (int column = 1; column <= model.getBoardSize(); column++) {
+        for (int column = 1; column <= getBoardSize(); column++) {
             addSquare(row, column);
         }
     }
 
     private void addSquare(int row, int column) {
         int squareNumber = calcSquareNumber(row, column);
-        PlayerSymbol square = model.getBoardSquare(squareNumber);
+        PlayerSymbol square = getBoardSquare(squareNumber);
         Button button = buildSquareButton(square, squareNumber);
-        getBoard().add(button, column, row);
+        getGrid().add(button, column, row);
+    }
+
+    private Board getBoard() {
+        return ticTacToeModel.getCurrentGame().getBoard();
+    }
+
+    private PlayerSymbol getBoardSquare(int squareNumber) {
+        return getBoard().getSquare(squareNumber);
     }
 
     private Button buildSquareButton(PlayerSymbol square, int squareNumber) {
@@ -81,20 +94,20 @@ public class BoardUI extends UI {
     }
 
     private boolean isActiveGame() {
-        return !model.isGameOver();
+        return !ticTacToeModel.getCurrentGame().isOver();
     }
 
     private boolean isActiveSquare(PlayerSymbol square) {
-        return model.getNextPlayerType() == PlayerType.HUMAN
+        return ticTacToeModel.getNextPlayerType() == PlayerType.HUMAN
                 && square.isEmpty();
     }
 
     private int calcSquareNumber(int row, int column) {
-        int squareOffset = (row - 1) * model.getBoardSize();
+        int squareOffset = (row - 1) * getBoardSize();
         return squareOffset + column;
     }
 
     private void move(int squareNumber) {
-        model.move(squareNumber);
+        ticTacToeModel.gameMove(squareNumber);
     }
 }

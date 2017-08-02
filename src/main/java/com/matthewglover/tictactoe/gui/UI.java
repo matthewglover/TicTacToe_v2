@@ -6,13 +6,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 public abstract class UI implements Observer {
-    protected final Model model;
+    protected final TicTacToeModel ticTacToeModel;
     protected final Parent rootNode;
 
-    public UI(Model model, Parent rootNode) {
-        this.model = model;
+    public UI(TicTacToeModel ticTacToeModel, Parent rootNode) {
+        this.ticTacToeModel = ticTacToeModel;
         this.rootNode = rootNode;
-        model.addObserver(this);
+        ticTacToeModel.addObserver(this);
     }
 
     @Override
