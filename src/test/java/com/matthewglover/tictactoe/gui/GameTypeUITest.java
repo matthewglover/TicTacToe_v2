@@ -13,16 +13,16 @@ import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 
-public class GameOptionsUITest extends ApplicationTest {
+public class GameTypeUITest extends ApplicationTest {
 
     private Parent mainNode;
     private TicTacToeModel ticTacToeModel = new TicTacToeModel();
 
     @Override
     public void start(Stage stage) throws Exception {
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(ticTacToeModel);
+        GameTypeUI gameTypeUI = new GameTypeUI(ticTacToeModel);
 
-        mainNode = gameOptionsUI.getNode();
+        mainNode = gameTypeUI.getNode();
         buildStage(stage);
     }
 

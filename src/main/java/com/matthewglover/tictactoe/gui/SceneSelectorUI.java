@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 
 public class SceneSelectorUI extends ModelObserver {
 
-    private final GameOptionsUI gameOptionsUI;
+    private final GameTypeUI gameTypeUI;
     private final BoardSizeUI boardSizeUI;
     private final BoardUI boardUI;
     private final GameStatusUI gameStatusUI;
@@ -20,11 +20,11 @@ public class SceneSelectorUI extends ModelObserver {
         super(ticTacToeModel);
         this.gameStatusDelay = gameStatusDelay;
 
-        gameOptionsUI = new GameOptionsUI(ticTacToeModel);
+        gameTypeUI = new GameTypeUI(ticTacToeModel);
         boardSizeUI = new BoardSizeUI(ticTacToeModel);
         boardUI = new BoardUI(ticTacToeModel);
         gameStatusUI = new GameStatusUI(ticTacToeModel);
-        scene = new Scene(gameOptionsUI.getNode(), 300, 300);
+        scene = new Scene(gameTypeUI.getNode(), 300, 300);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SceneSelectorUI extends ModelObserver {
     }
 
     private void selectGameOptionsUI() {
-        scene.setRoot(gameOptionsUI.getNode());
+        scene.setRoot(gameTypeUI.getNode());
     }
 
     private void selectGameStatusUI() {
