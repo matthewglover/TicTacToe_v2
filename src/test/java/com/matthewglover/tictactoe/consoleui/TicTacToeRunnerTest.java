@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.core.ComputerPlayer;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import org.junit.Test;
 
@@ -16,7 +15,9 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
-                gameStatusBuilder.getGameStatusUI());
+                playerBuilder.getComputerPlayerUI(),
+                gameStatusBuilder.getGameStatusUI(),
+                0);
         runner.execute();
         assertEquals(PlayerSymbol.X, runner.getWinner());
         assertEquals(1, runner.gameCount());
@@ -30,7 +31,9 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
-                gameStatusBuilder.getGameStatusUI());
+                playerBuilder.getComputerPlayerUI(),
+                gameStatusBuilder.getGameStatusUI(),
+                0);
         runner.execute();
         assertEquals(2, runner.gameCount());
     }
@@ -43,7 +46,9 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
-                gameStatusBuilder.getGameStatusUI());
+                playerBuilder.getComputerPlayerUI(),
+                gameStatusBuilder.getGameStatusUI(),
+                0);
         runner.execute();
         assertTrue(runner.getPlayerX() instanceof HumanPlayer);
         assertTrue(runner.getPlayerO() instanceof ComputerPlayer);
@@ -57,7 +62,9 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
-                gameStatusBuilder.getGameStatusUI());
+                playerBuilder.getComputerPlayerUI(),
+                gameStatusBuilder.getGameStatusUI(),
+                0);
         runner.execute();
         assertTrue(runner.getPlayerX() instanceof ComputerPlayer);
         assertTrue(runner.getPlayerO() instanceof HumanPlayer);
@@ -71,7 +78,9 @@ public class TicTacToeRunnerTest {
         TicTacToeRunner runner = new TicTacToeRunner(
                 optionsBuilder.getGameOptionsUI(),
                 playerBuilder.getHumanPlayerUI(),
-                gameStatusBuilder.getGameStatusUI());
+                playerBuilder.getComputerPlayerUI(),
+                gameStatusBuilder.getGameStatusUI(),
+                0);
         runner.execute();
         assertTrue(runner.getPlayerX() instanceof ComputerPlayer);
         assertTrue(runner.getPlayerO() instanceof ComputerPlayer);

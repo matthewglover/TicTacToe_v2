@@ -25,11 +25,15 @@ public enum GameType {
         return PlayerType.valueOf(getPlayers()[1]);
     }
 
+    private String[] getPlayers() {
+        return this.toString().split("_");
+    }
+
     private Function<String, String> capitalize() {
         return (String player) -> Character.toUpperCase(player.charAt(0)) + player.substring(1);
     }
 
-    private String[] getPlayers() {
-        return this.toString().split("_");
+    public PlayerType getPlayerType(PlayerSymbol playerSymbol) {
+        return PlayerType.valueOf(getPlayers()[playerSymbol.getPlayerIndex()]);
     }
 }

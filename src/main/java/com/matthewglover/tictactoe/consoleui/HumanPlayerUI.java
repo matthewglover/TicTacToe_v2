@@ -1,25 +1,18 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.core.Board;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class HumanPlayerUI {
+public class HumanPlayerUI extends PlayerUI {
 
-    private final PrintStream out;
     private final Scanner scanner;
 
     public HumanPlayerUI(InputStream in, PrintStream out) {
-        this.out = out;
+        super(out);
         scanner = new Scanner(in);
-    }
-
-    public void printBoard(Board board) {
-        String printableBoard = new BoardFormatter(board).format();
-        out.println(printableBoard);
     }
 
     public void printMoveRequest(PlayerSymbol playerSymbol) {
@@ -42,7 +35,4 @@ public class HumanPlayerUI {
         out.println(PlayerMessages.INVALID_INPUT);
     }
 
-    public void clearScreen() {
-        out.print("\033[H\033[2J");
-    }
 }

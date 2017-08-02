@@ -16,7 +16,6 @@ public class HumanPlayer extends Player {
     @Override
     protected void makeMove(Game game) {
         Board board = game.getBoard();
-        humanPlayerUI.clearScreen();
         printBoard(board);
         printMoveRequest();
         game.move(obtainMove(board));
