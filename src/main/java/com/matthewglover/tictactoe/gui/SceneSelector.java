@@ -9,18 +9,18 @@ import java.util.Observer;
 
 public class SceneSelector implements Observer {
 
-    private final TicTacToeModel ticTacToeModel;
     private final GameOptionsUI gameOptionsUI;
+    private final BoardSizeUI boardSizeUI;
     private final BoardUI boardUI;
     private final GameStatusUI gameStatusUI;
     private final int gameStatusDelay;
     private final Scene scene;
 
     public SceneSelector(TicTacToeModel ticTacToeModel, int gameStatusDelay) {
-        this.ticTacToeModel = ticTacToeModel;
         this.gameStatusDelay = gameStatusDelay;
 
         gameOptionsUI = new GameOptionsUI(ticTacToeModel);
+        boardSizeUI = new BoardSizeUI(ticTacToeModel);
         boardUI = new BoardUI(ticTacToeModel);
         gameStatusUI = new GameStatusUI(ticTacToeModel);
         scene = new Scene(gameOptionsUI.getNode(), 300, 300);
@@ -37,17 +37,23 @@ public class SceneSelector implements Observer {
         ModelUpdate modelUpdate = (ModelUpdate) arg;
 
         switch (modelUpdate) {
-            case SET_GAME_TYPE:
-                ticTacToeModel.createGame(3);
-                selectBoardUI();
-                break;
             case START_NEW_GAME:
                 selectGameOptionsUI();
+                break;
+            case SET_GAME_TYPE:
+                selectBoardSizeUI();
+                break;
+            case CREATE_GAME:
+                selectBoardUI();
                 break;
             case GAME_OVER:
                 selectGameStatusUI();
                 break;
         }
+    }
+
+    private void selectBoardSizeUI() {
+        scene.setRoot(boardSizeUI.getNode());
     }
 
     private void selectBoardUI() {

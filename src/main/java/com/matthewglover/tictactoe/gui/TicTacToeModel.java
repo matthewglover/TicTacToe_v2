@@ -10,11 +10,18 @@ public class TicTacToeModel extends Observable {
     private final CurrentGameModel currentGameModel;
     private final CurrentGameTypeModel currentGameTypeModel;
 
-
     public TicTacToeModel() {
         super();
         currentGameModel = new CurrentGameModel(this);
         currentGameTypeModel = new CurrentGameTypeModel(this);
+    }
+
+    public Board getCurrentBoard() {
+        return getCurrentGame().getBoard();
+    }
+
+    public void setCurrentBoard(int boardSize) {
+        currentGameModel.createGame(boardSize);
     }
 
     public CurrentGameTypeModel getCurrentGameTypeModel() {

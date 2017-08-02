@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import com.matthewglover.tictactoe.core.PlayerType;
@@ -29,6 +30,14 @@ public class TicTacToeModelTest {
         ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
         assertEquals(PlayerType.COMPUTER, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.X));
         assertEquals(PlayerType.HUMAN, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.O));
+    }
+
+    @Test
+    public void setCurrentBoardCreatesGameAndNotifiesObservers() {
+        ticTacToeModel.addObserver(testObserver);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.setCurrentBoard(3);
+        assertEquals(ModelUpdate.CREATE_GAME, testObserver.getLastUpdate());
     }
 
     @Test

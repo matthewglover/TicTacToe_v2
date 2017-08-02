@@ -36,9 +36,22 @@ public class SceneSelectorTest extends ApplicationTest {
     }
 
     @Test
+    public void sceneIsBoardSizeAfterGameOptionsSelected() throws Exception {
+        FutureTask<Void> query = new FutureTask<>(() -> {
+            ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+            return null;
+        });
+
+        Platform.runLater(query);
+        query.get();
+        verifyBoardSizeScene();
+    }
+
+    @Test
     public void sceneIsBoardAfterGameTypeSelected() throws Exception {
         FutureTask<Void> query = new FutureTask<>(() -> {
             ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setCurrentBoard(3);
             return null;
         });
 
@@ -64,12 +77,21 @@ public class SceneSelectorTest extends ApplicationTest {
         Platform.runLater(query);
         query.get();
 
-        runDelayed(50, () -> {
+        runDelayed(500, () -> {
             clickOn("#new_game");
-            return sceneSelector.getScene().getRoot();
+            return null;
         });
 
         verifyGameOptionsScene();
+    }
+
+    private void verifyBoardSizeScene() {
+        Parent mainNode = sceneSelector.getScene().getRoot();
+        verifyThat(mainNode, hasChildren(2, ".button"));
+        for (int i = 3; i < 4; i++) {
+            Button currentButton = from(mainNode).lookup(".button").nth(i - 3).query();
+            assertEquals(i + " X " + i, currentButton.getText());
+        }
     }
 
     private void verifyGameOptionsScene() {
@@ -100,6 +122,7 @@ public class SceneSelectorTest extends ApplicationTest {
     private FutureTask<Void> runWinningGameForX() {
         return new FutureTask<>(() -> {
             ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setCurrentBoard(3);
             // x x x
             // o o 6
             // 7 8 9
