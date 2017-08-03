@@ -1,24 +1,16 @@
 package com.matthewglover.tictactoe.consoleui;
 
 import com.matthewglover.tictactoe.core.GameType;
-import com.matthewglover.tictactoe.core.ModelObserver;
 import com.matthewglover.tictactoe.core.ModelUpdate;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
-public class GameTypeUI extends ModelObserver {
-    private final Scanner scanner;
-    private final PrintStream out;
-    private final TicTacToeModel ticTacToeModel;
+public class GameTypeUI extends UI {
 
     public GameTypeUI(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
-        super(ticTacToeModel);
-        scanner = new Scanner(in);
-        this.out = out;
-        this.ticTacToeModel = ticTacToeModel;
+        super(in, out, ticTacToeModel);
     }
 
     @Override
@@ -28,7 +20,8 @@ public class GameTypeUI extends ModelObserver {
         }
     }
 
-    private void run() {
+    @Override
+    protected void run() {
         clearScreen();
         printRequestGameType();
         ticTacToeModel.setCurrentGameType(promptForGameType());
@@ -67,9 +60,5 @@ public class GameTypeUI extends ModelObserver {
 
     private void printInvalidInput() {
         out.println(GameOptionsMessages.INVALID_INPUT);
-    }
-
-    private void clearScreen() {
-        out.print("\033[H\033[2J");
     }
 }

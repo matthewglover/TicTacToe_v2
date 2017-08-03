@@ -4,19 +4,12 @@ import com.matthewglover.tictactoe.core.*;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 
-public class BoardUI extends ModelObserver {
-    private final Scanner scanner;
-    private final PrintStream out;
-    private final TicTacToeModel ticTacToeModel;
+public class BoardUI extends UI {
 
     public BoardUI(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
-        super(ticTacToeModel);
-        scanner = new Scanner(in);
-        this.out = out;
-        this.ticTacToeModel = ticTacToeModel;
+        super(in, out, ticTacToeModel);
     }
 
     @Override
@@ -26,7 +19,8 @@ public class BoardUI extends ModelObserver {
         }
     }
 
-    private void run() {
+    @Override
+    protected void run() {
         clearScreen();
         printBoard();
         if (ticTacToeModel.getNextPlayerType().isHuman()) {
@@ -69,9 +63,5 @@ public class BoardUI extends ModelObserver {
 
     private void printInvalidInput() {
         out.println(PlayerMessages.INVALID_INPUT);
-    }
-
-    private void clearScreen() {
-        out.print("\033[H\033[2J");
     }
 }
