@@ -1,8 +1,8 @@
 package com.matthewglover.tictactoe.core;
 
-public class SimpleHumanPlayer extends SimplePlayer {
+public class HumanPlayer extends Player {
 
-    public SimpleHumanPlayer(PlayerSymbol playerSymbol) {
+    public HumanPlayer(PlayerSymbol playerSymbol) {
         super(playerSymbol);
     }
 

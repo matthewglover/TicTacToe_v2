@@ -1,10 +1,10 @@
 package com.matthewglover.tictactoe.core;
 
 
-public class SimpleComputerPlayer extends SimplePlayer {
+public class ComputerPlayer extends Player {
     private static final int MAX_SEARCH_DEPTH = 6;
 
-    public SimpleComputerPlayer(PlayerSymbol playerSymbol) {
+    public ComputerPlayer(PlayerSymbol playerSymbol) {
         super(playerSymbol);
     }
 

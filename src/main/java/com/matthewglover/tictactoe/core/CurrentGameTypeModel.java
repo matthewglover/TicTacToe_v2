@@ -4,8 +4,8 @@ package com.matthewglover.tictactoe.core;
 public class CurrentGameTypeModel {
     private final TicTacToeModel ticTacToeModel;
     private GameType gameType;
-    private SimplePlayer playerX;
-    private SimplePlayer playerO;
+    private Player playerX;
+    private Player playerO;
 
     public CurrentGameTypeModel(TicTacToeModel ticTacToeModel) {
         this.ticTacToeModel = ticTacToeModel;
@@ -28,7 +28,7 @@ public class CurrentGameTypeModel {
         playerO = null;
     }
 
-    public SimplePlayer getPlayer(PlayerSymbol playerSymbol) {
+    public Player getPlayer(PlayerSymbol playerSymbol) {
         return playerSymbol == PlayerSymbol.X
                 ? playerX
                 : playerO;
@@ -38,9 +38,9 @@ public class CurrentGameTypeModel {
         return gameType;
     }
 
-    private SimplePlayer createPlayer(PlayerSymbol playerSymbol) {
+    private Player createPlayer(PlayerSymbol playerSymbol) {
         return (gameType.getPlayerType(playerSymbol) == PlayerType.HUMAN)
-                ? new SimpleHumanPlayer(playerSymbol)
-                : new SimpleComputerPlayer(playerSymbol);
+                ? new HumanPlayer(playerSymbol)
+                : new ComputerPlayer(playerSymbol);
     }
 }

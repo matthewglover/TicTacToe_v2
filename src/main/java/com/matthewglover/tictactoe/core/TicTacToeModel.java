@@ -70,7 +70,7 @@ public class TicTacToeModel extends Observable {
         }
     }
 
-    public SimplePlayer getNextPlayer() {
+    public Player getNextPlayer() {
         PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
         return currentGameTypeModel.getPlayer(nextPlayerSymbol);
     }
