@@ -1,24 +1,34 @@
 package com.matthewglover.tictactoe.consoleui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.ModelObserver;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class GameTypeUI {
+public class GameTypeUI extends ModelObserver {
     private final Scanner scanner;
     private final PrintStream out;
     private final TicTacToeModel ticTacToeModel;
 
     public GameTypeUI(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
+        super(ticTacToeModel);
         scanner = new Scanner(in);
         this.out = out;
         this.ticTacToeModel = ticTacToeModel;
     }
 
-    public void run() {
+    @Override
+    protected void update(ModelUpdate modelUpdate) {
+        if (modelUpdate == ModelUpdate.START_NEW_GAME) {
+            run();
+        }
+    }
+
+    private void run() {
         printRequestGameType();
         ticTacToeModel.setCurrentGameType(promptForGameType());
     }

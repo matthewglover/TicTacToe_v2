@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.core;
 
-import javafx.application.Platform;
 
 import java.util.Observable;
 
@@ -15,16 +14,20 @@ public class TicTacToeModel extends Observable {
         currentGameTypeModel = new CurrentGameTypeModel(this);
     }
 
+    public CurrentGameTypeModel getCurrentGameTypeModel() {
+        return currentGameTypeModel;
+    }
+
+    public CurrentGameModel getCurrentGameModel() {
+        return currentGameModel;
+    }
+
     public Board getCurrentBoard() {
         return getCurrentGame().getBoard();
     }
 
     public void setCurrentBoard(int boardSize) {
         currentGameModel.createGame(boardSize);
-    }
-
-    public CurrentGameTypeModel getCurrentGameTypeModel() {
-        return currentGameTypeModel;
     }
 
     public Game getCurrentGame() {
@@ -67,7 +70,7 @@ public class TicTacToeModel extends Observable {
         }
     }
 
-    private SimplePlayer getNextPlayer() {
+    public SimplePlayer getNextPlayer() {
         PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
         return currentGameTypeModel.getPlayer(nextPlayerSymbol);
     }
@@ -76,7 +79,7 @@ public class TicTacToeModel extends Observable {
         return modelUpdate == ModelUpdate.MOVE && getNextPlayer().isComputer();
     }
 
-    private Runnable getRunComputerMove() {
-        return () -> Platform.runLater(() -> gameMove(getNextPlayer().getMove(currentGameModel.getGame())));
+    protected Runnable getRunComputerMove() {
+        return () -> gameMove(getNextPlayer().getMove(currentGameModel.getGame()));
     }
 }

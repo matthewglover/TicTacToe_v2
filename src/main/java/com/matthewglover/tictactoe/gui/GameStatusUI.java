@@ -2,7 +2,6 @@ package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.ModelObserver;
 import com.matthewglover.tictactoe.core.ModelUpdate;
-import com.matthewglover.tictactoe.core.TicTacToeModel;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

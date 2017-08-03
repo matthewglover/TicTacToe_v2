@@ -8,35 +8,31 @@ import static org.junit.Assert.assertEquals;
 
 public class BoardSizeUITest {
     private TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private final IOTestHelper ioTestHelper = new IOTestHelper();
 
     @Test
     public void printsRequestBoardSizeOutputsMessage() {
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        IOTestHelper ioTestHelper = new IOTestHelper();
-        ioTestHelper.setInputStream("3\n");
-        BoardSizeUI boardSizeUI = new BoardSizeUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
-        boardSizeUI.run();
+        setupTest("3\n");
         assertEquals(GameOptionsMessages.REQUEST_BOARD_SIZE + "\n", ioTestHelper.getOutContentString());
     }
 
     @Test
-    public void promptForBoardSizeReturnsSizeForValidInteger() {
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        IOTestHelper ioTestHelper = new IOTestHelper();
-        ioTestHelper.setInputStream("3\n");
-        BoardSizeUI boardSizeUI = new BoardSizeUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
-        boardSizeUI.run();
+    public void setsBoardSizeToValidUserInput() {
+        setupTest("3\n");
         assertEquals(3, ticTacToeModel.getCurrentBoard().getSize());
     }
 
     @Test
-    public void promptForBoardSizeReportsErrorAndPromptsForValidInput() {
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        IOTestHelper ioTestHelper = new IOTestHelper();
-        ioTestHelper.setInputStream("invalid\n4\n");
-        BoardSizeUI boardSizeUI = new BoardSizeUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
-        boardSizeUI.run();
+    public void validatesInputAndPromptsUntilValidInputReceived() {
+        setupTest("invalid\n4\n");
         assertEquals(GameOptionsMessages.INVALID_INPUT, ioTestHelper.getLastLineOfOutput());
         assertEquals(4, ticTacToeModel.getCurrentBoard().getSize());
+    }
+
+    private void setupTest(String input) {
+        ioTestHelper.setInputStream(input);
+        new BoardSizeUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+
     }
 }

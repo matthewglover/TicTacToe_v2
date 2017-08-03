@@ -6,9 +6,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class GameStatus extends Observable implements Observer {
-    private final GameStatusUI gameStatusUI;
+    private final OldGameStatusUI gameStatusUI;
 
-    public GameStatus(GameStatusUI gameStatusUI) {
+    public GameStatus(OldGameStatusUI gameStatusUI) {
         this.gameStatusUI = gameStatusUI;
     }
 

@@ -61,6 +61,10 @@ public class Board {
         return stream(grid).allMatch(square -> !square.isEmpty());
     }
 
+    public boolean isValidMove(int move) {
+        return isInBound(move) && isEmptySquare(move);
+    }
+
     private void setupGrid() {
         grid = new PlayerSymbol[getTotalSquares()];
         fill(grid, PlayerSymbol.NEITHER);
@@ -110,5 +114,9 @@ public class Board {
         return (Integer firstItem) ->
                 Stream.iterate(firstItem, d -> d + increment)
                         .limit(size);
+    }
+
+    private boolean isInBound(int move) {
+        return move >= FIRST_SQUARE_NUMBER && move <= getTotalSquares();
     }
 }

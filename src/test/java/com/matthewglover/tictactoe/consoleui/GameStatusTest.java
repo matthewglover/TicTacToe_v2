@@ -1,9 +1,5 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.consoleui.BoardFormatter;
-import com.matthewglover.tictactoe.consoleui.GameStatus;
-import com.matthewglover.tictactoe.consoleui.GameStatusMessages;
-import com.matthewglover.tictactoe.consoleui.IOTestHelper;
 import com.matthewglover.tictactoe.core.Game;
 import com.matthewglover.tictactoe.core.GameTestHelper;
 import com.matthewglover.tictactoe.core.PlayerSymbol;

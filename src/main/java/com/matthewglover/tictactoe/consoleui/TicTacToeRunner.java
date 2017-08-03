@@ -9,7 +9,7 @@ public class TicTacToeRunner implements Observer {
     private final GameOptionsUI gameOptionsUI;
     private final HumanPlayerUI humanPlayerUI;
     private final ComputerPlayerUI computerPlayerUI;
-    private GameStatusUI gameStatusUI;
+    private OldGameStatusUI gameStatusUI;
     private final int withDelay;
     private GameOptions gameOptions;
     private Game game;
@@ -22,7 +22,7 @@ public class TicTacToeRunner implements Observer {
         GameOptionsUI gameOptionsUI = new GameOptionsUI(System.in, System.out);
         HumanPlayerUI humanPlayerUI = new HumanPlayerUI(System.in, System.out);
         ComputerPlayerUI computerPlayerUI = new ComputerPlayerUI(System.in, System.out);
-        GameStatusUI gameStatusUI = new GameStatusUI(System.in, System.out);
+        OldGameStatusUI gameStatusUI = new OldGameStatusUI(System.in, System.out);
         TicTacToeRunner ticTacToeRunner = new TicTacToeRunner(
                 gameOptionsUI,
                 humanPlayerUI,
@@ -36,7 +36,7 @@ public class TicTacToeRunner implements Observer {
             GameOptionsUI gameOptionsUI,
             HumanPlayerUI humanPlayerUI,
             ComputerPlayerUI computerPlayerUI,
-            GameStatusUI gameStatusUI,
+            OldGameStatusUI gameStatusUI,
             int withDelay) {
         this.gameOptionsUI = gameOptionsUI;
         this.humanPlayerUI = humanPlayerUI;

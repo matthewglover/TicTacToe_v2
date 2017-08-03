@@ -1,44 +1,67 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.ModelObserver;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
+import com.matthewglover.tictactoe.core.TicTacToeModel;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class GameStatusUI {
-
+public class GameStatusUI extends ModelObserver {
     private final Scanner scanner;
     private final PrintStream out;
+    private final TicTacToeModel ticTacToeModel;
 
-    public GameStatusUI(InputStream in, PrintStream out) {
+    public GameStatusUI(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
+        super(ticTacToeModel);
         scanner = new Scanner(in);
         this.out = out;
+        this.ticTacToeModel = ticTacToeModel;
     }
 
-    public void reportWinner(PlayerSymbol winner) {
-        out.println(String.format(GameStatusMessages.REPORT_WINNER, winner));
+    @Override
+    protected void update(ModelUpdate modelUpdate) {
+        if (modelUpdate == ModelUpdate.GAME_OVER) {
+            run();
+        }
+    }
+
+    private void run() {
+        if (isWinner()) {
+            reportWinner();
+        } else {
+            reportDraw();
+        }
+        printPlayAgainRequest();
+        if (promptForPlayAgain()) {
+            ticTacToeModel.reset();
+        }
+    }
+
+    private boolean isWinner() {
+        return ticTacToeModel.getCurrentGame().isWinner();
+    }
+
+    private void reportWinner() {
+        out.println(String.format(GameStatusMessages.REPORT_WINNER, getWinner()));
+    }
+
+    private PlayerSymbol getWinner() {
+        return ticTacToeModel.getCurrentGame().getWinner();
     }
 
     public void reportDraw() {
         out.println(GameStatusMessages.REPORT_DRAW);
     }
 
-    public void printPlayAgainRequest() {
+    private void printPlayAgainRequest() {
         out.println(GameStatusMessages.REQUEST_PLAY_AGAIN);
     }
 
-    public boolean promptForPlayAgain() {
+    private boolean promptForPlayAgain() {
         String input = scanner.nextLine();
         return input.trim().toLowerCase().matches("y");
-    }
-
-    public void clearScreen() {
-        out.print("\033[H\033[2J");
-    }
-
-    public void printBoard(Board board) {
-        out.println(new BoardFormatter(board).format());
     }
 }

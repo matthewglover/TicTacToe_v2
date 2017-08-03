@@ -2,7 +2,6 @@ package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
-import com.matthewglover.tictactoe.core.TicTacToeModel;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

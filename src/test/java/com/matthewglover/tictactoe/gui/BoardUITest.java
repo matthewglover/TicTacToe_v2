@@ -3,7 +3,6 @@ package com.matthewglover.tictactoe.gui;
 import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 
-import com.matthewglover.tictactoe.core.TicTacToeModel;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

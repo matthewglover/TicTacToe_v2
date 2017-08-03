@@ -1,24 +1,34 @@
 package com.matthewglover.tictactoe.consoleui;
 
 import com.matthewglover.tictactoe.core.Board;
+import com.matthewglover.tictactoe.core.ModelObserver;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class BoardSizeUI {
+public class BoardSizeUI extends ModelObserver {
     private final Scanner scanner;
     private final PrintStream out;
     private final TicTacToeModel ticTacToeModel;
 
     public BoardSizeUI(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
+        super(ticTacToeModel);
         scanner = new Scanner(in);
         this.out = out;
         this.ticTacToeModel = ticTacToeModel;
     }
 
-    public void run() {
+    @Override
+    protected void update(ModelUpdate modelUpdate) {
+        if (modelUpdate == ModelUpdate.SET_GAME_TYPE) {
+            run();
+        }
+    }
+
+    private void run() {
         printRequestBoardSize();
         ticTacToeModel.setCurrentBoard(promptForBoardSize());
     }

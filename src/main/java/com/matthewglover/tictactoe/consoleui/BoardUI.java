@@ -52,11 +52,18 @@ public class BoardUI extends ModelObserver {
         String input = scanner.nextLine();
 
         if (input.matches("^\\d+$")) {
-            return Integer.parseInt(input);
-        } else {
-            printInvalidInput();
-            return promptForMove();
+            int move = Integer.parseInt(input);
+            if (isValidMove(move)) {
+                return move;
+            }
         }
+
+        printInvalidInput();
+        return promptForMove();
+    }
+
+    private boolean isValidMove(int move) {
+        return ticTacToeModel.getCurrentBoard().isValidMove(move);
     }
 
     public void printInvalidInput() {

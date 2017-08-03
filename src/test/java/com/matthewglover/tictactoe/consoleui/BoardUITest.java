@@ -6,6 +6,8 @@ import com.matthewglover.tictactoe.core.PlayerSymbol;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
 
 public class BoardUITest {
@@ -41,18 +43,44 @@ public class BoardUITest {
 
     @Test
     public void promptForMoveReportsErrorAndPromptsForValidInputWithNonIntegerValues() {
-        ioTestHelper.setInputStream("invalid input\n3\n");
+        ioTestHelper.setInputStream("1\ninvalid input\n4\n2\n5\n3\n");
+        runInvalidMoveTest();
+    }
+
+    @Test
+    public void promptForMoveReportsErrorAndPromptsForValidInputWithTakenSquare() {
+        ioTestHelper.setInputStream("1\n1\n4\n2\n5\n3\n");
+        runInvalidMoveTest();
+    }
+
+    @Test
+    public void promptForMoveReportsErrorAndPromptsForValidOutOfRangeSquare() {
+        ioTestHelper.setInputStream("1\n10\n4\n2\n5\n3\n");
+        runInvalidMoveTest();
+    }
+
+    private void runInvalidMoveTest() {
         setupBoard();
 
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.setCurrentBoard(3);
 
-        String[] boardStates = getBoardStates(3);
-        String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
+        String[] boardStates = getBoardStates(1);
+
+        String[] firstMessage = Arrays.copyOfRange(ioTestHelper.getOutContentAsLines(), 0, 13);
 
         assertEquals(
-                boardStates[0] + "\n" + formattedRequest + "\n" + PlayerMessages.INVALID_INPUT + "\n" + boardStates[1] + "\n",
-                ioTestHelper.getOutContentString());
+                boardStates[0] + "\n" +
+                        requestMoveString(PlayerSymbol.X) + "\n" +
+                        boardStates[1] + "\n" +
+                        requestMoveString(PlayerSymbol.O) + "\n" +
+                        PlayerMessages.INVALID_INPUT
+                ,
+                String.join("\n", firstMessage));
+    }
+
+    private String requestMoveString(PlayerSymbol playerSymbol) {
+        return String.format(PlayerMessages.MOVE_REQUEST, playerSymbol);
     }
 
     private BoardUI setupBoard() {
