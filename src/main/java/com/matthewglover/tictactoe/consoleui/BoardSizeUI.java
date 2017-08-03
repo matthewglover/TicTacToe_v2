@@ -24,11 +24,15 @@ public class BoardSizeUI extends UI {
     protected void run() {
         clearScreen();
         printRequestBoardSize();
-        ticTacToeModel.setCurrentBoard(promptForBoardSize());
+        setBoardSize();
     }
 
     private void printRequestBoardSize() {
         out.println(GameOptionsMessages.REQUEST_BOARD_SIZE);
+    }
+
+    private void setBoardSize() {
+        ticTacToeModel.setCurrentBoard(promptForBoardSize());
     }
 
     private int promptForBoardSize() {
@@ -43,7 +47,7 @@ public class BoardSizeUI extends UI {
     }
 
     private boolean isValidBoardSize(String input) {
-        if (!input.matches("^\\d$")) {
+        if (!isNumericInput(input)) {
             return false;
         }
 

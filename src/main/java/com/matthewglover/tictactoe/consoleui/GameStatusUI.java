@@ -24,19 +24,21 @@ public class GameStatusUI extends UI {
     protected void run() {
         clearScreen();
         printBoard();
+        reportResult();
+        printPlayAgainRequest();
+        promptForPlayAgain();
+    }
+
+    private void printBoard() {
+        out.println(new BoardFormatter(ticTacToeModel.getCurrentBoard()).format());
+    }
+
+    private void reportResult() {
         if (isWinner()) {
             reportWinner();
         } else {
             reportDraw();
         }
-        printPlayAgainRequest();
-        if (promptForPlayAgain()) {
-            ticTacToeModel.reset();
-        }
-    }
-
-    private void printBoard() {
-        out.println(new BoardFormatter(ticTacToeModel.getCurrentBoard()).format());
     }
 
     private boolean isWinner() {
@@ -59,8 +61,14 @@ public class GameStatusUI extends UI {
         out.println(GameStatusMessages.REQUEST_PLAY_AGAIN);
     }
 
-    private boolean promptForPlayAgain() {
+    private void promptForPlayAgain() {
         String input = scanner.nextLine();
+        if (isPlayAgain(input)) {
+            ticTacToeModel.reset();
+        }
+    }
+
+    private boolean isPlayAgain(String input) {
         return input.trim().toLowerCase().matches("y");
     }
 }

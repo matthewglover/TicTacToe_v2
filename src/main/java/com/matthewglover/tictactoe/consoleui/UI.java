@@ -28,4 +28,8 @@ public abstract class UI extends ModelObserver {
     protected void clearScreen() {
         out.print("\033[H\033[2J");
     }
+
+    protected boolean isNumericInput(String input) {
+        return input.matches("^\\d+$");
+    }
 }

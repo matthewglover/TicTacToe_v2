@@ -23,9 +23,9 @@ public class BoardUI extends UI {
     protected void run() {
         clearScreen();
         printBoard();
-        if (ticTacToeModel.getNextPlayerType().isHuman()) {
+        if (isNextPlayerHuman()) {
             printMoveRequest();
-            ticTacToeModel.gameMove(promptForMove());
+            setNextPlayerMove();
         }
     }
 
@@ -37,24 +37,35 @@ public class BoardUI extends UI {
         return ticTacToeModel.getCurrentGame().getBoard();
     }
 
+    private boolean isNextPlayerHuman() {
+        return ticTacToeModel.getNextPlayerType().isHuman();
+    }
+
     private void printMoveRequest() {
-        PlayerSymbol playerSymbol = ticTacToeModel.getCurrentGame().getNextPlayerSymbol();
-        String moveRequest = String.format(PlayerMessages.MOVE_REQUEST, playerSymbol);
-        out.println(moveRequest);
+        out.println(String.format(PlayerMessages.MOVE_REQUEST, getNextPlayerSymbol()));
+    }
+
+    private PlayerSymbol getNextPlayerSymbol() {
+        return ticTacToeModel.getCurrentGame().getNextPlayerSymbol();
+    }
+
+    private void setNextPlayerMove() {
+        ticTacToeModel.gameMove(promptForMove());
     }
 
     private int promptForMove() {
         String input = scanner.nextLine();
 
-        if (input.matches("^\\d+$")) {
-            int move = Integer.parseInt(input);
-            if (isValidMove(move)) {
-                return move;
-            }
+        if (isValidInput(input)) {
+            return Integer.parseInt(input);
+        } else {
+            printInvalidInput();
+            return promptForMove();
         }
+    }
 
-        printInvalidInput();
-        return promptForMove();
+    private boolean isValidInput(String input) {
+        return isNumericInput(input) && isValidMove(Integer.parseInt(input));
     }
 
     private boolean isValidMove(int move) {

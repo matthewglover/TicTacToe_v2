@@ -49,7 +49,7 @@ public class GameTypeUI extends UI {
     }
 
     private boolean isValidGameType(String input) {
-        if (!input.matches("^\\d$")) {
+        if (!isNumericInput(input)) {
             return false;
         }
 
