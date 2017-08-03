@@ -13,7 +13,8 @@ public class GameTypeUITest {
     @Test
     public void printsAllGameTypeOptions() {
         setupTest("2\n");
-        assertEquals(GameOptionsMessages.REQUEST_GAME_TYPE_INTRO + "\n" +
+        assertEquals(IOTestHelper.CLEAR_LINE +
+                GameOptionsMessages.REQUEST_GAME_TYPE_INTRO + "\n" +
                 "(1) " + GameType.HUMAN_HUMAN.getDescription() + "\n" +
                 "(2) " + GameType.HUMAN_COMPUTER.getDescription() + "\n" +
                 "(3) " + GameType.COMPUTER_HUMAN.getDescription() + "\n" +

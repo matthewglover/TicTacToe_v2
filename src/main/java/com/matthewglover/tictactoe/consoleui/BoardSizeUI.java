@@ -29,6 +29,7 @@ public class BoardSizeUI extends ModelObserver {
     }
 
     private void run() {
+        clearScreen();
         printRequestBoardSize();
         ticTacToeModel.setCurrentBoard(promptForBoardSize());
     }
@@ -60,5 +61,9 @@ public class BoardSizeUI extends ModelObserver {
 
     private void printInvalidInput() {
         out.println(GameOptionsMessages.INVALID_INPUT);
+    }
+
+    private void clearScreen() {
+        out.print("\033[H\033[2J");
     }
 }

@@ -22,7 +22,9 @@ public class BoardUITest {
         ticTacToeModel.setCurrentBoard(3);
 
         String formattedBoard = new BoardFormatter(new Board(3)).format();
-        assertEquals(formattedBoard + "\n", ioTestHelper.getOutContentString());
+        assertEquals(
+                IOTestHelper.CLEAR_LINE + formattedBoard + "\n",
+                ioTestHelper.getOutContentString());
     }
 
     @Test
@@ -37,7 +39,7 @@ public class BoardUITest {
         String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
 
         assertEquals(
-                boardStates[0] + "\n" + formattedRequest + "\n" + boardStates[1] + "\n",
+                IOTestHelper.CLEAR_LINE + boardStates[0] + "\n" + formattedRequest + "\n" + IOTestHelper.CLEAR_LINE + boardStates[1] + "\n",
                 ioTestHelper.getOutContentString());
     }
 
@@ -70,8 +72,10 @@ public class BoardUITest {
         String[] firstMessage = Arrays.copyOfRange(ioTestHelper.getOutContentAsLines(), 0, 13);
 
         assertEquals(
-                boardStates[0] + "\n" +
+                IOTestHelper.CLEAR_LINE +
+                        boardStates[0] + "\n" +
                         requestMoveString(PlayerSymbol.X) + "\n" +
+                        IOTestHelper.CLEAR_LINE +
                         boardStates[1] + "\n" +
                         requestMoveString(PlayerSymbol.O) + "\n" +
                         PlayerMessages.INVALID_INPUT

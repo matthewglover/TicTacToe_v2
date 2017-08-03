@@ -27,6 +27,7 @@ public class BoardUI extends ModelObserver {
     }
 
     private void run() {
+        clearScreen();
         printBoard();
         if (ticTacToeModel.getNextPlayerType().isHuman()) {
             printMoveRequest();
@@ -48,7 +49,7 @@ public class BoardUI extends ModelObserver {
         out.println(moveRequest);
     }
 
-    public int promptForMove() {
+    private int promptForMove() {
         String input = scanner.nextLine();
 
         if (input.matches("^\\d+$")) {
@@ -66,7 +67,11 @@ public class BoardUI extends ModelObserver {
         return ticTacToeModel.getCurrentBoard().isValidMove(move);
     }
 
-    public void printInvalidInput() {
+    private void printInvalidInput() {
         out.println(PlayerMessages.INVALID_INPUT);
+    }
+
+    private void clearScreen() {
+        out.print("\033[H\033[2J");
     }
 }

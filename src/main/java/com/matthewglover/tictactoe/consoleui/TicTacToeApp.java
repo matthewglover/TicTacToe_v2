@@ -16,6 +16,7 @@ public class TicTacToeApp {
 
     public TicTacToeApp(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
         this.ticTacToeModel = ticTacToeModel;
+        ticTacToeModel.setComputerMoveDelay(500);
         new GameTypeUI(in, out, ticTacToeModel);
         new BoardSizeUI(in, out, ticTacToeModel);
         new BoardUI(in, out, ticTacToeModel);

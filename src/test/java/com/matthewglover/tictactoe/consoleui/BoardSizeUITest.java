@@ -13,7 +13,8 @@ public class BoardSizeUITest {
     @Test
     public void printsRequestBoardSizeOutputsMessage() {
         setupTest("3\n");
-        assertEquals(GameOptionsMessages.REQUEST_BOARD_SIZE + "\n", ioTestHelper.getOutContentString());
+        assertEquals(IOTestHelper.CLEAR_LINE +
+                GameOptionsMessages.REQUEST_BOARD_SIZE + "\n", ioTestHelper.getOutContentString());
     }
 
     @Test

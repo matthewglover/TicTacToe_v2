@@ -29,6 +29,7 @@ public class GameTypeUI extends ModelObserver {
     }
 
     private void run() {
+        clearScreen();
         printRequestGameType();
         ticTacToeModel.setCurrentGameType(promptForGameType());
     }
@@ -66,5 +67,9 @@ public class GameTypeUI extends ModelObserver {
 
     private void printInvalidInput() {
         out.println(GameOptionsMessages.INVALID_INPUT);
+    }
+
+    private void clearScreen() {
+        out.print("\033[H\033[2J");
     }
 }

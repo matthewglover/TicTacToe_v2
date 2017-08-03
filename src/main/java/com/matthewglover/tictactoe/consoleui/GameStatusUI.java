@@ -29,6 +29,8 @@ public class GameStatusUI extends ModelObserver {
     }
 
     private void run() {
+        clearScreen();
+        printBoard();
         if (isWinner()) {
             reportWinner();
         } else {
@@ -38,6 +40,10 @@ public class GameStatusUI extends ModelObserver {
         if (promptForPlayAgain()) {
             ticTacToeModel.reset();
         }
+    }
+
+    private void printBoard() {
+        out.println(new BoardFormatter(ticTacToeModel.getCurrentBoard()).format());
     }
 
     private boolean isWinner() {
@@ -63,5 +69,9 @@ public class GameStatusUI extends ModelObserver {
     private boolean promptForPlayAgain() {
         String input = scanner.nextLine();
         return input.trim().toLowerCase().matches("y");
+    }
+
+    private void clearScreen() {
+        out.print("\033[H\033[2J");
     }
 }
