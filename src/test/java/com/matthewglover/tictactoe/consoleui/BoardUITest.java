@@ -10,11 +10,11 @@ import static org.junit.Assert.assertEquals;
 
 public class BoardUITest {
     private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private final IOTestHelper ioTestHelper = new IOTestHelper();
 
     @Test
     public void printsEmptyGridOnFirstMove() {
-        IOTestHelper ioTestHelper = new IOTestHelper();
-        new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+        setupBoard();
 
         ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
         ticTacToeModel.setCurrentBoard(3);
@@ -25,43 +25,46 @@ public class BoardUITest {
 
     @Test
     public void printsEmptyGridAndRequestsMoveFromHumanPlayer() {
-        IOTestHelper ioTestHelper = new IOTestHelper();
         ioTestHelper.setInputStream("3\n");
-        new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+        setupBoard();
 
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.setCurrentBoard(3);
 
-        Board board = new Board(3);
-        String firstBoard = new BoardFormatter(board).format();
-        board.setSquare(3, PlayerSymbol.X);
-        String secondBoard = new BoardFormatter(board).format();
+        String[] boardStates = getBoardStates(3);
         String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
 
         assertEquals(
-                firstBoard + "\n" + formattedRequest + "\n" + secondBoard + "\n",
+                boardStates[0] + "\n" + formattedRequest + "\n" + boardStates[1] + "\n",
                 ioTestHelper.getOutContentString());
     }
 
     @Test
     public void promptForMoveReportsErrorAndPromptsForValidInputWithNonIntegerValues() {
-        IOTestHelper ioTestHelper = new IOTestHelper();
         ioTestHelper.setInputStream("invalid input\n3\n");
-
-        new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+        setupBoard();
 
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.setCurrentBoard(3);
 
-        Board board = new Board(3);
-        String firstBoard = new BoardFormatter(board).format();
-        board.setSquare(3, PlayerSymbol.X);
-        String secondBoard = new BoardFormatter(board).format();
-
+        String[] boardStates = getBoardStates(3);
         String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
 
         assertEquals(
-                firstBoard + "\n" + formattedRequest + "\n" + PlayerMessages.INVALID_INPUT + "\n" + secondBoard + "\n",
+                boardStates[0] + "\n" + formattedRequest + "\n" + PlayerMessages.INVALID_INPUT + "\n" + boardStates[1] + "\n",
                 ioTestHelper.getOutContentString());
+    }
+
+    private BoardUI setupBoard() {
+        return new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+    }
+
+    private String[] getBoardStates(int move) {
+        Board board = new Board(3);
+        String firstBoard = new BoardFormatter(board).format();
+        board.setSquare(move, PlayerSymbol.X);
+        String secondBoard = new BoardFormatter(board).format();
+
+        return new String[]{firstBoard, secondBoard};
     }
 }
