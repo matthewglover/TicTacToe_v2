@@ -47,12 +47,10 @@ public class BoardSizeUI extends UI {
     }
 
     private boolean isValidBoardSize(String input) {
-        if (!isNumericInput(input)) {
-            return false;
-        }
+        return isNumericInput(input) && isValidBoardSize(Integer.parseInt(input));
+    }
 
-        int value = Integer.parseInt(input);
-
+    private boolean isValidBoardSize(int value) {
         return value >= Board.MIN_SIZE && value <= Board.MAX_SIZE;
     }
 
