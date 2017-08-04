@@ -39,7 +39,9 @@ public class BoardUITest {
         String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
 
         assertEquals(
-                IOTestHelper.CLEAR_LINE + boardStates[0] + "\n" + formattedRequest + "\n" + IOTestHelper.CLEAR_LINE + boardStates[1] + "\n",
+                IOTestHelper.CLEAR_LINE + boardStates[0] + "\n" +
+                        formattedRequest + "\n" +
+                        IOTestHelper.CLEAR_LINE + boardStates[1] + "\n",
                 ioTestHelper.getOutContentString());
     }
 

@@ -6,4 +6,9 @@ public enum ModelUpdate {
     CREATE_GAME,
     MAKE_MOVE,
     GAME_OVER;
+
+    public boolean isGameMove() {
+        return this == ModelUpdate.MAKE_MOVE ||
+                this == ModelUpdate.CREATE_GAME;
+    }
 }

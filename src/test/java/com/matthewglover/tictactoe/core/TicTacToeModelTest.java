@@ -22,20 +22,6 @@ public class TicTacToeModelTest {
     }
 
     @Test
-    public void setCurrentBoardCreatesGameAndNotifiesObservers() {
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.setCurrentBoardSize(3);
-        assertEquals(ModelUpdate.CREATE_GAME, testObserver.getLastUpdate());
-    }
-
-    @Test
-    public void createGameNotifiesObservers() {
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.createGame(3);
-        assertEquals(ModelUpdate.CREATE_GAME, testObserver.getLastUpdate());
-    }
-
-    @Test
     public void tracksGameAndCurrentPlayer() {
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);

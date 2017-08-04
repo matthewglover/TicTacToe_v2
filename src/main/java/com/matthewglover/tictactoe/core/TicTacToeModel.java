@@ -76,7 +76,7 @@ public class TicTacToeModel extends Observable {
     }
 
     private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
-        return modelUpdate == ModelUpdate.MAKE_MOVE && getNextPlayer().isComputer();
+        return modelUpdate.isGameMove() && getNextPlayer().isComputer();
     }
 
     protected Runnable getRunComputerMove() {

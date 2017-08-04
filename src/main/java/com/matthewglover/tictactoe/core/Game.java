@@ -1,11 +1,10 @@
 package com.matthewglover.tictactoe.core;
 
 import java.util.List;
-import java.util.Observable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Game extends Observable {
+public class Game {
     private Board board;
     private PlayerSymbol nextPlayerSymbol = PlayerSymbol.X;
     private int currentMove;
@@ -50,16 +49,11 @@ public class Game extends Observable {
         return !getWinner().isEmpty();
     }
 
-    public void start() {
-        notifyChange();
-    }
-
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
             currentMove = squareNumber;
             board.setSquare(squareNumber, getNextPlayerSymbol());
             toggleNextPlayer();
-            notifyChange();
         }
     }
 
@@ -87,11 +81,6 @@ public class Game extends Observable {
             newGame.move(squareNumber);
             return newGame;
         };
-    }
-
-    private void notifyChange() {
-        setChanged();
-        notifyObservers(getNextPlayerSymbol());
     }
 
     private void toggleNextPlayer() {

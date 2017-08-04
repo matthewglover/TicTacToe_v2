@@ -1,8 +1,5 @@
 package com.matthewglover.tictactoe.core;
 
-import java.util.Observable;
-import java.util.Observer;
-
 public class CurrentGameModel {
     private final TicTacToeModel ticTacToeModel;
     private Game game;
@@ -17,6 +14,12 @@ public class CurrentGameModel {
 
     public void move(int squareNumber) {
         game.move(squareNumber);
+
+        if (game.isOver()) {
+            ticTacToeModel.notifyUpdate(ModelUpdate.GAME_OVER);
+        } else {
+            ticTacToeModel.notifyUpdate(ModelUpdate.MAKE_MOVE);
+        }
     }
 
     public void reset() {
@@ -25,26 +28,6 @@ public class CurrentGameModel {
 
     public void createGame(int boardSize) {
         game = new Game(boardSize);
-        game.addObserver(new GameObserver(ticTacToeModel));
-        game.start();
         ticTacToeModel.notifyUpdate(ModelUpdate.CREATE_GAME);
-    }
-
-    private class GameObserver implements Observer {
-        private final TicTacToeModel ticTacToeModel;
-
-        public GameObserver(TicTacToeModel ticTacToeModel) {
-            this.ticTacToeModel = ticTacToeModel;
-        }
-
-        @Override
-        public void update(Observable o, Object arg) {
-            if (game.isOver()) {
-                ticTacToeModel.notifyUpdate(ModelUpdate.GAME_OVER);
-            } else {
-                ticTacToeModel.notifyUpdate(ModelUpdate.MAKE_MOVE);
-            }
-        }
-
     }
 }

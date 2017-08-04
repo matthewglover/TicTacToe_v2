@@ -2,9 +2,6 @@ package com.matthewglover.tictactoe.core;
 
 import org.junit.Test;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import static org.junit.Assert.*;
 
 public class GameTest {
@@ -100,27 +97,5 @@ public class GameTest {
         GameTestHelper.runGame(game, new int[]{1, 2});
         Game duplicateGame = game.duplicate();
         assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
-    }
-
-    @Test
-    public void startGameNotifiesObserversWithNextPlayer() {
-        TestGameObserver testGameObserver = new TestGameObserver();
-        game.addObserver(testGameObserver);
-        game.start();
-        assertEquals(game.getNextPlayerSymbol(), testGameObserver.getNextPlayerSymbol());
-    }
-
-    public static class TestGameObserver implements Observer {
-
-        private PlayerSymbol nextPlayerSymbol;
-
-        @Override
-        public void update(Observable game, Object arg) {
-            nextPlayerSymbol = (PlayerSymbol) arg;
-        }
-
-        public PlayerSymbol getNextPlayerSymbol() {
-            return nextPlayerSymbol;
-        }
     }
 }
