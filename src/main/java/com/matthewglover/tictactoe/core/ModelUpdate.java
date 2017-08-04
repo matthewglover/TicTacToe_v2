@@ -1,5 +1,9 @@
 package com.matthewglover.tictactoe.core;
 
 public enum ModelUpdate {
-    MOVE, SET_GAME_TYPE, CREATE_GAME, GAME_OVER, START_NEW_GAME;
+    SETUP_NEW_GAME,
+    SET_GAME_TYPE,
+    CREATE_GAME,
+    MAKE_MOVE,
+    GAME_OVER;
 }

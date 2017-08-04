@@ -26,7 +26,7 @@ public class TicTacToeModel extends Observable {
         return getCurrentGame().getBoard();
     }
 
-    public void setCurrentBoard(int boardSize) {
+    public void setCurrentBoardSize(int boardSize) {
         currentGameModel.createGame(boardSize);
     }
 
@@ -55,10 +55,15 @@ public class TicTacToeModel extends Observable {
         currentGameModel.move(squareNumber);
     }
 
-    public void reset() {
+    public void startNewGame() {
         currentGameModel.reset();
         currentGameTypeModel.reset();
-        notifyUpdate(ModelUpdate.START_NEW_GAME);
+        notifyUpdate(ModelUpdate.SETUP_NEW_GAME);
+    }
+
+    public Player getNextPlayer() {
+        PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
+        return currentGameTypeModel.getPlayer(nextPlayerSymbol);
     }
 
     protected void notifyUpdate(ModelUpdate modelUpdate) {
@@ -70,13 +75,8 @@ public class TicTacToeModel extends Observable {
         }
     }
 
-    public Player getNextPlayer() {
-        PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
-        return currentGameTypeModel.getPlayer(nextPlayerSymbol);
-    }
-
     private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
-        return modelUpdate == ModelUpdate.MOVE && getNextPlayer().isComputer();
+        return modelUpdate == ModelUpdate.MAKE_MOVE && getNextPlayer().isComputer();
     }
 
     protected Runnable getRunComputerMove() {

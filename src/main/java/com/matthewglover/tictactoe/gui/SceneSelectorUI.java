@@ -29,11 +29,11 @@ public class SceneSelectorUI extends ModelObserver {
     @Override
     protected void update(ModelUpdate modelUpdate) {
         switch (modelUpdate) {
-            case START_NEW_GAME:
-                selectGameOptionsUI();
+            case SETUP_NEW_GAME:
+                selectGameType();
                 break;
             case SET_GAME_TYPE:
-                selectBoardSizeUI();
+                selectBoardSize();
                 break;
             case CREATE_GAME:
                 selectBoardUI();
@@ -48,7 +48,7 @@ public class SceneSelectorUI extends ModelObserver {
         return scene;
     }
 
-    private void selectBoardSizeUI() {
+    private void selectBoardSize() {
         scene.setRoot(boardSizeUI.getNode());
     }
 
@@ -56,7 +56,7 @@ public class SceneSelectorUI extends ModelObserver {
         scene.setRoot(boardUI.getNode());
     }
 
-    private void selectGameOptionsUI() {
+    private void selectGameType() {
         scene.setRoot(gameTypeUI.getNode());
     }
 

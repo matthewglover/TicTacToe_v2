@@ -24,6 +24,6 @@ public class TicTacToeApp {
     }
 
     public void execute() {
-        ticTacToeModel.reset();
+        ticTacToeModel.startNewGame();
     }
 }

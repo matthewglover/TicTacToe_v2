@@ -1,23 +1,21 @@
 package com.matthewglover.tictactoe.gui;
 
-import javafx.scene.Parent;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-public class BoardSizeUI implements UI {
+public class BoardSizeUI extends UI {
 
-    private final TicTacToeModel ticTacToeModel;
-    private final GridPane rootNode;
+    private final GridPane gridPane = new GridPane();
 
     public BoardSizeUI(TicTacToeModel ticTacToeModel) {
-        this.ticTacToeModel = ticTacToeModel;
-        rootNode = new GridPane();
+        super(ticTacToeModel);
+        setRootNode(gridPane);
         buildForm();
     }
 
     @Override
-    public Parent getNode() {
-        return rootNode;
+    protected void update(ModelUpdate modelUpdate) {
     }
 
     private void buildForm() {
@@ -31,8 +29,8 @@ public class BoardSizeUI implements UI {
         Button button = new Button();
         button.setText(boardSize + " X " + boardSize);
         button.setOnAction(event -> {
-            ticTacToeModel.setCurrentBoard(boardSize);
+            ticTacToeModel.setCurrentBoardSize(boardSize);
         });
-        rootNode.add(button, 0, buttonNumber);
+        gridPane.add(button, 0, buttonNumber);
     }
 }

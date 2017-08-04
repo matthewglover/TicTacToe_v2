@@ -1,23 +1,24 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
-import javafx.scene.Parent;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 
-public class GameTypeUI implements UI {
+public class GameTypeUI extends UI {
 
-    private final GridPane grid = new GridPane();
-    private final TicTacToeModel ticTacToeModel;
+    private final GridPane gridPane = new GridPane();
 
     GameTypeUI(TicTacToeModel ticTacToeModel) {
-        this.ticTacToeModel = ticTacToeModel;
+        super(ticTacToeModel);
+        setRootNode(gridPane);
         buildForm();
     }
 
-    public Parent getNode() {
-        return  grid;
+    @Override
+    protected void update(ModelUpdate modelUpdate) {
+
     }
 
     private void buildForm() {
@@ -34,6 +35,6 @@ public class GameTypeUI implements UI {
         button.setOnAction(event -> {
             ticTacToeModel.setCurrentGameType(gameType);
         });
-        grid.add(button, 0, row);
+        gridPane.add(button, 0, row);
     }
 }

@@ -24,7 +24,7 @@ public class TicTacToeModelTest {
     @Test
     public void setCurrentBoardCreatesGameAndNotifiesObservers() {
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.setCurrentBoard(3);
+        ticTacToeModel.setCurrentBoardSize(3);
         assertEquals(ModelUpdate.CREATE_GAME, testObserver.getLastUpdate());
     }
 

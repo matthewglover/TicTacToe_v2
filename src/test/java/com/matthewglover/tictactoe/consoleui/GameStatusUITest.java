@@ -72,7 +72,7 @@ public class GameStatusUITest {
 
         // NOTE: TestObserver needs to be set after GameStatusUI
         // Otherwise event dispatch order is lost and GAME_OVER event
-        // is received after START_NEW_GAME
+        // is received after SETUP_NEW_GAME
         TicTacToeModelTestObserver testObserver = new TicTacToeModelTestObserver(ticTacToeModel);
 
         // x x x
@@ -80,14 +80,14 @@ public class GameStatusUITest {
         // 7 8 9
         runGame(new int[]{1, 4, 2, 5, 3});
 
-        assertEquals(ModelUpdate.START_NEW_GAME, testObserver.getLastUpdate());
+        assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
     }
 
     public void setupTest(String inputStream) {
         ioTestHelper.setInputStream(inputStream);
         setupGameStatusUI();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.setCurrentBoard(3);
+        ticTacToeModel.setCurrentBoardSize(3);
     }
 
     private void setupGameStatusUI() {

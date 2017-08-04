@@ -32,7 +32,7 @@ public class BoardSizeUI extends UI {
     }
 
     private void setBoardSize() {
-        ticTacToeModel.setCurrentBoard(promptForBoardSize());
+        ticTacToeModel.setCurrentBoardSize(promptForBoardSize());
     }
 
     private int promptForBoardSize() {

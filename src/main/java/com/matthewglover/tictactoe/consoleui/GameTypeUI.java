@@ -15,7 +15,7 @@ public class GameTypeUI extends UI {
 
     @Override
     protected void update(ModelUpdate modelUpdate) {
-        if (modelUpdate == ModelUpdate.START_NEW_GAME) {
+        if (modelUpdate == ModelUpdate.SETUP_NEW_GAME) {
             run();
         }
     }

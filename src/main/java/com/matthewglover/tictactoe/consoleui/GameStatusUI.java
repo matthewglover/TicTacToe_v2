@@ -64,7 +64,7 @@ public class GameStatusUI extends UI {
     private void promptForPlayAgain() {
         String input = scanner.nextLine();
         if (isPlayAgain(input)) {
-            ticTacToeModel.reset();
+            ticTacToeModel.startNewGame();
         }
     }
 

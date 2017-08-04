@@ -14,7 +14,7 @@ public class BoardUI extends UI {
 
     @Override
     protected void update(ModelUpdate modelUpdate) {
-        if (modelUpdate == ModelUpdate.MOVE) {
+        if (modelUpdate == ModelUpdate.MAKE_MOVE) {
             run();
         }
     }

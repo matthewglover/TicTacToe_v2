@@ -44,7 +44,7 @@ public class GameTypeUITest {
     private IOTestHelper setupTest(String input) {
         ioTestHelper.setInputStream(input);
         new GameTypeUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
-        ticTacToeModel.reset();
+        ticTacToeModel.startNewGame();
         return ioTestHelper;
     }
 }

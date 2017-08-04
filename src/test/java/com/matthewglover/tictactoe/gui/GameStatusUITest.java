@@ -18,7 +18,7 @@ import java.util.concurrent.FutureTask;
 
 import static org.junit.Assert.assertEquals;
 
-public class OldGameStatusUITest extends ApplicationTest {
+public class GameStatusUITest extends ApplicationTest {
     private TicTacToeModel ticTacToeModel = new TicTacToeModel();
     private Parent mainNode;
 
@@ -99,7 +99,7 @@ public class OldGameStatusUITest extends ApplicationTest {
         TestObserver testObserver = new TestObserver();
         ticTacToeModel.addObserver(testObserver);
         clickOn("#new_game");
-        assertEquals(ModelUpdate.START_NEW_GAME, testObserver.getLastUpdate());
+        assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
     }
 
     private void buildStage(Stage stage) {

@@ -42,7 +42,7 @@ public class CurrentGameModel {
             if (game.isOver()) {
                 ticTacToeModel.notifyUpdate(ModelUpdate.GAME_OVER);
             } else {
-                ticTacToeModel.notifyUpdate(ModelUpdate.MOVE);
+                ticTacToeModel.notifyUpdate(ModelUpdate.MAKE_MOVE);
             }
         }
 
