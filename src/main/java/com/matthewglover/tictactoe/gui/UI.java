@@ -13,7 +13,8 @@ public abstract class UI extends ModelObserver {
     }
 
     @Override
-    protected abstract void update(ModelUpdate modelUpdate);
+    protected void update(ModelUpdate modelUpdate) {
+    }
 
     protected void setRootNode(Parent rootNode) {
         this.rootNode = rootNode;

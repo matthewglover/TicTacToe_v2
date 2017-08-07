@@ -14,10 +14,6 @@ public class BoardSizeUI extends UI {
         buildForm();
     }
 
-    @Override
-    protected void update(ModelUpdate modelUpdate) {
-    }
-
     private void buildForm() {
         for (int buttonNumber = 0; buttonNumber <= 1; buttonNumber++) {
             addBoardSizeButton(buttonNumber);
