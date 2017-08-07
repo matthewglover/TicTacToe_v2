@@ -10,9 +10,4 @@ public class HumanPlayer extends Player {
     public boolean isComputer() {
         return false;
     }
-
-    @Override
-    public int getMove(Game game) {
-        return -1;
-    }
 }

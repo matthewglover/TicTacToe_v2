@@ -16,10 +16,6 @@ public class TicTacToeModel extends Observable {
         return currentGameTypeModel;
     }
 
-    public CurrentGameModel getCurrentGameModel() {
-        return currentGameModel;
-    }
-
     public Board getCurrentBoard() {
         return getCurrentGame().getBoard();
     }

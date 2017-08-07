@@ -12,9 +12,7 @@ public class ComputerPlayer extends Player {
         return true;
     }
 
-    @Override
     public int getMove(Game game) {
         return AlphaBeta.run(game).getMove();
     }
-
 }
