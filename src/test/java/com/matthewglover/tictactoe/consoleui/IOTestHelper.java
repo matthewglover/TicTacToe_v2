@@ -11,10 +11,6 @@ public class IOTestHelper {
     private PrintStream outputStream = new PrintStream(outContent);
     private InputStream inputStream = new ByteArrayInputStream("".getBytes());
 
-    static String removeClearLine(String line) {
-        return line.replace(CLEAR_LINE, "");
-    }
-
     public ByteArrayOutputStream getOutContent() {
         return outContent;
     }
