@@ -11,7 +11,7 @@ public class AlphaBetaTest {
         // x o x
         // x o o
         // 7 8 x
-        Game game = new Game(3);
+        Game game = new Game(new Board(3));
         GameTestHelper.runGame(game, new int[]{1, 2, 3, 5, 4, 6, 9});
         AlphaBeta alphaBeta = new AlphaBeta(game, 0, true);
         alphaBeta.execute();
@@ -23,7 +23,7 @@ public class AlphaBetaTest {
         // x o x
         // 4 5 6
         // 7 o 9
-        Game game = new Game(3);
+        Game game = new Game(new Board(3));
         GameTestHelper.runGame(game, new int[]{1, 2, 3, 8});
         AlphaBeta alphaBeta = new AlphaBeta(game, 0, true);
         alphaBeta.execute();
@@ -32,7 +32,7 @@ public class AlphaBetaTest {
 
     @Test
     public void runsBiggerGame() {
-        Game game = new Game(4);
+        Game game = new Game(new Board(4));
         GameTestHelper.runGame(game, new int[]{1, 5, 2, 6, 3, 7});
         AlphaBeta alphaBeta = new AlphaBeta(game, 0, true);
         alphaBeta.execute();
@@ -44,7 +44,7 @@ public class AlphaBetaTest {
         // x o 3
         // 4 x 6
         // 7 8 o
-        Game game = new Game(3);
+        Game game = new Game(new Board(3));
         GameTestHelper.runGame(game, new int[]{1, 2, 5, 9});
         AlphaBeta alphaBeta = new AlphaBeta(game, 0, true);
         alphaBeta.execute();
@@ -54,7 +54,7 @@ public class AlphaBetaTest {
     @Test
     @Ignore
     public void runs4x4Game() {
-        Game game = new Game(4);
+        Game game = new Game(new Board(4));
         GameTestHelper.runGame(game, new int[]{5, 9, 6, 10, 7, 11});
 
         long abStartTime = System.nanoTime();

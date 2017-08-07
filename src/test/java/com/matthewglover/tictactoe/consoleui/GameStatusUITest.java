@@ -28,7 +28,7 @@ public class GameStatusUITest {
     }
 
     private Board buildBoard(int[] moves) {
-        Game game = new Game(3);
+        Game game = new Game(new Board(3));
         for (int move : moves) {
             game.move(move);
         }

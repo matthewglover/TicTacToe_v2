@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class GameTest {
 
-    private Game game = new Game(3);
+    private Game game = new Game(new Board(3));
     private Board board = game.getBoard();
 
     @Test
@@ -61,21 +61,21 @@ public class GameTest {
 
     @Test
     public void boardSizeCanBeSelected() {
-        game = new Game(4);
+        game = new Game(new Board(4));
         Board board = game.getBoard();
         assertEquals(4, board.getSize());
     }
 
     @Test
     public void noWinnerIfLineOf3in4x4Game() {
-        game = new Game(4);
+        game = new Game(new Board(4));
         GameTestHelper.runGame(game, new int[]{1, 5, 2, 9, 3, 13, 6, 15, 11});
         assertFalse(game.isWinner());
     }
 
     @Test
     public void winnerIfLineOf4in4x4Game() {
-        game = new Game(4);
+        game = new Game(new Board(4));
         GameTestHelper.runGame(game, new int[]{1, 5, 2, 9, 3, 13, 4});
         assertTrue(game.isWinner());
         assertEquals(PlayerSymbol.X, game.getWinner());

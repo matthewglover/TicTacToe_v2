@@ -23,7 +23,7 @@ public class CurrentGameModel {
     }
 
     public void createGame(int boardSize) {
-        game = new Game(boardSize);
+        game = new Game(new Board(boardSize));
         ticTacToeModel.notifyUpdate(ModelUpdate.CREATE_GAME);
     }
 }

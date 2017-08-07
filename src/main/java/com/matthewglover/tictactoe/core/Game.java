@@ -9,8 +9,8 @@ public class Game {
     private PlayerSymbol nextPlayerSymbol = PlayerSymbol.X;
     private int currentMove;
 
-    public Game(int boardSize) {
-        buildBoard(boardSize);
+    public Game(Board board) {
+        this.board = board;
     }
 
     public Board getBoard() {
@@ -58,7 +58,7 @@ public class Game {
     }
 
     public Game duplicate() {
-        Game duplicateGame = new Game(board.getSize());
+        Game duplicateGame = new Game(new Board(board.getSize()));
         Board duplicateBoard = duplicateGame.getBoard();
         for (int i = Board.FIRST_SQUARE_NUMBER; i <= board.getTotalSquares(); i++) {
             PlayerSymbol currentSquare = board.getSquare(i);
@@ -85,9 +85,5 @@ public class Game {
 
     private void toggleNextPlayer() {
         nextPlayerSymbol = (nextPlayerSymbol == PlayerSymbol.X) ? PlayerSymbol.O : PlayerSymbol.X;
-    }
-
-    private void buildBoard(int boardSize) {
-        board = new Board(boardSize);
     }
 }
