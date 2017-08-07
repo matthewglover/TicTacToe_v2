@@ -65,6 +65,17 @@ public class Board {
         return isInBound(move) && isEmptySquare(move);
     }
 
+    public Board duplicate() {
+        Board duplicateBoard =  new Board(getSize());
+        for (int i = FIRST_SQUARE_NUMBER; i <= getTotalSquares(); i++) {
+            PlayerSymbol currentSquare = getSquare(i);
+            if (!currentSquare.isEmpty()) {
+                duplicateBoard.setSquare(i, currentSquare);
+            }
+        }
+        return duplicateBoard;
+    }
+
     private void setupGrid() {
         grid = new PlayerSymbol[getTotalSquares()];
         fill(grid, PlayerSymbol.NEITHER);
@@ -118,16 +129,5 @@ public class Board {
 
     private boolean isInBound(int move) {
         return move >= FIRST_SQUARE_NUMBER && move <= getTotalSquares();
-    }
-
-    public Board duplicate() {
-        Board duplicateBoard =  new Board(getSize());
-        for (int i = FIRST_SQUARE_NUMBER; i <= getTotalSquares(); i++) {
-            PlayerSymbol currentSquare = getSquare(i);
-            if (!currentSquare.isEmpty()) {
-                duplicateBoard.setSquare(i, currentSquare);
-            }
-        }
-        return duplicateBoard;
     }
 }
