@@ -10,12 +10,14 @@ public class TicTacToeModelTest {
 
     @Test
     public void setGameTypeNotifiesObservers() {
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
         assertEquals(ModelUpdate.SET_GAME_TYPE, testObserver.getLastUpdate());
     }
 
     @Test
     public void getPlayerTypeBasedOnGameType() {
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
         assertEquals(PlayerType.COMPUTER, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.X));
         assertEquals(PlayerType.HUMAN, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.O));
@@ -23,6 +25,7 @@ public class TicTacToeModelTest {
 
     @Test
     public void tracksGameAndCurrentPlayer() {
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
         assertEquals(PlayerSymbol.X, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
@@ -32,6 +35,7 @@ public class TicTacToeModelTest {
 
     @Test
     public void delegatesMoveToComputer () {
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.createGame(3);
         ticTacToeModel.gameMove(1);

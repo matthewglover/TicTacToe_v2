@@ -18,6 +18,7 @@ public class BoardUITest {
     public void printsEmptyGridOnFirstMove() {
         setupBoard();
 
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
         ticTacToeModel.setCurrentBoardSize(3);
 
@@ -32,6 +33,7 @@ public class BoardUITest {
         ioTestHelper.setInputStream("3\n");
         setupBoard();
 
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.setCurrentBoardSize(3);
 
@@ -66,6 +68,7 @@ public class BoardUITest {
     private void runInvalidMoveTest() {
         setupBoard();
 
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.setCurrentBoardSize(3);
 

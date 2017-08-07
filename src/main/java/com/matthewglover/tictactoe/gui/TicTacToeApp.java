@@ -12,7 +12,8 @@ public class TicTacToeApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         TicTacToeModel ticTacToeModel = new TicTacToeModel();
-        ticTacToeModel.setComputerMoveDelay(1000);
+        ticTacToeModel.startNewGame();
+        ticTacToeModel.setComputerMoveDelay(500);
         SceneSelectorUI sceneSelectorUI = new SceneSelectorUI(ticTacToeModel, 1000);
         assembleStage(primaryStage, sceneSelectorUI);
     }

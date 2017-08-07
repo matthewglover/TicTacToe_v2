@@ -5,13 +5,11 @@ import java.util.Observable;
 
 public class TicTacToeModel extends Observable {
     private int computerMoveDelay = 0;
-    private final CurrentGameModel currentGameModel;
-    private final CurrentGameTypeModel currentGameTypeModel;
+    private CurrentGameTypeModel currentGameTypeModel;
+    private CurrentGameModel currentGameModel;
 
     public TicTacToeModel() {
         super();
-        currentGameModel = new CurrentGameModel(this);
-        currentGameTypeModel = new CurrentGameTypeModel(this);
     }
 
     public CurrentGameTypeModel getCurrentGameTypeModel() {
@@ -26,10 +24,6 @@ public class TicTacToeModel extends Observable {
         return getCurrentGame().getBoard();
     }
 
-    public void setCurrentBoardSize(int boardSize) {
-        currentGameModel.createGame(boardSize);
-    }
-
     public Game getCurrentGame() {
         return currentGameModel.getGame();
     }
@@ -39,8 +33,23 @@ public class TicTacToeModel extends Observable {
         return currentGameTypeModel.getPlayerType(playerSymbol);
     }
 
+    public Player getNextPlayer() {
+        PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
+        return currentGameTypeModel.getPlayer(nextPlayerSymbol);
+    }
+
     public void setComputerMoveDelay(int computerMoveDelay) {
         this.computerMoveDelay = computerMoveDelay;
+    }
+
+    public void startNewGame() {
+        currentGameTypeModel = new CurrentGameTypeModel(this);
+        currentGameModel = new CurrentGameModel(this);
+        notifyUpdate(ModelUpdate.SETUP_NEW_GAME);
+    }
+
+    public void setCurrentBoardSize(int boardSize) {
+        currentGameModel.createGame(boardSize);
     }
 
     public void setCurrentGameType(GameType gameType) {
@@ -55,17 +64,6 @@ public class TicTacToeModel extends Observable {
         currentGameModel.move(squareNumber);
     }
 
-    public void startNewGame() {
-        currentGameModel.reset();
-        currentGameTypeModel.reset();
-        notifyUpdate(ModelUpdate.SETUP_NEW_GAME);
-    }
-
-    public Player getNextPlayer() {
-        PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
-        return currentGameTypeModel.getPlayer(nextPlayerSymbol);
-    }
-
     protected void notifyUpdate(ModelUpdate modelUpdate) {
         setChanged();
         notifyObservers(modelUpdate);
@@ -75,11 +73,11 @@ public class TicTacToeModel extends Observable {
         }
     }
 
-    private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
-        return modelUpdate.isGameMove() && getNextPlayer().isComputer();
-    }
-
     protected Runnable getRunComputerMove() {
         return () -> gameMove(getNextPlayer().getMove(currentGameModel.getGame()));
+    }
+
+    private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
+        return modelUpdate.isGameMove() && getNextPlayer().isComputer();
     }
 }

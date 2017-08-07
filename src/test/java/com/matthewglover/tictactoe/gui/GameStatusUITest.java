@@ -28,6 +28,7 @@ public class GameStatusUITest extends ApplicationTest {
         GameStatusUI gameStatusUI = new GameStatusUI(ticTacToeModel);
         mainNode = gameStatusUI.getNode();
         buildStage(stage);
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
     }

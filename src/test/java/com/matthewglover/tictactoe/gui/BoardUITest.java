@@ -23,6 +23,7 @@ public class BoardUITest extends ApplicationTest {
     public void start(Stage stage) throws Exception {
         BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.createGame(3);
         buildStage(stage);

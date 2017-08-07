@@ -22,12 +22,6 @@ public class CurrentGameTypeModel {
         return gameType.getPlayerType(playerSymbol);
     }
 
-    public void reset() {
-        gameType = null;
-        playerX = null;
-        playerO = null;
-    }
-
     public Player getPlayer(PlayerSymbol playerSymbol) {
         return playerSymbol == PlayerSymbol.X
                 ? playerX

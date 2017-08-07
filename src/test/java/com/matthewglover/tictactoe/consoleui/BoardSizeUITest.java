@@ -33,6 +33,7 @@ public class BoardSizeUITest {
     private void setupTest(String input) {
         ioTestHelper.setInputStream(input);
         new BoardSizeUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
 
     }

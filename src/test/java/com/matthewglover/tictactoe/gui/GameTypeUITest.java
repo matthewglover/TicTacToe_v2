@@ -21,6 +21,7 @@ public class GameTypeUITest extends ApplicationTest {
     public void start(Stage stage) throws Exception {
         GameTypeUI gameTypeUI = new GameTypeUI(ticTacToeModel);
 
+        ticTacToeModel.startNewGame();
         mainNode = gameTypeUI.getNode();
         buildStage(stage);
     }

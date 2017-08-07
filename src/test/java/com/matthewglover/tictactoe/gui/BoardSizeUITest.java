@@ -18,6 +18,7 @@ public class BoardSizeUITest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+        ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         BoardSizeUI boardSizeUI = new BoardSizeUI(ticTacToeModel);
         mainNode = boardSizeUI.getNode();

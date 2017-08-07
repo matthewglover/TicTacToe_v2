@@ -22,10 +22,6 @@ public class CurrentGameModel {
         }
     }
 
-    public void reset() {
-        this.game = null;
-    }
-
     public void createGame(int boardSize) {
         game = new Game(boardSize);
         ticTacToeModel.notifyUpdate(ModelUpdate.CREATE_GAME);
