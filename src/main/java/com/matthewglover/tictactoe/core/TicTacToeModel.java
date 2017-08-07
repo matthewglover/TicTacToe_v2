@@ -74,7 +74,11 @@ public class TicTacToeModel extends Observable {
     }
 
     protected Runnable getRunComputerMove() {
-        return () -> gameMove(getNextPlayer().getMove(currentGameModel.getGame()));
+        return () -> {
+            ComputerPlayer computerPlayer = (ComputerPlayer) getNextPlayer();
+            int nextMove = computerPlayer.getMove(currentGameModel.getGame());
+            gameMove(nextMove);
+        };
     }
 
     private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {

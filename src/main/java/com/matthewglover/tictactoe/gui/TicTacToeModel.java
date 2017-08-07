@@ -4,6 +4,6 @@ import javafx.application.Platform;
 
 public class TicTacToeModel extends com.matthewglover.tictactoe.core.TicTacToeModel {
     protected Runnable getRunComputerMove() {
-        return () -> Platform.runLater(() -> gameMove(getNextPlayer().getMove(getCurrentGameModel().getGame())));
+        return () -> Platform.runLater(super.getRunComputerMove());
     }
 }
