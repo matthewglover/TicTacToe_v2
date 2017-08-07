@@ -1,4 +1,4 @@
-package com.matthewglover.tictactoe.gui;
+package com.matthewglover.tictactoe.core;
 
 import java.util.concurrent.FutureTask;
 

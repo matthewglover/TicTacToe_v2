@@ -8,14 +8,14 @@ public class AlphaBeta extends MiniMax {
     private int beta;
 
 
-    public static AlphaBeta run(Game game, int maxSearchDepth) {
-        AlphaBeta alphaBeta = new AlphaBeta(game, maxSearchDepth, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
+    public static AlphaBeta run(Game game) {
+        AlphaBeta alphaBeta = new AlphaBeta(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
         alphaBeta.execute();
         return alphaBeta;
     }
 
-    public AlphaBeta(Game game, int maxSearchDepth, int depth, boolean isMaximising, int alpha, int beta) {
-        super(game, maxSearchDepth, depth, isMaximising);
+    public AlphaBeta(Game game, int depth, boolean isMaximising, int alpha, int beta) {
+        super(game, depth, isMaximising);
         this.alpha = alpha;
         this.beta = beta;
     }
@@ -40,12 +40,12 @@ public class AlphaBeta extends MiniMax {
     @Override
     protected void setOutOfDepthScore() {
         super.setOutOfDepthScore();
-        updateAlphaBeta(DRAW_SCORE);
+        updateAlphaBeta(getDrawScore());
     }
 
     @Override
     protected int calculateInterimMoveScore(Game gameMove) {
-        AlphaBeta alphaBeta = new AlphaBeta(gameMove, maxSearchDepth,nextDepth(), isNextMaximising(), alpha, beta);
+        AlphaBeta alphaBeta = new AlphaBeta(gameMove, nextDepth(), isNextMaximising(), alpha, beta);
         alphaBeta.execute();
         return alphaBeta.getScore();
     }

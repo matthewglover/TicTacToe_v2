@@ -12,34 +12,33 @@ import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 
-public class GameOptionsUITest extends ApplicationTest {
-
+public class BoardSizeUITest extends ApplicationTest {
     private Parent mainNode;
-    private TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
 
     @Override
     public void start(Stage stage) throws Exception {
-        GameOptionsUI gameOptionsUI = new GameOptionsUI(ticTacToeModel);
-
-        mainNode = gameOptionsUI.getNode();
+        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        BoardSizeUI boardSizeUI = new BoardSizeUI(ticTacToeModel);
+        mainNode = boardSizeUI.getNode();
         buildStage(stage);
     }
 
     @Test
-    public void displaysAllGameTypes() {
-        verifyThat(mainNode, hasChildren(GameType.values().length, ".button"));
-        for (int i = 0; i < GameType.values().length; i++) {
-            Button currentButton = from(mainNode).lookup(".button").nth(i).query();
-            assertEquals(GameType.values()[i].getDescription(), currentButton.getText());
+    public void displaysAllBoardSizes() {
+        verifyThat(mainNode, hasChildren(2, ".button"));
+        for (int i = 3; i < 4; i++) {
+            Button currentButton = from(mainNode).lookup(".button").nth(i - 3).query();
+            assertEquals(i + " X " + i, currentButton.getText());
         }
     }
 
     @Test
-    public void gameButtonClickNotifiesModel() {
-        for (int i = 0; i < GameType.values().length; i++) {
+    public void boardSizeButtonClickUpdatesModel() {
+        for (int i = 0; i <= 1; i++) {
             Button currentButton = from(mainNode).lookup(".button").nth(i).query();
             clickOn(currentButton);
-            assertEquals(GameType.values()[i], ticTacToeModel.getCurrentGameTypeModel().getGameType());
+            assertEquals(i + 3, ticTacToeModel.getCurrentBoard().getSize());
         }
     }
 

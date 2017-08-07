@@ -1,48 +1,42 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.ModelObserver;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 
-import java.util.Observable;
-import java.util.Observer;
+public class SceneSelectorUI extends ModelObserver {
 
-public class SceneSelector implements Observer {
-
-    private final TicTacToeModel ticTacToeModel;
-    private final GameOptionsUI gameOptionsUI;
+    private final GameTypeUI gameTypeUI;
+    private final BoardSizeUI boardSizeUI;
     private final BoardUI boardUI;
     private final GameStatusUI gameStatusUI;
     private final int gameStatusDelay;
     private final Scene scene;
 
-    public SceneSelector(TicTacToeModel ticTacToeModel, int gameStatusDelay) {
-        this.ticTacToeModel = ticTacToeModel;
+    public SceneSelectorUI(TicTacToeModel ticTacToeModel, int gameStatusDelay) {
+        super(ticTacToeModel);
         this.gameStatusDelay = gameStatusDelay;
 
-        gameOptionsUI = new GameOptionsUI(ticTacToeModel);
+        gameTypeUI = new GameTypeUI(ticTacToeModel);
+        boardSizeUI = new BoardSizeUI(ticTacToeModel);
         boardUI = new BoardUI(ticTacToeModel);
         gameStatusUI = new GameStatusUI(ticTacToeModel);
-        scene = new Scene(gameOptionsUI.getNode(), 300, 300);
-
-        ticTacToeModel.addObserver(this);
-    }
-
-    public Scene getScene() {
-        return scene;
+        scene = new Scene(gameTypeUI.getNode(), 300, 300);
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        ModelUpdate modelUpdate = (ModelUpdate) arg;
-
+    protected void update(ModelUpdate modelUpdate) {
         switch (modelUpdate) {
-            case SET_GAME_TYPE:
-                ticTacToeModel.createGame(3);
-                selectBoardUI();
+            case SETUP_NEW_GAME:
+                selectGameType();
                 break;
-            case START_NEW_GAME:
-                selectGameOptionsUI();
+            case SET_GAME_TYPE:
+                selectBoardSize();
+                break;
+            case CREATE_GAME:
+                selectBoardUI();
                 break;
             case GAME_OVER:
                 selectGameStatusUI();
@@ -50,12 +44,20 @@ public class SceneSelector implements Observer {
         }
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
+    private void selectBoardSize() {
+        scene.setRoot(boardSizeUI.getNode());
+    }
+
     private void selectBoardUI() {
         scene.setRoot(boardUI.getNode());
     }
 
-    private void selectGameOptionsUI() {
-        scene.setRoot(gameOptionsUI.getNode());
+    private void selectGameType() {
+        scene.setRoot(gameTypeUI.getNode());
     }
 
     private void selectGameStatusUI() {

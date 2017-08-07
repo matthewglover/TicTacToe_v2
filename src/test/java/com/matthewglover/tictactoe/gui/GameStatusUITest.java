@@ -1,6 +1,7 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -98,7 +99,7 @@ public class GameStatusUITest extends ApplicationTest {
         TestObserver testObserver = new TestObserver();
         ticTacToeModel.addObserver(testObserver);
         clickOn("#new_game");
-        assertEquals(ModelUpdate.START_NEW_GAME, testObserver.getLastUpdate());
+        assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
     }
 
     private void buildStage(Stage stage) {

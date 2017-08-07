@@ -5,7 +5,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'application'
 
-mainClassName = 'com.matthewglover.tictactoe.consoleui.TicTacToeRunner'
+mainClassName = 'com.matthewglover.tictactoe.consoleui.TicTacToeApp'
 
 repositories {
     mavenCentral()

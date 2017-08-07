@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -7,9 +8,11 @@ import javafx.scene.layout.GridPane;
 
 public class GameStatusUI extends UI {
     private Label label;
+    private final GridPane gridPane = new GridPane();
 
     public GameStatusUI(TicTacToeModel ticTacToeModel) {
-        super(ticTacToeModel, new GridPane());
+        super(ticTacToeModel);
+        setRootNode(gridPane);
         build();
     }
 
@@ -23,19 +26,15 @@ public class GameStatusUI extends UI {
     private void build() {
         label = new Label();
         label.setId("game_result");
-        getGridPane().add(label, 1, 1);
+        gridPane.add(label, 1, 1);
 
         Button button = new Button();
         button.setId("new_game");
         button.setText("New Game");
         button.setOnAction(event -> {
-            ticTacToeModel.reset();
+            ticTacToeModel.startNewGame();
         });
-        getGridPane().add(button, 1, 2);
-    }
-
-    private GridPane getGridPane() {
-        return (GridPane) rootNode;
+        gridPane.add(button, 1, 2);
     }
 
     private void displayMessage() {
@@ -44,5 +43,4 @@ public class GameStatusUI extends UI {
                 : "It's a draw!";
         label.setText(resultMessage);
     }
-
 }
