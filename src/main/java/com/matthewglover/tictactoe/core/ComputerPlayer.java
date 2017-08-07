@@ -13,6 +13,7 @@ public class ComputerPlayer extends Player {
     }
 
     public int getMove(Game game) {
-        return AlphaBeta.run(game).getMove();
+        StrategyRunner strategyRunner = new StrategyRunner(game);
+        return strategyRunner.runAlphaBeta();
     }
 }

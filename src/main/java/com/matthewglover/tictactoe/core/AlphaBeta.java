@@ -8,16 +8,16 @@ public class AlphaBeta extends MiniMax {
     private int beta;
 
 
-    public static AlphaBeta run(Game game) {
-        AlphaBeta alphaBeta = new AlphaBeta(game, 0, true, MINIMUM_ALPHA, MAXIMUM_BETA);
-        alphaBeta.execute();
-        return alphaBeta;
-    }
-
     public AlphaBeta(Game game, int depth, boolean isMaximising, int alpha, int beta) {
         super(game, depth, isMaximising);
         this.alpha = alpha;
         this.beta = beta;
+    }
+
+    public AlphaBeta(Game game, int depth, boolean isMaximising) {
+        super(game, depth, isMaximising);
+        this.alpha = MINIMUM_ALPHA;
+        this.beta = MAXIMUM_BETA;
     }
 
     @Override
