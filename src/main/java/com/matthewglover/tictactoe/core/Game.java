@@ -58,14 +58,8 @@ public class Game {
     }
 
     public Game duplicate() {
-        Game duplicateGame = new Game(new Board(board.getSize()));
-        Board duplicateBoard = duplicateGame.getBoard();
-        for (int i = Board.FIRST_SQUARE_NUMBER; i <= board.getTotalSquares(); i++) {
-            PlayerSymbol currentSquare = board.getSquare(i);
-            if (!currentSquare.isEmpty()) {
-                duplicateBoard.setSquare(i, currentSquare);
-            }
-        }
+        Board duplicateBoard = board.duplicate();
+        Game duplicateGame = new Game(duplicateBoard);
         duplicateGame.nextPlayerSymbol = nextPlayerSymbol;
         duplicateGame.currentMove = currentMove;
         return duplicateGame;

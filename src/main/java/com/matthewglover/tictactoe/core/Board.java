@@ -119,4 +119,15 @@ public class Board {
     private boolean isInBound(int move) {
         return move >= FIRST_SQUARE_NUMBER && move <= getTotalSquares();
     }
+
+    public Board duplicate() {
+        Board duplicateBoard =  new Board(getSize());
+        for (int i = FIRST_SQUARE_NUMBER; i <= getTotalSquares(); i++) {
+            PlayerSymbol currentSquare = getSquare(i);
+            if (!currentSquare.isEmpty()) {
+                duplicateBoard.setSquare(i, currentSquare);
+            }
+        }
+        return duplicateBoard;
+    }
 }
