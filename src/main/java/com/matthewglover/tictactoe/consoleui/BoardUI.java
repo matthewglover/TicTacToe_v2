@@ -34,7 +34,7 @@ public class BoardUI extends UI {
     }
 
     private Board getBoard() {
-        return ticTacToeModel.getCurrentGame().getBoard();
+        return ticTacToeModel.getCurrentBoard();
     }
 
     private boolean isNextPlayerHuman() {

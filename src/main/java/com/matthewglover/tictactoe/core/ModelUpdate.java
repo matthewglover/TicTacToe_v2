@@ -4,6 +4,7 @@ public enum ModelUpdate {
     SETUP_NEW_GAME,
     SET_GAME_TYPE,
     CREATE_GAME,
+    LOCK_BOARD,
     MAKE_MOVE,
     GAME_OVER;
 
@@ -17,6 +18,6 @@ public enum ModelUpdate {
     }
 
     public boolean isBoardChange() {
-        return isGameMove() || isGameOver();
+        return isGameMove() || isGameOver() || this == LOCK_BOARD;
     }
 }

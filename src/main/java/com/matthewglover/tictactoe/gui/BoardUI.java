@@ -53,13 +53,13 @@ public class BoardUI extends UI {
 
     private void addTile(int row, int column) {
         TileUI tileUI = new TileUI(ticTacToeModel, row, column);
-        if (isActiveGame()) {
+        if (isActiveBoard()) {
             tileUI.setClickHandler();
         }
         pane.getChildren().add(tileUI.getNode());
     }
 
-    private boolean isActiveGame() {
-        return !ticTacToeModel.getCurrentGame().isOver();
+    private boolean isActiveBoard() {
+        return !ticTacToeModel.getCurrentGame().isOver() && !ticTacToeModel.isBoardLocked();
     }
 }

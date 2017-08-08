@@ -1,16 +1,12 @@
 package com.matthewglover.tictactoe.core;
 
-
 import java.util.Observable;
 
 public class TicTacToeModel extends Observable {
     private int computerMoveDelay = 0;
     private CurrentGameTypeModel currentGameTypeModel;
     private CurrentGameModel currentGameModel;
-
-    public TicTacToeModel() {
-        super();
-    }
+    private ModelUpdate lastUpdate;
 
     public CurrentGameTypeModel getCurrentGameTypeModel() {
         return currentGameTypeModel;
@@ -32,6 +28,10 @@ public class TicTacToeModel extends Observable {
     public Player getNextPlayer() {
         PlayerSymbol nextPlayerSymbol = getCurrentGame().getNextPlayerSymbol();
         return currentGameTypeModel.getPlayer(nextPlayerSymbol);
+    }
+
+    public boolean isBoardLocked() {
+        return lastUpdate == ModelUpdate.LOCK_BOARD;
     }
 
     public void setComputerMoveDelay(int computerMoveDelay) {
@@ -61,10 +61,12 @@ public class TicTacToeModel extends Observable {
     }
 
     protected void notifyUpdate(ModelUpdate modelUpdate) {
+        lastUpdate = modelUpdate;
         setChanged();
         notifyObservers(modelUpdate);
 
         if (isComputerPlayersMove(modelUpdate)) {
+            notifyUpdate(ModelUpdate.LOCK_BOARD);
             DelayedRunner.run(computerMoveDelay, getRunComputerMove());
         }
     }
@@ -78,6 +80,8 @@ public class TicTacToeModel extends Observable {
     }
 
     private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
-        return modelUpdate.isGameMove() && getNextPlayer().isComputer();
+        return modelUpdate.isGameMove() &&
+                getNextPlayer().isComputer() &&
+                !isBoardLocked();
     }
 }
