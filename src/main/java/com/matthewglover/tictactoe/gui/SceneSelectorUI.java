@@ -24,7 +24,7 @@ public class SceneSelectorUI extends ModelObserver {
         boardUI = new BoardUI(ticTacToeModel);
         gameStatusUI = new GameStatusUI(ticTacToeModel);
 
-        scene = new Scene(gameTypeUI.getNode(), 300, 300);
+        scene = new Scene(gameTypeUI.getNode(), 500, 500);
         scene.getStylesheets().add(this.getClass().getResource("scene.css").toExternalForm());
     }
 

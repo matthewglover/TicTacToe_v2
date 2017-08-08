@@ -1,23 +1,22 @@
 .root {
-    -fx-background-color: #000000;
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
 }
 
 .button {
     -fx-background-color: transparent;
     -fx-border-width: 1;
-    -fx-text-fill: #33ff66;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: #ffffff;
 }
 
 .button:hover {
     -fx-underline: true;
 }
 
-
-.square {
-    -fx-border-width: 1px;
-    -fx-border-color: #33ff66;
-    -fx-text-fill: #33ff66;
-    -fx-background-color: transparent;
-    -fx-border-width: 1;
-    -fx-text-fill: #33ff66;
+.centeredContent {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+    -fx-orientation: vertical;
+    -fx-alignment: center;
 }

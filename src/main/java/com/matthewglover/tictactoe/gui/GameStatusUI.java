@@ -2,17 +2,20 @@ package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class GameStatusUI extends UI {
-    private Label label;
-    private final GridPane gridPane = new GridPane();
+    private Text text;
+    private final FlowPane flowPane = new FlowPane();
 
     public GameStatusUI(TicTacToeModel ticTacToeModel) {
         super(ticTacToeModel);
-        setRootNode(gridPane);
+        setRootNode(flowPane);
+        addClasses();
         build();
     }
 
@@ -23,24 +26,37 @@ public class GameStatusUI extends UI {
         }
     }
 
-    private void build() {
-        label = new Label();
-        label.setId("game_result");
-        gridPane.add(label, 1, 1);
+    private void addClasses() {
+        flowPane.getStyleClass().add(CENTER_CSS_CLASS);
+    }
 
+    private void build() {
+        addResultText();
+        addNewGameButton();
+    }
+
+    private void addResultText() {
+        text = new Text();
+        text.setId("game_result");
+        text.setFont(Font.font(40));
+        text.setFill(Color.WHITE);
+        flowPane.getChildren().add(text);
+    }
+
+    private void addNewGameButton() {
         Button button = new Button();
         button.setId("new_game");
         button.setText("New Game");
         button.setOnAction(event -> {
             ticTacToeModel.startNewGame();
         });
-        gridPane.add(button, 1, 2);
+        flowPane.getChildren().add(button);
     }
 
     private void displayMessage() {
         String resultMessage = ticTacToeModel.getCurrentGame().isWinner()
                 ? ticTacToeModel.getCurrentGame().getWinner() + " wins!"
                 : "It's a draw!";
-        label.setText(resultMessage);
+        text.setText(resultMessage);
     }
 }

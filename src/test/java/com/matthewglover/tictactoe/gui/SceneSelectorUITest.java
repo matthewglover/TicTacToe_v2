@@ -4,8 +4,8 @@ import com.matthewglover.tictactoe.core.GameType;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -112,8 +112,8 @@ public class SceneSelectorUITest extends ApplicationTest {
 
     private void verifyGameStatusScene() {
         String text = runDelayed(50, () -> {
-            Label label = from(getRootNode()).lookup("#game_result").query();
-            return label.getText();
+            Text textNode = from(getRootNode()).lookup("#game_result").query();
+            return textNode.getText();
         });
 
         assertEquals("X wins!", text);

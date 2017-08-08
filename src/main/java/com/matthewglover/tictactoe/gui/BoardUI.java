@@ -1,8 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.*;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
@@ -14,15 +12,12 @@ public class BoardUI extends UI {
     public BoardUI(TicTacToeModel ticTacToeModel) {
         super(ticTacToeModel);
         setRootNode(flowPane);
-        buildFlowPane();
+        addClasses();
+        flowPane.getChildren().add(pane);
     }
 
-    private void buildFlowPane() {
-        flowPane.getChildren().add(pane);
-        flowPane.setHgap(10);
-        flowPane.setVgap(10);
-        flowPane.setOrientation(Orientation.VERTICAL);
-        flowPane.setAlignment(Pos.CENTER);
+    private void addClasses() {
+        flowPane.getStyleClass().add(CENTER_CSS_CLASS);
     }
 
     @Override
@@ -34,7 +29,9 @@ public class BoardUI extends UI {
 
     private void buildBoard() {
         pane.getChildren().clear();
-        pane.setPrefSize(300, 300);
+        pane.setMinSize(400, 400);
+        pane.setMaxSize(400, 400);
+        pane.setPrefSize(400, 400);
 
         for (int rowIndex = 1; rowIndex <= getBoardSize(); rowIndex++) {
             addRow(rowIndex);

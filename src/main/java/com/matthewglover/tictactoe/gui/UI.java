@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 
 public abstract class UI extends ModelObserver {
     private Parent rootNode;
+    protected final String CENTER_CSS_CLASS = "centeredContent";
 
     public UI(TicTacToeModel ticTacToeModel) {
         super(ticTacToeModel);

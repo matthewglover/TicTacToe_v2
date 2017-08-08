@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -40,12 +41,15 @@ public class GameStatusUITest extends ApplicationTest {
             // o o 6
             // 7 8 9
             GameMoveHelper.runMoves(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
-            Label label = from(mainNode).lookup("#game_result").query();
-            return label.getText();
+            return getTextNode().getText();
         });
 
         Platform.runLater(query);
         assertEquals("X wins!", query.get());
+    }
+
+    private Text getTextNode() {
+        return from(mainNode).lookup("#game_result").query();
     }
 
     @Test
@@ -55,8 +59,7 @@ public class GameStatusUITest extends ApplicationTest {
             // x x 6
             // 7 8 x
             GameMoveHelper.runMoves(ticTacToeModel, new int[]{4, 1, 5, 2, 9, 3});
-            Label label = from(mainNode).lookup("#game_result").query();
-            return label.getText();
+            return getTextNode().getText();
         });
 
         Platform.runLater(query);
@@ -70,8 +73,7 @@ public class GameStatusUITest extends ApplicationTest {
             // x x o
             // o x x
             GameMoveHelper.runMoves(ticTacToeModel, new int[]{4, 1, 5, 2, 9, 6, 3, 7, 8});
-            Label label = from(mainNode).lookup("#game_result").query();
-            return label.getText();
+            return getTextNode().getText();
         });
 
         Platform.runLater(query);
