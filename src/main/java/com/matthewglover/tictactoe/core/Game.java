@@ -8,8 +8,7 @@ import java.util.stream.Collectors;
 public class Game {
     private Board board;
     private PlayerSymbol nextPlayerSymbol = PlayerSymbol.X;
-    private final List<Integer> moveSequence = new ArrayList<>();
-    private int currentMove;
+    private List<Integer> moveSequence = new ArrayList<>();
 
     public Game(Board board) {
         this.board = board;
@@ -33,7 +32,7 @@ public class Game {
     }
 
     public int getCurrentMove() {
-        return currentMove;
+        return moveSequence.get(moveSequence.size() - 1);
     }
 
     public List<Game> getNextMoves() {
@@ -53,7 +52,6 @@ public class Game {
 
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
-            currentMove = squareNumber;
             moveSequence.add(squareNumber);
             board.setSquare(squareNumber, getNextPlayerSymbol());
             toggleNextPlayer();
@@ -64,7 +62,7 @@ public class Game {
         Board duplicateBoard = board.duplicate();
         Game duplicateGame = new Game(duplicateBoard);
         duplicateGame.nextPlayerSymbol = nextPlayerSymbol;
-        duplicateGame.currentMove = currentMove;
+        duplicateGame.moveSequence = new ArrayList<>(moveSequence);
         return duplicateGame;
     }
 
