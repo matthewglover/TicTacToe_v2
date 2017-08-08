@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.core;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 public class Game {
     private Board board;
     private PlayerSymbol nextPlayerSymbol = PlayerSymbol.X;
+    private final List<Integer> moveSequence = new ArrayList<>();
     private int currentMove;
 
     public Game(Board board) {
@@ -52,6 +54,7 @@ public class Game {
     public void move(int squareNumber) {
         if (board.isEmptySquare(squareNumber)) {
             currentMove = squareNumber;
+            moveSequence.add(squareNumber);
             board.setSquare(squareNumber, getNextPlayerSymbol());
             toggleNextPlayer();
         }
@@ -79,5 +82,9 @@ public class Game {
 
     private void toggleNextPlayer() {
         nextPlayerSymbol = (nextPlayerSymbol == PlayerSymbol.X) ? PlayerSymbol.O : PlayerSymbol.X;
+    }
+
+    public List<Integer> getMoveSequence() {
+        return moveSequence;
     }
 }

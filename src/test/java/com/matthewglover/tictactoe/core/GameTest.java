@@ -2,6 +2,11 @@ package com.matthewglover.tictactoe.core;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.junit.Assert.*;
 
 public class GameTest {
@@ -60,7 +65,7 @@ public class GameTest {
     }
 
     @Test
-    public void boardSizeCanBeSelected() {
+    public void accepts4x4Board() {
         game = new Game(new Board(4));
         Board board = game.getBoard();
         assertEquals(4, board.getSize());
@@ -97,5 +102,18 @@ public class GameTest {
         GameTestHelper.runGame(game, new int[]{1, 2});
         Game duplicateGame = game.duplicate();
         assertEquals(game.getNextPlayerSymbol(), duplicateGame.getNextPlayerSymbol());
+    }
+
+    @Test
+    public void moveSequenceIsEmptyForEmptyGame() {
+        assertEquals(new ArrayList<Integer>(), game.getMoveSequence());
+    }
+
+    @Test
+    public void moveSequenceRecordsMovesInOrder() {
+        int[] moves = {5, 1, 6, 2, 7, 3};
+        GameTestHelper.runGame(game, moves);
+        List<Integer> expected = IntStream.of(moves).boxed().collect(Collectors.toList());
+        assertEquals(expected, game.getMoveSequence());
     }
 }
