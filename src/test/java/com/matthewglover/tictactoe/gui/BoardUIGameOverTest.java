@@ -4,7 +4,8 @@ import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -15,31 +16,22 @@ import static org.junit.Assert.assertEquals;
 public class BoardUIGameOverTest extends ApplicationTest {
 
     private Parent mainNode;
-    private TicTacToeModel ticTacToeModel;
 
     @Override
     public void start(Stage stage) throws Exception {
-        ticTacToeModel = new TicTacToeModel();
+        TicTacToeModel ticTacToeModel = new TicTacToeModel();
         BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
         ticTacToeModel.startNewGame();
         ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
-        ticTacToeModel.gameMove(1);
-        ticTacToeModel.gameMove(4);
-        ticTacToeModel.gameMove(2);
-        ticTacToeModel.gameMove(5);
-        ticTacToeModel.gameMove(3);
+        GameMoveHelper.runMoves(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         buildStage(stage);
     }
 
     @Test
     public void drawsFinalStateBoard() {
-        assertEquals(PlayerSymbol.X.toString(), getSquare(3).getText());
-    }
-
-    private Button getSquare(int squareNumber) {
-        return from(mainNode).lookup("#square_" + squareNumber).query();
+        assertEquals(PlayerSymbol.X.toString(), getSquare(1).getText());
     }
 
     private void buildStage(Stage stage) {
@@ -47,4 +39,10 @@ public class BoardUIGameOverTest extends ApplicationTest {
         stage.show();
         stage.toFront();
     }
+
+    private Text getSquare(int squareNumber) {
+        StackPane tile = from(mainNode).lookup("#square_" + squareNumber).query();
+        return BoardUIHelper.getSquareTextNode(tile);
+    }
+
 }

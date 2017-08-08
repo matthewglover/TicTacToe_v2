@@ -11,4 +11,12 @@ public enum ModelUpdate {
         return this == ModelUpdate.MAKE_MOVE ||
                 this == ModelUpdate.CREATE_GAME;
     }
+
+    private boolean isGameOver() {
+        return this == GAME_OVER;
+    }
+
+    public boolean isBoardChange() {
+        return isGameMove() || isGameOver();
+    }
 }

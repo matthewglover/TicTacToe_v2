@@ -39,11 +39,7 @@ public class GameStatusUITest extends ApplicationTest {
             // x x x
             // o o 6
             // 7 8 9
-            ticTacToeModel.gameMove(1);
-            ticTacToeModel.gameMove(4);
-            ticTacToeModel.gameMove(2);
-            ticTacToeModel.gameMove(5);
-            ticTacToeModel.gameMove(3);
+            GameMoveHelper.runMoves(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
             Label label = from(mainNode).lookup("#game_result").query();
             return label.getText();
         });
@@ -58,12 +54,7 @@ public class GameStatusUITest extends ApplicationTest {
             // o o o
             // x x 6
             // 7 8 x
-            ticTacToeModel.gameMove(4);
-            ticTacToeModel.gameMove(1);
-            ticTacToeModel.gameMove(5);
-            ticTacToeModel.gameMove(2);
-            ticTacToeModel.gameMove(9);
-            ticTacToeModel.gameMove(3);
+            GameMoveHelper.runMoves(ticTacToeModel, new int[]{4, 1, 5, 2, 9, 3});
             Label label = from(mainNode).lookup("#game_result").query();
             return label.getText();
         });
@@ -78,15 +69,7 @@ public class GameStatusUITest extends ApplicationTest {
             // o o x
             // x x o
             // o x x
-            ticTacToeModel.gameMove(4);
-            ticTacToeModel.gameMove(1);
-            ticTacToeModel.gameMove(5);
-            ticTacToeModel.gameMove(2);
-            ticTacToeModel.gameMove(9);
-            ticTacToeModel.gameMove(6);
-            ticTacToeModel.gameMove(3);
-            ticTacToeModel.gameMove(7);
-            ticTacToeModel.gameMove(8);
+            GameMoveHelper.runMoves(ticTacToeModel, new int[]{4, 1, 5, 2, 9, 6, 3, 7, 8});
             Label label = from(mainNode).lookup("#game_result").query();
             return label.getText();
         });
@@ -108,7 +91,6 @@ public class GameStatusUITest extends ApplicationTest {
         stage.show();
         stage.toFront();
     }
-
 
     private class TestObserver implements Observer {
         private final List<ModelUpdate> modelUpdates = new ArrayList<>();

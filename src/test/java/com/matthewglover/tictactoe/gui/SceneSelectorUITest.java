@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -18,13 +19,13 @@ import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 
 public class SceneSelectorUITest extends ApplicationTest {
 
-    private final int GAME_STATUS_DELAY = 0;
     private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
     private SceneSelectorUI sceneSelectorUI;
 
     @Override
     public void start(Stage stage) throws Exception {
-        sceneSelectorUI = new SceneSelectorUI(ticTacToeModel, GAME_STATUS_DELAY);
+        int gameStatusDelay = 0;
+        sceneSelectorUI = new SceneSelectorUI(ticTacToeModel, gameStatusDelay);
         stage.setScene(sceneSelectorUI.getScene());
         stage.show();
         stage.toFront();
@@ -105,7 +106,8 @@ public class SceneSelectorUITest extends ApplicationTest {
     }
 
     private void verifyBoardScene() {
-        verifyThat(getRootNode(), hasChildren(9, ".button"));
+        Pane boardRoot = (Pane) getRootNode().getChildrenUnmodifiable().get(0);
+        assertEquals(9, boardRoot.getChildren().size());
     }
 
     private void verifyGameStatusScene() {
@@ -129,11 +131,7 @@ public class SceneSelectorUITest extends ApplicationTest {
             // x x x
             // o o 6
             // 7 8 9
-            ticTacToeModel.gameMove(1);
-            ticTacToeModel.gameMove(4);
-            ticTacToeModel.gameMove(2);
-            ticTacToeModel.gameMove(5);
-            ticTacToeModel.gameMove(3);
+            GameMoveHelper.runMoves(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
             return null;
         });
     }

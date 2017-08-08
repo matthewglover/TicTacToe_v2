@@ -1,32 +1,37 @@
 package com.matthewglover.tictactoe.gui;
 
-import com.matthewglover.tictactoe.core.ModelUpdate;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
 
 public class BoardSizeUI extends UI {
 
-    private final GridPane gridPane = new GridPane();
+    private final FlowPane flowPane = new FlowPane();
 
     public BoardSizeUI(TicTacToeModel ticTacToeModel) {
         super(ticTacToeModel);
-        setRootNode(gridPane);
+        setRootNode(flowPane);
+        setLayout();
         buildForm();
     }
 
+    private void setLayout() {
+        flowPane.setHgap(10);
+        flowPane.setVgap(10);
+        flowPane.setOrientation(Orientation.VERTICAL);
+        flowPane.setAlignment(Pos.CENTER);
+    }
+
     private void buildForm() {
-        for (int buttonNumber = 0; buttonNumber <= 1; buttonNumber++) {
-            addBoardSizeButton(buttonNumber);
+        for (int boardSize = 3; boardSize <= 4; boardSize++) {
+            flowPane.getChildren().add(buildBoardSizeButton(boardSize));
         }
     }
 
-    private void addBoardSizeButton(int buttonNumber) {
-        int boardSize = buttonNumber + 3;
-        Button button = new Button();
-        button.setText(boardSize + " X " + boardSize);
-        button.setOnAction(event -> {
-            ticTacToeModel.setCurrentBoardSize(boardSize);
-        });
-        gridPane.add(button, 0, buttonNumber);
+    private Button buildBoardSizeButton(int boardSize) {
+        Button button = new Button(boardSize + " X " + boardSize);
+        button.setOnAction(event -> ticTacToeModel.setCurrentBoardSize(boardSize));
+        return button;
     }
 }

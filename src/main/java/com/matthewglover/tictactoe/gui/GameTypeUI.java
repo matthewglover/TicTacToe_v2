@@ -1,34 +1,43 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
 
 
 public class GameTypeUI extends UI {
 
-    private final GridPane gridPane = new GridPane();
+    private final FlowPane flowPane = new FlowPane();
 
     GameTypeUI(TicTacToeModel ticTacToeModel) {
         super(ticTacToeModel);
-        setRootNode(gridPane);
+        setRootNode(flowPane);
+        setLayout();
         buildForm();
     }
 
+    private void setLayout() {
+        flowPane.setHgap(10);
+        flowPane.setVgap(10);
+        flowPane.setOrientation(Orientation.VERTICAL);
+        flowPane.setAlignment(Pos.CENTER);
+    }
+
     private void buildForm() {
-        int row = 0;
         for (GameType gameType : GameType.values()) {
-            addGameTypeButton(row, gameType);
-            row++;
+            flowPane.getChildren().add(buildButton(gameType));
         }
     }
 
-    private void addGameTypeButton(int row, GameType gameType) {
+    private Button buildButton(GameType gameType) {
         Button button = new Button();
         button.setText(gameType.getDescription());
         button.setOnAction(event -> {
             ticTacToeModel.setCurrentGameType(gameType);
         });
-        gridPane.add(button, 0, row);
+        button.setMaxWidth(Double.MAX_VALUE);
+        return button;
     }
 }
