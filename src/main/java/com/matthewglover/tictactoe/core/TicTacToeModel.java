@@ -42,7 +42,7 @@ public class TicTacToeModel extends Observable {
     }
 
     public void createGame(int boardSize) {
-        game = new Game(new Board(boardSize));
+        initGame(boardSize);
         notifyUpdate(ModelUpdate.CREATE_GAME);
     }
 
@@ -53,6 +53,9 @@ public class TicTacToeModel extends Observable {
 
     public void replayGame() {
         if (game.isOver()) {
+            int boardSize = getBoard().getSize();
+            gameTypeModel = new GameTypeModel(GameType.REPLAY, game.getMoveSequence());
+            createGame(boardSize);
             notifyUpdate(ModelUpdate.REPLAY_GAME);
         }
     }
@@ -68,6 +71,10 @@ public class TicTacToeModel extends Observable {
         }
     }
 
+    private void initGame(int boardSize) {
+        game = new Game(new Board(boardSize));
+    }
+
     private void notifyGameUpdate() {
         if (game.isOver()) {
             notifyUpdate(ModelUpdate.GAME_OVER);
@@ -77,15 +84,14 @@ public class TicTacToeModel extends Observable {
     }
 
     private boolean isComputerPlayersMove(ModelUpdate modelUpdate) {
-        return modelUpdate.isGameMove() &&
+        return modelUpdate.isGameMovePrompt() &&
                 getNextPlayer().isComputer() &&
                 !isBoardLocked();
     }
 
     protected Runnable getRunComputerMove() {
         return () -> {
-            ComputerPlayer computerPlayer = (ComputerPlayer) getNextPlayer();
-            int nextMove = computerPlayer.getMove(game);
+            int nextMove = ((ComputerPlayer) getNextPlayer()).getMove(game);
             gameMove(nextMove);
         };
     }

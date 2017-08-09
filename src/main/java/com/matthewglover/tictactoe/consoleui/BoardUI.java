@@ -14,7 +14,7 @@ public class BoardUI extends UI {
 
     @Override
     protected void update(ModelUpdate modelUpdate) {
-        if (modelUpdate.isGameMove()) {
+        if (modelUpdate.isGameMovePrompt()) {
             run();
         }
     }

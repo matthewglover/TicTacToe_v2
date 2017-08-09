@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.core;
 
+
 public abstract class Player {
     protected final PlayerSymbol playerSymbol;
 

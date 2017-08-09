@@ -1,6 +1,7 @@
 package com.matthewglover.tictactoe.core;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -8,7 +9,8 @@ public enum GameType {
     HUMAN_HUMAN,
     HUMAN_COMPUTER,
     COMPUTER_HUMAN,
-    COMPUTER_COMPUTER;
+    COMPUTER_COMPUTER,
+    REPLAY;
 
     public String getDescription() {
         return Arrays.stream(getPlayers())
@@ -34,6 +36,21 @@ public enum GameType {
     }
 
     public PlayerType getPlayerType(PlayerSymbol playerSymbol) {
-        return PlayerType.valueOf(getPlayers()[playerSymbol.getPlayerIndex()]);
+        if (this == REPLAY) {
+            return PlayerType.REPLAY;
+
+        } else {
+            return PlayerType.valueOf(getPlayers()[playerSymbol.getPlayerIndex()]);
+        }
+    }
+
+    public boolean isSelectable() {
+        return this != REPLAY;
+    }
+
+    public static List<GameType> getSelectableValues() {
+        return Arrays.stream(GameType.values())
+                .filter(GameType::isSelectable)
+                .collect(Collectors.toList());
     }
 }

@@ -20,7 +20,9 @@ public class PlayerBuilder {
             case HUMAN:
                 return new HumanPlayer(playerSymbol);
             case COMPUTER:
-                return new ComputerPlayer(playerSymbol);
+                return new AlphaBetaPlayer(playerSymbol);
+            case REPLAY:
+                return new ReplayPlayer(playerSymbol);
             default:
                 return null;
         }

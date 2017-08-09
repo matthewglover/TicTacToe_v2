@@ -98,8 +98,8 @@ public class SceneSelectorUITest extends ApplicationTest {
     }
 
     private void verifyGameOptionsScene() {
-        verifyThat(getRootNode(), hasChildren(GameType.values().length, ".button"));
-        for (int i = 0; i < GameType.values().length; i++) {
+        verifyThat(getRootNode(), hasChildren(GameType.getSelectableValues().size(), ".button"));
+        for (int i = 0; i < GameType.getSelectableValues().size(); i++) {
             Button currentButton = from(getRootNode()).lookup(".button").nth(i).query();
             assertEquals(GameType.values()[i].getDescription(), currentButton.getText());
         }

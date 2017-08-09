@@ -21,7 +21,7 @@ public class GameTypeUI extends UI {
     }
 
     private void buildForm() {
-        for (GameType gameType : GameType.values()) {
+        for (GameType gameType : GameType.getSelectableValues()) {
             flowPane.getChildren().add(buildButton(gameType));
         }
     }

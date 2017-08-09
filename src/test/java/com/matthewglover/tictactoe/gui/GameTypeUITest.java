@@ -28,8 +28,8 @@ public class GameTypeUITest extends ApplicationTest {
 
     @Test
     public void displaysAllGameTypes() {
-        verifyThat(mainNode, hasChildren(GameType.values().length, ".button"));
-        for (int i = 0; i < GameType.values().length; i++) {
+        verifyThat(mainNode, hasChildren(GameType.getSelectableValues().size(), ".button"));
+        for (int i = 0; i < GameType.getSelectableValues().size(); i++) {
             Button currentButton = from(mainNode).lookup(".button").nth(i).query();
             assertEquals(GameType.values()[i].getDescription(), currentButton.getText());
         }
@@ -37,10 +37,12 @@ public class GameTypeUITest extends ApplicationTest {
 
     @Test
     public void gameButtonClickNotifiesModel() {
-        for (int i = 0; i < GameType.values().length; i++) {
-            Button currentButton = from(mainNode).lookup(".button").nth(i).query();
+        int counter = 0;
+        for (GameType gameType : GameType.getSelectableValues()) {
+            Button currentButton = from(mainNode).lookup(".button").nth(counter).query();
             clickOn(currentButton);
-            assertEquals(GameType.values()[i], ticTacToeModel.getGameTypeModel().getGameType());
+            assertEquals(gameType, ticTacToeModel.getGameTypeModel().getGameType());
+            counter++;
         }
     }
 

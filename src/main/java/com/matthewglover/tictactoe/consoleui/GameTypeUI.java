@@ -30,7 +30,7 @@ public class GameTypeUI extends UI {
     private void printRequestGameType() {
         out.println(GameOptionsMessages.REQUEST_GAME_TYPE_INTRO);
         int counter = 1;
-        for (GameType gameType : GameType.values()) {
+        for (GameType gameType : GameType.getSelectableValues()) {
             out.println("(" + counter + ") " + gameType.getDescription());
             counter++;
         }
@@ -55,7 +55,7 @@ public class GameTypeUI extends UI {
 
         int value = Integer.parseInt(input) - 1;
 
-        return value >= 0 && value < GameType.values().length;
+        return value >= 0 && value < GameType.getSelectableValues().size();
     }
 
     private void printInvalidInput() {

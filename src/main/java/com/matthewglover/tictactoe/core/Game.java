@@ -46,6 +46,10 @@ public class Game {
         return isWinner() || board.isFull();
     }
 
+    public boolean isNew() {
+        return moveSequence.isEmpty();
+    }
+
     public boolean isWinner() {
         return !getWinner().isEmpty();
     }

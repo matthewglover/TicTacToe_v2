@@ -2,8 +2,11 @@ package com.matthewglover.tictactoe.core;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TicTacToeModelTest {
     private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
@@ -45,21 +48,42 @@ public class TicTacToeModelTest {
 
     @Test
     public void replaysCompletedGame() {
-        ticTacToeModel.setupNewGame();
-        ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.createGame(3);
-        GameTestHelper.runGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
+        createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         ticTacToeModel.replayGame();
         assertEquals(ModelUpdate.REPLAY_GAME, testObserver.getLastUpdate());
     }
 
     @Test
     public void doesntReplayInCompleteGame() {
+        createAndRunGame(ticTacToeModel, new int[]{1});
+        ticTacToeModel.replayGame();
+        assertNotEquals(ModelUpdate.REPLAY_GAME, testObserver.getLastUpdate());
+    }
+
+    @Test
+    public void replayGameCreatesNewGameWithComputerPlayers() {
+        createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
+        ticTacToeModel.replayGame();
+        assertTrue(ticTacToeModel.getGame().isNew());
+        assertEquals(GameType.REPLAY, ticTacToeModel.getGameTypeModel().getGameType());
+        assertTrue(ticTacToeModel.getGameTypeModel().getPlayer(PlayerSymbol.X) instanceof ReplayPlayer);
+        assertTrue(ticTacToeModel.getGameTypeModel().getPlayer(PlayerSymbol.O) instanceof ReplayPlayer);
+    }
+
+    @Test
+    public void replayGameRunsMovesOfLastGame() throws InterruptedException {
+        createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
+        List<Integer> originalMoves = ticTacToeModel.getGame().getMoveSequence();
+        testObserver.resetCollectedMoves();
+        ticTacToeModel.replayGame();
+        Thread.sleep(100);      // NOTE: sleep needed to make sure async threads have completed (should be better way to do this)
+        assertEquals(originalMoves, testObserver.getCollectedMoves());
+    }
+
+    private void createAndRunGame(TicTacToeModel ticTacToeModel, int[] moves) {
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
-        GameTestHelper.runGame(ticTacToeModel, new int[]{1});
-        ticTacToeModel.replayGame();
-        assertNotEquals(ModelUpdate.REPLAY_GAME, testObserver.getLastUpdate());
+        GameTestHelper.runGame(ticTacToeModel, moves);
     }
 }

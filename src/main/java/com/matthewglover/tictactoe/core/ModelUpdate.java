@@ -6,15 +6,19 @@ public enum ModelUpdate {
     CREATE_GAME,
     LOCK_BOARD,
     GAME_MOVE,
-    GAME_OVER, REPLAY_GAME;
+    GAME_OVER,
+    REPLAY_GAME;
 
     public boolean isBoardChange() {
-        return isGameMove() || isGameOver() || isLockBoard();
+        return isGameMovePrompt() || isGameOver() || isLockBoard();
     }
 
     public boolean isGameMove() {
-        return this == ModelUpdate.GAME_MOVE ||
-                this == ModelUpdate.CREATE_GAME;
+        return this == GAME_MOVE || this == GAME_OVER;
+    }
+
+    public boolean isGameMovePrompt() {
+        return this == GAME_MOVE || this == CREATE_GAME;
     }
 
     private boolean isGameOver() {

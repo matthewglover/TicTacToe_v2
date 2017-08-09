@@ -1,8 +1,6 @@
 package com.matthewglover.tictactoe.core;
 
-
-public class ComputerPlayer extends Player {
-
+public abstract class ComputerPlayer extends Player {
     public ComputerPlayer(PlayerSymbol playerSymbol) {
         super(playerSymbol);
     }
@@ -17,8 +15,5 @@ public class ComputerPlayer extends Player {
         return PlayerType.COMPUTER;
     }
 
-    public int getMove(Game game) {
-        StrategyRunner strategyRunner = new StrategyRunner(game);
-        return strategyRunner.runAlphaBeta();
-    }
+    public abstract int getMove(Game game);
 }
