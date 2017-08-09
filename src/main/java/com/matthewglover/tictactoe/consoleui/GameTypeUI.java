@@ -24,7 +24,7 @@ public class GameTypeUI extends UI {
     protected void run() {
         clearScreen();
         printRequestGameType();
-        ticTacToeModel.setCurrentGameType(promptForGameType());
+        ticTacToeModel.setGameType(promptForGameType());
     }
 
     private void printRequestGameType() {

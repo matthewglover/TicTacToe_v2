@@ -39,8 +39,8 @@ public class SceneSelectorUITest extends ApplicationTest {
     @Test
     public void sceneIsBoardSizeAfterGameOptionsSelected() throws Exception {
         FutureTask<Void> query = new FutureTask<>(() -> {
-            ticTacToeModel.startNewGame();
-            ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setupNewGame();
+            ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
             return null;
         });
 
@@ -52,8 +52,8 @@ public class SceneSelectorUITest extends ApplicationTest {
     @Test
     public void sceneIsBoardAfterGameTypeSelected() throws Exception {
         FutureTask<Void> query = new FutureTask<>(() -> {
-            ticTacToeModel.startNewGame();
-            ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setupNewGame();
+            ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
             ticTacToeModel.setCurrentBoardSize(3);
             return null;
         });
@@ -125,8 +125,8 @@ public class SceneSelectorUITest extends ApplicationTest {
 
     private FutureTask<Void> runWinningGameForX() {
         return new FutureTask<>(() -> {
-            ticTacToeModel.startNewGame();
-            ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+            ticTacToeModel.setupNewGame();
+            ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
             ticTacToeModel.setCurrentBoardSize(3);
             // x x x
             // o o 6

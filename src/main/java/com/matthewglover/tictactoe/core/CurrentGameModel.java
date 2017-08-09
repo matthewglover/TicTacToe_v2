@@ -12,18 +12,18 @@ public class CurrentGameModel {
         return game;
     }
 
+    public void createGame(int boardSize) {
+        game = new Game(new Board(boardSize));
+        ticTacToeModel.notifyUpdate(ModelUpdate.CREATE_GAME);
+    }
+
     public void move(int squareNumber) {
         game.move(squareNumber);
 
         if (game.isOver()) {
             ticTacToeModel.notifyUpdate(ModelUpdate.GAME_OVER);
         } else {
-            ticTacToeModel.notifyUpdate(ModelUpdate.MAKE_MOVE);
+            ticTacToeModel.notifyUpdate(ModelUpdate.GAME_MOVE);
         }
-    }
-
-    public void createGame(int boardSize) {
-        game = new Game(new Board(boardSize));
-        ticTacToeModel.notifyUpdate(ModelUpdate.CREATE_GAME);
     }
 }

@@ -38,18 +38,18 @@ public class TicTacToeModel extends Observable {
         this.computerMoveDelay = computerMoveDelay;
     }
 
-    public void startNewGame() {
+    public void setupNewGame() {
         currentGameTypeModel = new CurrentGameTypeModel(this);
         currentGameModel = new CurrentGameModel(this);
         notifyUpdate(ModelUpdate.SETUP_NEW_GAME);
     }
 
-    public void setCurrentBoardSize(int boardSize) {
-        currentGameModel.createGame(boardSize);
+    public void setGameType(GameType gameType) {
+        currentGameTypeModel.setGameType(gameType);
     }
 
-    public void setCurrentGameType(GameType gameType) {
-        currentGameTypeModel.setGameType(gameType);
+    public void setCurrentBoardSize(int boardSize) {
+        currentGameModel.createGame(boardSize);
     }
 
     public void createGame(int boardSize) {
@@ -58,6 +58,12 @@ public class TicTacToeModel extends Observable {
 
     public void gameMove(int squareNumber) {
         currentGameModel.move(squareNumber);
+    }
+
+    public void replayGame() {
+        if (getCurrentGame().isOver()) {
+            notifyUpdate(ModelUpdate.REPLAY_GAME);
+        }
     }
 
     protected void notifyUpdate(ModelUpdate modelUpdate) {

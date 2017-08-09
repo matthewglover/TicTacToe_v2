@@ -16,7 +16,7 @@ public class TicTacToeApp {
 
     public TicTacToeApp(InputStream in, PrintStream out, TicTacToeModel ticTacToeModel) {
         this.ticTacToeModel = ticTacToeModel;
-        ticTacToeModel.startNewGame();
+        ticTacToeModel.setupNewGame();
         ticTacToeModel.setComputerMoveDelay(500);
         new GameTypeUI(in, out, ticTacToeModel);
         new BoardSizeUI(in, out, ticTacToeModel);
@@ -25,6 +25,6 @@ public class TicTacToeApp {
     }
 
     public void execute() {
-        ticTacToeModel.startNewGame();
+        ticTacToeModel.setupNewGame();
     }
 }

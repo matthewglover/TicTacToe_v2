@@ -48,7 +48,7 @@ public class GameStatusUI extends UI {
         button.setId("new_game");
         button.setText("New Game");
         button.setOnAction(event -> {
-            ticTacToeModel.startNewGame();
+            ticTacToeModel.setupNewGame();
         });
         flowPane.getChildren().add(button);
     }

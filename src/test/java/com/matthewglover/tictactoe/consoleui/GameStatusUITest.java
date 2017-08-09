@@ -86,8 +86,8 @@ public class GameStatusUITest {
     public void setupTest(String inputStream) {
         ioTestHelper.setInputStream(inputStream);
         setupGameStatusUI();
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.setCurrentBoardSize(3);
     }
 

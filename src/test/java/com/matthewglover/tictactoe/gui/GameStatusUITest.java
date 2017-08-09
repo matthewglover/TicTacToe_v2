@@ -5,7 +5,6 @@ import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.junit.Test;
@@ -29,8 +28,8 @@ public class GameStatusUITest extends ApplicationTest {
         GameStatusUI gameStatusUI = new GameStatusUI(ticTacToeModel);
         mainNode = gameStatusUI.getNode();
         buildStage(stage);
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
     }
 

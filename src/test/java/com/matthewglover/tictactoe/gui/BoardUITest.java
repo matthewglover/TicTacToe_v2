@@ -23,8 +23,8 @@ public class BoardUITest extends ApplicationTest {
         BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
         boardNode = (Pane) mainNode.getChildrenUnmodifiable().get(0);
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.createGame(3);
         buildStage(stage);
     }

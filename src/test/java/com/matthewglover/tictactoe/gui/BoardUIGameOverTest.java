@@ -22,8 +22,8 @@ public class BoardUIGameOverTest extends ApplicationTest {
         TicTacToeModel ticTacToeModel = new TicTacToeModel();
         BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
         GameMoveHelper.runMoves(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         buildStage(stage);

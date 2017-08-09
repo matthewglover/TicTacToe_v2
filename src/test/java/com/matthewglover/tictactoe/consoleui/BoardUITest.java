@@ -18,8 +18,8 @@ public class BoardUITest {
     public void printsEmptyGridOnFirstMove() {
         setupBoard();
 
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.COMPUTER_HUMAN);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.COMPUTER_HUMAN);
         ticTacToeModel.setCurrentBoardSize(3);
 
         String formattedBoard = new BoardFormatter(new Board(3)).format();
@@ -33,8 +33,8 @@ public class BoardUITest {
         ioTestHelper.setInputStream("3\n");
         setupBoard();
 
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_COMPUTER);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.setCurrentBoardSize(3);
 
         String[] boardStates = getBoardStates(3);
@@ -68,8 +68,8 @@ public class BoardUITest {
     private void runInvalidMoveTest() {
         setupBoard();
 
-        ticTacToeModel.startNewGame();
-        ticTacToeModel.setCurrentGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.setCurrentBoardSize(3);
 
         String[] boardStates = getBoardStates(1);

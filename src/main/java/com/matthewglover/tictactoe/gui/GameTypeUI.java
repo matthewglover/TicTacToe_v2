@@ -30,7 +30,7 @@ public class GameTypeUI extends UI {
         Button button = new Button();
         button.setText(gameType.getDescription());
         button.setOnAction(event -> {
-            ticTacToeModel.setCurrentGameType(gameType);
+            ticTacToeModel.setGameType(gameType);
         });
         button.setMaxWidth(Double.MAX_VALUE);
         return button;

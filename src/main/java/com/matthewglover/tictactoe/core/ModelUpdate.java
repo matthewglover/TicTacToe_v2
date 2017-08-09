@@ -5,15 +5,15 @@ public enum ModelUpdate {
     SET_GAME_TYPE,
     CREATE_GAME,
     LOCK_BOARD,
-    MAKE_MOVE,
-    GAME_OVER;
+    GAME_MOVE,
+    GAME_OVER, REPLAY_GAME;
 
     public boolean isBoardChange() {
         return isGameMove() || isGameOver() || isLockBoard();
     }
 
     public boolean isGameMove() {
-        return this == ModelUpdate.MAKE_MOVE ||
+        return this == ModelUpdate.GAME_MOVE ||
                 this == ModelUpdate.CREATE_GAME;
     }
 
