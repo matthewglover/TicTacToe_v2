@@ -67,10 +67,10 @@ public class TileUI {
     }
 
     private int getBoardSize() {
-        return ticTacToeModel.getCurrentBoard().getSize();
+        return ticTacToeModel.getBoard().getSize();
     }
 
     private PlayerSymbol getSquare() {
-        return ticTacToeModel.getCurrentBoard().getSquare(getSquareNumber());
+        return ticTacToeModel.getBoard().getSquare(getSquareNumber());
     }
 }

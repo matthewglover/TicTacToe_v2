@@ -20,14 +20,14 @@ public class BoardSizeUITest {
     @Test
     public void setsBoardSizeToValidUserInput() {
         setupTest("3\n");
-        assertEquals(3, ticTacToeModel.getCurrentBoard().getSize());
+        assertEquals(3, ticTacToeModel.getBoard().getSize());
     }
 
     @Test
     public void validatesInputAndPromptsUntilValidInputReceived() {
         setupTest("invalid\n4\n");
         assertEquals(GameOptionsMessages.INVALID_INPUT, ioTestHelper.getLastLineOfOutput());
-        assertEquals(4, ticTacToeModel.getCurrentBoard().getSize());
+        assertEquals(4, ticTacToeModel.getBoard().getSize());
     }
 
     private void setupTest(String input) {

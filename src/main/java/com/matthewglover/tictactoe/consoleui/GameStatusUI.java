@@ -30,7 +30,7 @@ public class GameStatusUI extends UI {
     }
 
     private void printBoard() {
-        out.println(new BoardFormatter(ticTacToeModel.getCurrentBoard()).format());
+        out.println(new BoardFormatter(ticTacToeModel.getBoard()).format());
     }
 
     private void reportResult() {
@@ -42,7 +42,7 @@ public class GameStatusUI extends UI {
     }
 
     private boolean isWinner() {
-        return ticTacToeModel.getCurrentGame().isWinner();
+        return ticTacToeModel.getGame().isWinner();
     }
 
     private void reportWinner() {
@@ -50,7 +50,7 @@ public class GameStatusUI extends UI {
     }
 
     private PlayerSymbol getWinner() {
-        return ticTacToeModel.getCurrentGame().getWinner();
+        return ticTacToeModel.getGame().getWinner();
     }
 
     public void reportDraw() {

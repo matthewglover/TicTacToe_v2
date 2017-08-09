@@ -20,7 +20,7 @@ public class BoardUITest {
 
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.COMPUTER_HUMAN);
-        ticTacToeModel.setCurrentBoardSize(3);
+        ticTacToeModel.createGame(3);
 
         String formattedBoard = new BoardFormatter(new Board(3)).format();
         assertEquals(
@@ -35,7 +35,7 @@ public class BoardUITest {
 
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_COMPUTER);
-        ticTacToeModel.setCurrentBoardSize(3);
+        ticTacToeModel.createGame(3);
 
         String[] boardStates = getBoardStates(3);
         String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
@@ -70,7 +70,7 @@ public class BoardUITest {
 
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.setCurrentBoardSize(3);
+        ticTacToeModel.createGame(3);
 
         String[] boardStates = getBoardStates(1);
 

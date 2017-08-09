@@ -10,4 +10,8 @@ public class HumanPlayer extends Player {
     public boolean isComputer() {
         return false;
     }
+
+    public PlayerType getType() {
+        return PlayerType.HUMAN;
+    }
 }

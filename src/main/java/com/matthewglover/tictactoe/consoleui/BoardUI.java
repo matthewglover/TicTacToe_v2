@@ -34,11 +34,11 @@ public class BoardUI extends UI {
     }
 
     private Board getBoard() {
-        return ticTacToeModel.getCurrentBoard();
+        return ticTacToeModel.getBoard();
     }
 
     private boolean isNextPlayerHuman() {
-        return ticTacToeModel.getNextPlayerType().isHuman();
+        return !ticTacToeModel.getNextPlayer().isComputer();
     }
 
     private void printMoveRequest() {
@@ -46,7 +46,7 @@ public class BoardUI extends UI {
     }
 
     private PlayerSymbol getNextPlayerSymbol() {
-        return ticTacToeModel.getCurrentGame().getNextPlayerSymbol();
+        return ticTacToeModel.getGame().getNextPlayerSymbol();
     }
 
     private void setNextPlayerMove() {
@@ -69,7 +69,7 @@ public class BoardUI extends UI {
     }
 
     private boolean isValidMove(int move) {
-        return ticTacToeModel.getCurrentBoard().isValidMove(move);
+        return ticTacToeModel.getBoard().isValidMove(move);
     }
 
     private void printInvalidInput() {

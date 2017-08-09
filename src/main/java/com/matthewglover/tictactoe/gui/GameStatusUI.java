@@ -54,8 +54,8 @@ public class GameStatusUI extends UI {
     }
 
     private void displayMessage() {
-        String resultMessage = ticTacToeModel.getCurrentGame().isWinner()
-                ? ticTacToeModel.getCurrentGame().getWinner() + " wins!"
+        String resultMessage = ticTacToeModel.getGame().isWinner()
+                ? ticTacToeModel.getGame().getWinner() + " wins!"
                 : "It's a draw!";
         text.setText(resultMessage);
     }

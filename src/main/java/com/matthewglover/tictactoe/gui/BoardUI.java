@@ -39,7 +39,7 @@ public class BoardUI extends UI {
     }
 
     private int getBoardSize() {
-        return ticTacToeModel.getCurrentBoard().getSize();
+        return ticTacToeModel.getBoard().getSize();
     }
 
     private void addRow(int row) {
@@ -57,6 +57,6 @@ public class BoardUI extends UI {
     }
 
     private boolean isActiveBoard() {
-        return !ticTacToeModel.getCurrentGame().isOver() && !ticTacToeModel.isBoardLocked();
+        return !ticTacToeModel.getGame().isOver() && !ticTacToeModel.isBoardLocked();
     }
 }

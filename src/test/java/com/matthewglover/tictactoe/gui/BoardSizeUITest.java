@@ -39,7 +39,7 @@ public class BoardSizeUITest extends ApplicationTest {
         for (int i = 0; i <= 1; i++) {
             Button currentButton = from(mainNode).lookup(".button").nth(i).query();
             clickOn(currentButton);
-            assertEquals(i + 3, ticTacToeModel.getCurrentBoard().getSize());
+            assertEquals(i + 3, ticTacToeModel.getBoard().getSize());
         }
     }
 

@@ -12,6 +12,11 @@ public class ComputerPlayer extends Player {
         return true;
     }
 
+    @Override
+    public PlayerType getType() {
+        return PlayerType.COMPUTER;
+    }
+
     public int getMove(Game game) {
         StrategyRunner strategyRunner = new StrategyRunner(game);
         return strategyRunner.runAlphaBeta();

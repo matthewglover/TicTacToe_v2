@@ -26,7 +26,7 @@ public class BoardSizeUI extends UI {
 
     private Button buildBoardSizeButton(int boardSize) {
         Button button = new Button(boardSize + " X " + boardSize);
-        button.setOnAction(event -> ticTacToeModel.setCurrentBoardSize(boardSize));
+        button.setOnAction(event -> ticTacToeModel.createGame(boardSize));
         return button;
     }
 }

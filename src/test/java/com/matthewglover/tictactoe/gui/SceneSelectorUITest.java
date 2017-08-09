@@ -54,7 +54,7 @@ public class SceneSelectorUITest extends ApplicationTest {
         FutureTask<Void> query = new FutureTask<>(() -> {
             ticTacToeModel.setupNewGame();
             ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
-            ticTacToeModel.setCurrentBoardSize(3);
+            ticTacToeModel.createGame(3);
             return null;
         });
 
@@ -127,7 +127,7 @@ public class SceneSelectorUITest extends ApplicationTest {
         return new FutureTask<>(() -> {
             ticTacToeModel.setupNewGame();
             ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
-            ticTacToeModel.setCurrentBoardSize(3);
+            ticTacToeModel.createGame(3);
             // x x x
             // o o 6
             // 7 8 9

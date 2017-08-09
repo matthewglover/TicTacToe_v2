@@ -24,21 +24,21 @@ public class GameTypeUITest {
     @Test
     public void setGameTypeForCorrespondingValue() {
         setupTest("2\n");
-        assertEquals(GameType.values()[1], ticTacToeModel.getCurrentGameTypeModel().getGameType());
+        assertEquals(GameType.values()[1], ticTacToeModel.getGameTypeModel().getGameType());
     }
 
     @Test
     public void promptForGameTypeReportsErrorAndPromptsForValidInputForOutOfRangeInput() {
         setupTest("5\n2\n");
         assertEquals(GameOptionsMessages.INVALID_INPUT, ioTestHelper.getLastLineOfOutput());
-        assertEquals(GameType.values()[1], ticTacToeModel.getCurrentGameTypeModel().getGameType());
+        assertEquals(GameType.values()[1], ticTacToeModel.getGameTypeModel().getGameType());
     }
 
     @Test
     public void promptForGameTypeReportsErrorAndPromptsForValidInputForNonIntegerInput() {
         setupTest("non integer\n3\n");
         assertEquals(GameOptionsMessages.INVALID_INPUT, ioTestHelper.getLastLineOfOutput());
-        assertEquals(GameType.values()[2], ticTacToeModel.getCurrentGameTypeModel().getGameType());
+        assertEquals(GameType.values()[2], ticTacToeModel.getGameTypeModel().getGameType());
     }
 
     private IOTestHelper setupTest(String input) {

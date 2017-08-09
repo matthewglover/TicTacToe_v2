@@ -8,4 +8,6 @@ public abstract class Player {
     }
 
     public abstract boolean isComputer();
+
+    public abstract PlayerType getType();
 }

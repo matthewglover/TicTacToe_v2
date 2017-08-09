@@ -20,8 +20,8 @@ public class TicTacToeModelTest {
     public void getPlayerTypeBasedOnGameType() {
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.COMPUTER_HUMAN);
-        assertEquals(PlayerType.COMPUTER, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.X));
-        assertEquals(PlayerType.HUMAN, ticTacToeModel.getCurrentGameTypeModel().getPlayerType(PlayerSymbol.O));
+        assertEquals(PlayerType.COMPUTER, ticTacToeModel.getGameTypeModel().getPlayerType(PlayerSymbol.X));
+        assertEquals(PlayerType.HUMAN, ticTacToeModel.getGameTypeModel().getPlayerType(PlayerSymbol.O));
     }
 
     @Test
@@ -29,9 +29,9 @@ public class TicTacToeModelTest {
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
         ticTacToeModel.createGame(3);
-        assertEquals(PlayerSymbol.X, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
+        assertEquals(PlayerSymbol.X, ticTacToeModel.getGame().getNextPlayerSymbol());
         ticTacToeModel.gameMove(1);
-        assertEquals(PlayerSymbol.O, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
+        assertEquals(PlayerSymbol.O, ticTacToeModel.getGame().getNextPlayerSymbol());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TicTacToeModelTest {
         ticTacToeModel.setGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.createGame(3);
         ticTacToeModel.gameMove(1);
-        assertEquals(PlayerType.COMPUTER, ticTacToeModel.getNextPlayerType());
+        assertEquals(PlayerType.COMPUTER, ticTacToeModel.getNextPlayer().getType());
     }
 
     @Test

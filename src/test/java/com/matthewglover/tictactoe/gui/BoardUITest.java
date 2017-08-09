@@ -43,7 +43,7 @@ public class BoardUITest extends ApplicationTest {
     @Test
     public void computerMovesUpdateAutomatically() {
         clickOn("#square_1");
-        assertEquals(PlayerSymbol.X, ticTacToeModel.getCurrentGame().getNextPlayerSymbol());
+        assertEquals(PlayerSymbol.X, ticTacToeModel.getGame().getNextPlayerSymbol());
     }
 
     private void buildStage(Stage stage) {

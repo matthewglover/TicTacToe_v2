@@ -88,7 +88,7 @@ public class GameStatusUITest {
         setupGameStatusUI();
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
-        ticTacToeModel.setCurrentBoardSize(3);
+        ticTacToeModel.createGame(3);
     }
 
     private void setupGameStatusUI() {

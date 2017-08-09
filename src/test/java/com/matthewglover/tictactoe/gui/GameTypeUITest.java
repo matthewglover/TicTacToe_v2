@@ -40,7 +40,7 @@ public class GameTypeUITest extends ApplicationTest {
         for (int i = 0; i < GameType.values().length; i++) {
             Button currentButton = from(mainNode).lookup(".button").nth(i).query();
             clickOn(currentButton);
-            assertEquals(GameType.values()[i], ticTacToeModel.getCurrentGameTypeModel().getGameType());
+            assertEquals(GameType.values()[i], ticTacToeModel.getGameTypeModel().getGameType());
         }
     }
 
