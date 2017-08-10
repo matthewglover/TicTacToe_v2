@@ -26,7 +26,7 @@ public class GameStatusUI extends UI {
         printBoard();
         reportResult();
         printPlayAgainRequest();
-        promptForPlayAgain();
+        promptForPlayAgainOrReplay();
     }
 
     private void printBoard() {
@@ -61,11 +61,17 @@ public class GameStatusUI extends UI {
         out.println(GameStatusMessages.REQUEST_PLAY_AGAIN);
     }
 
-    private void promptForPlayAgain() {
+    private void promptForPlayAgainOrReplay() {
         String input = scanner.nextLine();
         if (isPlayAgain(input)) {
             ticTacToeModel.setupNewGame();
+        } else if (isReplay(input)) {
+            ticTacToeModel.replayGame();
         }
+    }
+
+    private boolean isReplay(String input) {
+        return input.trim().toLowerCase().matches("r");
     }
 
     private boolean isPlayAgain(String input) {

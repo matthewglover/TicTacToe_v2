@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.gui;
 
-import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;

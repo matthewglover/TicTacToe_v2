@@ -53,10 +53,10 @@ public class TicTacToeModel extends Observable {
 
     public void replayGame() {
         if (game.isOver()) {
+            notifyUpdate(ModelUpdate.REPLAY_GAME);
             int boardSize = getBoard().getSize();
             gameTypeModel = new GameTypeModel(GameType.REPLAY, game.getMoveSequence());
             createGame(boardSize);
-            notifyUpdate(ModelUpdate.REPLAY_GAME);
         }
     }
 

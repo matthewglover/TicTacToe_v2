@@ -12,10 +12,6 @@ import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.FutureTask;
 
 import static org.junit.Assert.assertEquals;
@@ -84,7 +80,7 @@ public class GameStatusUITest extends ApplicationTest {
 
     @Test
     public void clickOnNewGameFiresEvent() {
-        TestObserver testObserver = new TestObserver();
+        TicTacToeModelTestObserver testObserver = new TicTacToeModelTestObserver(ticTacToeModel);
         ticTacToeModel.addObserver(testObserver);
         clickOn("#new_game");
         assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
@@ -105,19 +101,5 @@ public class GameStatusUITest extends ApplicationTest {
         stage.setScene(new Scene(mainNode, 100, 100));
         stage.show();
         stage.toFront();
-    }
-
-    private class TestObserver implements Observer {
-        private final List<ModelUpdate> modelUpdates = new ArrayList<>();
-
-        @Override
-        public void update(Observable o, Object arg) {
-            ModelUpdate modelUpdate = (ModelUpdate) arg;
-            modelUpdates.add(modelUpdate);
-        }
-
-        public ModelUpdate getLastUpdate() {
-            return modelUpdates.get(modelUpdates.size() - 1);
-        }
     }
 }

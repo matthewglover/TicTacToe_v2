@@ -68,22 +68,41 @@ public class GameStatusUITest {
 
     @Test
     public void requestsNewGameOnUserInputOfy() {
-        setupTest("y\n");
+        TicTacToeModelTestObserver testObserver = runAndObserveGame("y\n", ticTacToeModel);
+        assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
+    }
 
-        // NOTE: TestObserver needs to be set after GameStatusUI
-        // Otherwise event dispatch order is lost and GAME_OVER event
-        // is received after SETUP_NEW_GAME
+    @Test
+    public void requestsNewGameOnUserInputOfY() {
+        TicTacToeModelTestObserver testObserver = runAndObserveGame("Y\n", ticTacToeModel);
+        assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
+    }
+
+    @Test
+    public void replaysGameOnUserInputOfr() {
+        TicTacToeModelTestObserver testObserver = runAndObserveGame("r\n", ticTacToeModel);
+        assertTrue(testObserver.getUpdates().contains(ModelUpdate.REPLAY_GAME));
+    }
+
+    @Test
+    public void replaysGameOnUserInputOfR() {
+        TicTacToeModelTestObserver testObserver = runAndObserveGame("R\n", ticTacToeModel);
+        assertTrue(testObserver.getUpdates().contains(ModelUpdate.REPLAY_GAME));
+    }
+
+    private TicTacToeModelTestObserver runAndObserveGame(String inputStream, TicTacToeModel ticTacToeModel) {
+        setupTest(inputStream);
+
         TicTacToeModelTestObserver testObserver = new TicTacToeModelTestObserver(ticTacToeModel);
 
         // x x x
         // o o 6
         // 7 8 9
         runGame(new int[]{1, 4, 2, 5, 3});
-
-        assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
+        return testObserver;
     }
 
-    public void setupTest(String inputStream) {
+    private void setupTest(String inputStream) {
         ioTestHelper.setInputStream(inputStream);
         setupGameStatusUI();
         ticTacToeModel.setupNewGame();
