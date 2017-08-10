@@ -50,7 +50,7 @@ public class TicTacToeModelTest {
     public void replaysCompletedGame() {
         createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         ticTacToeModel.replayGame();
-        assertEquals(ModelUpdate.REPLAY_GAME, testObserver.getLastUpdate());
+        assertTrue(testObserver.getUpdates().contains(ModelUpdate.REPLAY_GAME));
     }
 
     @Test
