@@ -16,4 +16,8 @@ public enum PlayerSymbol {
             default: return -1;
         }
     }
+
+    public boolean isX() {
+        return this == X;
+    }
 }

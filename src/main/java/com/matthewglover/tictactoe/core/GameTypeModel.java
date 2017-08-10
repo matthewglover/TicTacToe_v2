@@ -1,9 +1,6 @@
 package com.matthewglover.tictactoe.core;
 
-
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class GameTypeModel {
     private GameType gameType;
@@ -19,18 +16,18 @@ public class GameTypeModel {
         addMoves(moveSequence);
     }
 
+    public GameType getGameType() {
+        return gameType;
+    }
+
     public PlayerType getPlayerType(PlayerSymbol playerSymbol) {
         return gameType.getPlayerType(playerSymbol);
     }
 
     public Player getPlayer(PlayerSymbol playerSymbol) {
-        return playerSymbol == PlayerSymbol.X
+        return playerSymbol.isX()
                 ? playerX
                 : playerO;
-    }
-
-    public GameType getGameType() {
-        return gameType;
     }
 
     private void buildPlayers(GameType gameType) {
@@ -40,30 +37,20 @@ public class GameTypeModel {
     }
 
     private Player buildPlayer(PlayerSymbol playerSymbol) {
-        return new PlayerBuilder()
-                .withPlayerSymbol(playerSymbol)
-                .withPlayerType(getPlayerType(playerSymbol))
-                .build();
+        switch (getPlayerType(playerSymbol)) {
+            case HUMAN:
+                return new HumanPlayer(playerSymbol);
+            case COMPUTER:
+                return new AlphaBetaPlayer(playerSymbol);
+            case REPLAY:
+                return new ReplayPlayer(playerSymbol);
+            default:
+                return null;
+        }
     }
 
     private void addMoves(List<Integer> moveSequence) {
-        List<Integer> xMoves = getEvenItems(moveSequence);
-        List<Integer> oMoves = getOddItems(moveSequence);
-        ((ReplayPlayer) playerX).addMoves(xMoves);
-        ((ReplayPlayer) playerO).addMoves(oMoves);
-    }
-
-    private List<Integer> getEvenItems(List<Integer> moveSequence) {
-        return IntStream.range(0, moveSequence.size())
-                .filter(n -> n % 2 == 0)
-                .mapToObj(moveSequence::get)
-                .collect(Collectors.toList());
-    }
-
-    private List<Integer> getOddItems(List<Integer> moveSequence) {
-        return IntStream.range(0, moveSequence.size())
-                .filter(n -> n % 2 != 0)
-                .mapToObj(moveSequence::get)
-                .collect(Collectors.toList());
+        ((ReplayPlayer) playerX).addMoves(moveSequence);
+        ((ReplayPlayer) playerO).addMoves(moveSequence);
     }
 }
