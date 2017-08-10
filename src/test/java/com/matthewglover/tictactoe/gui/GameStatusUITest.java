@@ -1,7 +1,9 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.GameTestHelper;
 import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.ModelUpdate;
+import com.matthewglover.tictactoe.core.TicTacToeModelTestObserver;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +19,7 @@ import java.util.Observer;
 import java.util.concurrent.FutureTask;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GameStatusUITest extends ApplicationTest {
     private TicTacToeModel ticTacToeModel = new TicTacToeModel();
@@ -85,6 +88,17 @@ public class GameStatusUITest extends ApplicationTest {
         ticTacToeModel.addObserver(testObserver);
         clickOn("#new_game");
         assertEquals(ModelUpdate.SETUP_NEW_GAME, testObserver.getLastUpdate());
+    }
+
+    @Test
+    public void clickOnReplayGameFiresEvent() {
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
+        ticTacToeModel.createGame(3);
+        GameTestHelper.runGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
+        TicTacToeModelTestObserver testObserver = new TicTacToeModelTestObserver(ticTacToeModel);
+        clickOn("#replay_game");
+        assertTrue(testObserver.getUpdates().contains(ModelUpdate.REPLAY_GAME));
     }
 
     private void buildStage(Stage stage) {

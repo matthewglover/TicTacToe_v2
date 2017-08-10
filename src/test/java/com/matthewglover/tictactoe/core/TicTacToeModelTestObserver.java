@@ -20,6 +20,10 @@ public class TicTacToeModelTestObserver extends ModelObserver {
         }
     }
 
+    public List<ModelUpdate> getUpdates() {
+        return modelUpdates;
+    }
+
     public ModelUpdate getLastUpdate() {
         return modelUpdates.get(modelUpdates.size() - 1);
     }

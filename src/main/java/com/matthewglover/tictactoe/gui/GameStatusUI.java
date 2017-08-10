@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.GameType;
 import com.matthewglover.tictactoe.core.ModelUpdate;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
@@ -33,6 +34,7 @@ public class GameStatusUI extends UI {
     private void build() {
         addResultText();
         addNewGameButton();
+        addReplayGameButton();
     }
 
     private void addResultText() {
@@ -53,6 +55,15 @@ public class GameStatusUI extends UI {
         flowPane.getChildren().add(button);
     }
 
+    private void addReplayGameButton() {
+        Button button = new Button();
+        button.setId("replay_game");
+        button.setText("Replay Game");
+        button.setOnAction(event -> {
+            ticTacToeModel.replayGame();
+        });
+        flowPane.getChildren().add(button);
+    }
     private void displayMessage() {
         String resultMessage = ticTacToeModel.getGame().isWinner()
                 ? ticTacToeModel.getGame().getWinner() + " wins!"
