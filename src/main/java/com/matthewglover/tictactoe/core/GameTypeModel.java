@@ -6,31 +6,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GameTypeModel {
-    private final GameType gameType;
+    private GameType gameType;
     private Player playerX;
     private Player playerO;
 
     public GameTypeModel(GameType gameType) {
-        this.gameType = gameType;
-        buildPlayers();
+        buildPlayers(gameType);
     }
 
     public GameTypeModel(GameType gameType, List<Integer> moveSequence) {
-        this.gameType = gameType;
-        buildPlayers();
+        buildPlayers(gameType);
         addMoves(moveSequence);
-    }
-
-    private void addMoves(List<Integer> moveSequence) {
-        List<Integer> xMoves = getEvenItems(moveSequence);
-        List<Integer> oMoves = getOddItems(moveSequence);
-        ((ReplayPlayer) playerX).addMoves(xMoves);
-        ((ReplayPlayer) playerO).addMoves(oMoves);
-    }
-
-    private PlayerBuilder configurePlayer(PlayerSymbol playerSymbol) {
-        PlayerType playerType = getPlayerType(playerSymbol);
-        return new PlayerBuilder().withPlayerSymbol(playerSymbol).withPlayerType(playerType);
     }
 
     public PlayerType getPlayerType(PlayerSymbol playerSymbol) {
@@ -47,9 +33,24 @@ public class GameTypeModel {
         return gameType;
     }
 
-    private void buildPlayers() {
-        playerX = configurePlayer(PlayerSymbol.X).build();
-        playerO = configurePlayer(PlayerSymbol.O).build();
+    private void buildPlayers(GameType gameType) {
+        this.gameType = gameType;
+        playerX = buildPlayer(PlayerSymbol.X);
+        playerO = buildPlayer(PlayerSymbol.O);
+    }
+
+    private Player buildPlayer(PlayerSymbol playerSymbol) {
+        return new PlayerBuilder()
+                .withPlayerSymbol(playerSymbol)
+                .withPlayerType(getPlayerType(playerSymbol))
+                .build();
+    }
+
+    private void addMoves(List<Integer> moveSequence) {
+        List<Integer> xMoves = getEvenItems(moveSequence);
+        List<Integer> oMoves = getOddItems(moveSequence);
+        ((ReplayPlayer) playerX).addMoves(xMoves);
+        ((ReplayPlayer) playerO).addMoves(oMoves);
     }
 
     private List<Integer> getEvenItems(List<Integer> moveSequence) {
