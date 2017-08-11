@@ -1,6 +1,5 @@
 package com.matthewglover.tictactoe.core;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TicTacToeModelTest {
-    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private final TicTacToeModel ticTacToeModel = new TicTacToeModel(new ImmediateRunner());
     private final TicTacToeModelTestObserver testObserver = new TicTacToeModelTestObserver(ticTacToeModel);
 
     @Test
@@ -40,6 +39,7 @@ public class TicTacToeModelTest {
 
     @Test
     public void delegatesMoveToComputer() {
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new DelayedRunner());
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_COMPUTER);
         ticTacToeModel.createGame(3);
@@ -63,6 +63,7 @@ public class TicTacToeModelTest {
 
     @Test
     public void replayGameCreatesNewGameWithComputerPlayers() {
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new DelayedRunner());
         createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         ticTacToeModel.replayGame();
         assertTrue(ticTacToeModel.getGame().isNew());
@@ -72,13 +73,11 @@ public class TicTacToeModelTest {
     }
 
     @Test
-    @Ignore
     public void replayGameRunsMovesOfLastGame() throws InterruptedException {
         createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         List<Integer> originalMoves = ticTacToeModel.getGame().getMoveSequence();
         testObserver.resetCollectedMoves();
         ticTacToeModel.replayGame();
-        Thread.sleep(100);      // NOTE: sleep needed to make sure async threads have completed (should be better way to do this)
         assertEquals(originalMoves, testObserver.getCollectedMoves());
     }
 

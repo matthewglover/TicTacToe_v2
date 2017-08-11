@@ -1,13 +1,14 @@
 package com.matthewglover.tictactoe.consoleui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.ImmediateRunner;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class GameTypeUITest {
-    private TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private TicTacToeModel ticTacToeModel = new TicTacToeModel(new ImmediateRunner());
     private final IOTestHelper ioTestHelper = new IOTestHelper();
 
     @Test

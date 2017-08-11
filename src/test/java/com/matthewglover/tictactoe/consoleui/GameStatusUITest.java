@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameStatusUITest {
-    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private final TicTacToeModel ticTacToeModel = new TicTacToeModel(new DelayedRunner());
     private final IOTestHelper ioTestHelper = new IOTestHelper();
     private final int BOARD_LINE_OFFSET = 5;
 
@@ -18,7 +18,7 @@ public class GameStatusUITest {
         // o o 6
         // 7 8 9
         int[] moves = new int[]{1, 4, 2, 5, 3};
-        runGame(moves);
+        GameTestHelper.runGame(ticTacToeModel, moves);
 
         String[] lines = ioTestHelper.getOutContentAsLines();
 
@@ -42,7 +42,7 @@ public class GameStatusUITest {
         // x x x
         // o o 6
         // 7 8 9
-        runGame(new int[]{1, 4, 2, 5, 3});
+        GameTestHelper.runGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
 
         String winningMessage = String.format(GameStatusMessages.REPORT_WINNER, PlayerSymbol.X);
         String[] lines = ioTestHelper.getOutContentAsLines();
@@ -58,7 +58,7 @@ public class GameStatusUITest {
         // x o x
         // o o x
         // x x o
-        runGame(new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
+        GameTestHelper.runGame(ticTacToeModel, new int[]{1, 4, 6, 5, 3, 2, 8, 9, 7});
 
         String[] lines = ioTestHelper.getOutContentAsLines();
 
@@ -98,7 +98,7 @@ public class GameStatusUITest {
         // x x x
         // o o 6
         // 7 8 9
-        runGame(new int[]{1, 4, 2, 5, 3});
+        GameTestHelper.runGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         return testObserver;
     }
 
@@ -112,11 +112,5 @@ public class GameStatusUITest {
 
     private void setupGameStatusUI() {
         new GameStatusUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
-    }
-
-    private void runGame(int[] moves) {
-        for (int move : moves) {
-            ticTacToeModel.gameMove(move);
-        }
     }
 }

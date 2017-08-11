@@ -3,10 +3,15 @@ package com.matthewglover.tictactoe.core;
 import java.util.Observable;
 
 public class TicTacToeModel extends Observable {
+    private final Runner runner;
     private int computerMoveDelay = 0;
     private GameTypeModel gameTypeModel;
     private ModelUpdate lastUpdate;
     private Game game;
+
+    public TicTacToeModel(Runner runner) {
+        this.runner = runner;
+    }
 
     public GameTypeModel getGameTypeModel() {
         return gameTypeModel;
@@ -67,7 +72,7 @@ public class TicTacToeModel extends Observable {
 
         if (isComputerPlayersMove(modelUpdate)) {
             notifyUpdate(ModelUpdate.LOCK_BOARD);
-            DelayedRunner.run(computerMoveDelay, getRunComputerMove());
+            runner.run(computerMoveDelay, getRunComputerMove());
         }
     }
 

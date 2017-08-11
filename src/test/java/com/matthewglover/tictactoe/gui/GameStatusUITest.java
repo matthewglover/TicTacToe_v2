@@ -1,9 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
-import com.matthewglover.tictactoe.core.GameTestHelper;
-import com.matthewglover.tictactoe.core.GameType;
-import com.matthewglover.tictactoe.core.ModelUpdate;
-import com.matthewglover.tictactoe.core.TicTacToeModelTestObserver;
+import com.matthewglover.tictactoe.core.*;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GameStatusUITest extends ApplicationTest {
-    private TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private TicTacToeModel ticTacToeModel = new TicTacToeModel(new ImmediateRunner());
     private Parent mainNode;
 
 

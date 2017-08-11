@@ -2,8 +2,8 @@ package com.matthewglover.tictactoe.core;
 
 import java.util.concurrent.FutureTask;
 
-public class DelayedRunner {
-    public static void run(int milliSecondsDelay, Runnable runnable) {
+public class DelayedRunner implements Runner {
+    public void run(int milliSecondsDelay, Runnable runnable) {
         FutureTask<Void> sleeper = new FutureTask<>(() -> {
             Thread.sleep(milliSecondsDelay);
             runnable.run();

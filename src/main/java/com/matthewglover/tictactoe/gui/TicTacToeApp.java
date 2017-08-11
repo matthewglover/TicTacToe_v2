@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.gui;
 
+import com.matthewglover.tictactoe.core.DelayedRunner;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,7 +12,7 @@ public class TicTacToeApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        TicTacToeModel ticTacToeModel = new TicTacToeModel();
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new DelayedRunner());
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setComputerMoveDelay(500);
         SceneSelectorUI sceneSelectorUI = new SceneSelectorUI(ticTacToeModel, 1000);

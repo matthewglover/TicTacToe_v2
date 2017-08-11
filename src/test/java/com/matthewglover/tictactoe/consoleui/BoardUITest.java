@@ -1,9 +1,6 @@
 package com.matthewglover.tictactoe.consoleui;
 
-import com.matthewglover.tictactoe.core.Board;
-import com.matthewglover.tictactoe.core.GameType;
-import com.matthewglover.tictactoe.core.PlayerSymbol;
-import com.matthewglover.tictactoe.core.TicTacToeModel;
+import com.matthewglover.tictactoe.core.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,16 +8,11 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 public class BoardUITest {
-    private final TicTacToeModel ticTacToeModel = new TicTacToeModel();
     private final IOTestHelper ioTestHelper = new IOTestHelper();
 
     @Test
     public void printsEmptyGridOnFirstMove() {
-        setupBoard();
-
-        ticTacToeModel.setupNewGame();
-        ticTacToeModel.setGameType(GameType.COMPUTER_HUMAN);
-        ticTacToeModel.createGame(3);
+        setupDelayedRunnerGame(GameType.COMPUTER_HUMAN);
 
         String formattedBoard = new BoardFormatter(new Board(3)).format();
         assertEquals(
@@ -31,11 +23,7 @@ public class BoardUITest {
     @Test
     public void printsEmptyGridAndRequestsMoveFromHumanPlayer() {
         ioTestHelper.setInputStream("3\n");
-        setupBoard();
-
-        ticTacToeModel.setupNewGame();
-        ticTacToeModel.setGameType(GameType.HUMAN_COMPUTER);
-        ticTacToeModel.createGame(3);
+        setupDelayedRunnerGame(GameType.HUMAN_COMPUTER);
 
         String[] boardStates = getBoardStates(3);
         String formattedRequest = String.format(PlayerMessages.MOVE_REQUEST, PlayerSymbol.X);
@@ -65,8 +53,18 @@ public class BoardUITest {
         runInvalidMoveTest();
     }
 
+    private void setupDelayedRunnerGame(GameType humanComputer) {
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new DelayedRunner());
+        new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
+
+        ticTacToeModel.setupNewGame();
+        ticTacToeModel.setGameType(humanComputer);
+        ticTacToeModel.createGame(3);
+    }
+
     private void runInvalidMoveTest() {
-        setupBoard();
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new ImmediateRunner());
+        new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
 
         ticTacToeModel.setupNewGame();
         ticTacToeModel.setGameType(GameType.HUMAN_HUMAN);
@@ -90,10 +88,6 @@ public class BoardUITest {
 
     private String requestMoveString(PlayerSymbol playerSymbol) {
         return String.format(PlayerMessages.MOVE_REQUEST, playerSymbol);
-    }
-
-    private BoardUI setupBoard() {
-        return new BoardUI(ioTestHelper.getInputStream(), ioTestHelper.getOutputStream(), ticTacToeModel);
     }
 
     private String[] getBoardStates(int move) {

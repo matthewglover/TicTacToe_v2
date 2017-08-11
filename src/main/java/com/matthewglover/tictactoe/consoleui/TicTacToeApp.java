@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.consoleui;
 
+import com.matthewglover.tictactoe.core.DelayedRunner;
 import com.matthewglover.tictactoe.core.TicTacToeModel;
 
 import java.io.InputStream;
@@ -9,7 +10,7 @@ public class TicTacToeApp {
     private final TicTacToeModel ticTacToeModel;
 
     public static void main(String[] args) {
-        TicTacToeModel ticTacToeModel = new TicTacToeModel();
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new DelayedRunner());
         TicTacToeApp ticTacToeApp = new TicTacToeApp(System.in, System.out, ticTacToeModel);
         ticTacToeApp.execute();
     }

@@ -1,6 +1,7 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.ImmediateRunner;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +16,7 @@ import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 public class GameTypeUITest extends ApplicationTest {
 
     private Parent mainNode;
-    private TicTacToeModel ticTacToeModel = new TicTacToeModel();
+    private TicTacToeModel ticTacToeModel = new TicTacToeModel(new ImmediateRunner());
 
     @Override
     public void start(Stage stage) throws Exception {

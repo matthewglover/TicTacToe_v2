@@ -1,6 +1,7 @@
 package com.matthewglover.tictactoe.gui;
 
 import com.matthewglover.tictactoe.core.GameType;
+import com.matthewglover.tictactoe.core.ImmediateRunner;
 import com.matthewglover.tictactoe.core.PlayerSymbol;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ public class BoardUIGameOverTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        TicTacToeModel ticTacToeModel = new TicTacToeModel();
+        TicTacToeModel ticTacToeModel = new TicTacToeModel(new ImmediateRunner());
         BoardUI boardUI = new BoardUI(ticTacToeModel);
         mainNode = boardUI.getNode();
         ticTacToeModel.setupNewGame();
