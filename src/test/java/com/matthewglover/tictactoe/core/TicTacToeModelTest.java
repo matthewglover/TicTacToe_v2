@@ -1,5 +1,6 @@
 package com.matthewglover.tictactoe.core;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -71,6 +72,7 @@ public class TicTacToeModelTest {
     }
 
     @Test
+    @Ignore
     public void replayGameRunsMovesOfLastGame() throws InterruptedException {
         createAndRunGame(ticTacToeModel, new int[]{1, 4, 2, 5, 3});
         List<Integer> originalMoves = ticTacToeModel.getGame().getMoveSequence();
